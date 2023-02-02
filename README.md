@@ -1,8 +1,8 @@
-#Title of Project:
+# Title of Project:
 
-##Project Description: 
+## Project Description: 
 
-######Team members: 
+###### Team members: 
 
 
 How to install:
