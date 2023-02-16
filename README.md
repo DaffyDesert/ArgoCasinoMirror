@@ -1,6 +1,6 @@
-# Title of Project:
+# Title of Project: Argo Casino
 
-#### Project Description: 
+#### Project Description: A game package allowing players to enjoy multiple card based games.
 
 ###### Team members: 
 
