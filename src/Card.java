@@ -5,12 +5,13 @@
  * value: combination of the rank and suit of a card (5H, KD)
  * @author danielMiller
  *
- */ 
+ */
 public class Card {
 
 	private String rank;
 	private String suit;
 	private String value;
+	private boolean isFlipped;
 	
 	/**
 	 * Constructor
@@ -79,6 +80,14 @@ public class Card {
 		return value;
 	}
 	
+	public boolean isFlipped() {
+		return isFlipped;
+	}
+
+	public void setFlipped(boolean isFlipped) {
+		this.isFlipped = isFlipped;
+	}
+
 	public String toString() {
 		return getRank() + " of " + getSuit();
 	}

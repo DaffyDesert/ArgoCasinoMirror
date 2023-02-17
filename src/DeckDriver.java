@@ -31,15 +31,15 @@ public class DeckDriver {
 		System.out.print("Deck Pile: "); 
 		cardDeck.printDeck();		//show top 4 cards dealt
 		
-		discardPile.addCard(cardDeck.dealTopCard());
+		discardPile.addStack(cardDeck.dealTopCard());
 		System.out.print("Discard Pile: "); 
 		discardPile.printDeck();
 
-		discardPile.addCard(cardDeck.dealTopCard(3));
+		discardPile.addStack(cardDeck.dealTopCard(3));
 		System.out.print("Discard Pile: "); 
 		discardPile.printDeck();
 
-		discardPile.addCard(cardDeck.dealTopCard(4));
+		discardPile.addStack(cardDeck.dealTopCard(4));
 		System.out.print("Discard Pile: "); 
 		discardPile.printDeck();
 

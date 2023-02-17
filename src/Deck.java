@@ -7,10 +7,8 @@ import java.util.Random;
  *
  * cards: array list of cards representing the deck object
  */
-public class Deck {
+public class Deck extends CardStack{
 
-	private ArrayList<Card> deck = new ArrayList<>();
-	
 	/**
 	 * Default constructor that builds standard 52 card deck into 
 	 * the deck ArrayList of Cards
@@ -41,49 +39,4 @@ public class Deck {
 		deck = shuffeledDeck;
 	}
 	
-	/**
-	 * Removes the card from the top of the deck and returns it as a card object to be given 
-	 * given to a different deck object (player hand, discard pile, etc...)
-	 * @param numOfCards
-	 * @return the top card 
-	 */
-	public Card dealTopCard() {
-		Card topCard = deck.get(deck.size()-1);
-		deck.remove(deck.size()-1);
-		return topCard;
-	}
-	
-	/**
-	 * Takes in an integer and then removes that many cards from the top of the deck and returns them as an ArrayList to be 
-	 * given to a different deck object (player hand, discard pile, etc...)
-	 * @param numOfCards - number of cards to be dealt
-	 */
-	public ArrayList<Card> dealTopCard(int numOfCards) {
-		ArrayList<Card> topCards = new ArrayList<>();
-		for(int i = 0; i < numOfCards; i++)
-			topCards.add(dealTopCard());
-		return topCards;
-	}
-	
-
-	//STUBBs created to show how deck can be used as discard pile or hand - deck, discard pile, player hand, may all be sub classes to CardPile class???
-	public void printDeck() {
-		for(Card decks: deck) {
-			System.out.printf(decks.getValue() + " ");
-		}
-		System.out.println();
-		System.out.println("Deck Size: " + deck.size());
-	}
-
-	public void addCard(Card cardToAdd) {
-		deck.add(cardToAdd);
-	}
-	
-	public void addCard(ArrayList<Card> cardsToAdd) {
-		deck.addAll(cardsToAdd);
-	}
-	
-	public void emptyDeck() {
-		deck.clear();
-	}
 }
