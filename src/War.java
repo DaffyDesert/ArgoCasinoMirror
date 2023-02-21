@@ -1,33 +1,69 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Graphics;
+import java.awt.GridLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
-public class War extends JPanel{
+@SuppressWarnings("serial")
+public class War extends JPanel implements MouseListener{
+
 	/*Variables go here*/
-	JLabel l; 
-	Component table;
+	DeckComponent enemyDeck;
+	DeckComponent playerDeck;
+	JLabel tableLabel;
+	ImageIcon table;
 	
 	War() {
-		// INITIALIZE WAR ENEMY AND WAR PLAYER MEMBERS HERE
-		this.setLayout(new BorderLayout(20,15));
-		l = new JLabel("Let the game begin!", SwingConstants.CENTER);
-		this.add(l,BorderLayout.NORTH);
-		this.setVisible(true);
-	}
+		this.setLayout(null);
+
+		table = new ImageIcon("tabletop.png");
+		
+		playerDeck = new DeckComponent();
+		playerDeck.setBounds(350, 600, 100, 132);
+		enemyDeck = new DeckComponent();
+		enemyDeck.setBounds(350, 10, 100, 132);
+		tableLabel = new JLabel(table);
+		tableLabel.setBounds(0, 150, 800, 400);
 	
-	//Paints card table
-	public void paint(Graphics g) {
-		g.setColor(new Color(42, 137, 32));
-		g.fillRoundRect(100, 100, 500, 500, 50, 50);
+		this.add(enemyDeck);
+		this.add(tableLabel);
+		this.add(playerDeck);
+		this.setVisible(true);
 		
-		g.setColor(Color.black);
-		g.drawRect(300, 464, 100, 136); // Where Player's cards will go
+		playerDeck.addMouseListener(this);
+		tableLabel.addMouseListener(this);
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		if(e.getComponent() == getComponent(1)) {
+			System.out.println("Table was clicked");
+		}
+		if(e.getComponent() == getComponent(2)) {
+			System.out.println("Player deck was clicked");
+		}
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
 		
-		g.drawRect(300, 100, 100, 136); // Where opponent's cards will go
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		
 	}
 	
 }
