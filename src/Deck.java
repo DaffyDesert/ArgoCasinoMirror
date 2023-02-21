@@ -1,5 +1,3 @@
-
-
 /**
  * Class to build a standard deck of playing cards utilizing the Card class
  * @author danielMiller
@@ -9,7 +7,7 @@
 public class Deck extends CardStack{
 
 	/**
-	 * Default constructor that builds standard 52 card deck into 
+	 * Constructor that builds standard 52 card deck into 
 	 * the deck ArrayList of Cards
 	 */
 	public Deck(String deckName){

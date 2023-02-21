@@ -2,10 +2,13 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * Class used that implement what a pile of cards is expected to do
+ * Class used to implement what a stack of cards should expected to do /n
  * 
  * Allows for better abstraction between a deck, player hand, dealer hand, 
- * stacks of cards, discard pile, etc..
+ * discard piles, etc..
+ * 
+ * stackName - name of the stack object
+ * stack - list of card objects to handle
  * 
  * @author danielMiller
  *
@@ -15,67 +18,121 @@ public class CardStack {
 	private String stackName;
 	private ArrayList<Card> stack = new ArrayList<>();
 	
+	/**
+	 * default constructor that makes an empty stack of cards (a holding place for card objects)
+	 * with a default stackName of "Stack"
+	 */
 	public CardStack() {
+		setStackName("Stack");
 		stack.clear();
 	}
 
+	/**
+	 * Constructor that makes an empty stack of cards (a holding place for card objects)
+	 * with a parameterized stackName value
+	 */
 	public CardStack(String stackName) {
 		stack.clear();
 		setStackName(stackName);
 	}
 	
+	/**
+	 * Constructor that makes a stack of cards using a parameterized Card object
+	 * and a parameterized stackName value
+	 */
 	public CardStack(String stackName, Card card) {
 		setStack(card);
 		setStackName(stackName);
 	}
 	
+	/**
+	 * Constructor that makes a stack of cards using a parameterized list of Card objects
+	 * and a parameterized stackName value
+	 */
 	public CardStack(String stackName, ArrayList<Card> stack) {
 		setStack(stack);
 		setStackName(stackName);
 	}
 	
 	/**
-	 * @return the stackName
+	 * @return stackName
 	 */
 	public String getStackName() {
 		return stackName;
 	}
 
 	/**
+	 * sets stackName with parameterized value 
+	 * 
 	 * @param stackName the stackName to set
 	 */
 	public void setStackName(String stackName) {
 		this.stackName = stackName;
 	}
 
+	/**
+	 * 
+	 * @return stack
+	 */
 	public ArrayList<Card> getStack() {
 		return stack;
 	}
 
-	public void setStack(Card card) {
+	/**
+	 * Private method to set stack with parameterized value 
+	 * 
+	 * @param card - card object to set the stack to
+	 */
+	private void setStack(Card card) {
 		emptyStack();
 		getStack().add(card);
 	}
 
-	public void setStack(ArrayList<Card> stack) {
+
+	/**
+	 * Private method to set stack with parameterized list  
+	 * 
+	 * @param stack
+	 */
+	private void setStack(ArrayList<Card> stack) {
 		emptyStack();
 		getStack().addAll(stack);
 	}
 
+	/**
+	 * adds parameterized card object to the top of the card stack
+	 * 
+	 * @param cardToAdd
+	 */
 	public void addToTop(Card cardToAdd) {
 		getStack().add(cardToAdd);
 	}
 	
+	/**
+	 * adds parameterized list of card object to the top of the card stack
+	 * 
+	 * @param cardsToAdd
+	 */
 	public void addToTop(ArrayList<Card> cardsToAdd) {
 		getStack().addAll(cardsToAdd);
 	}
 	
+	/**
+	 * adds parameterized card object to the bottom of the card stack
+	 * 
+	 * @param cardToAdd
+	 */
 	public void addToBottom(Card cardToAdd) {
 		getStack().add(0, cardToAdd);
 	}
 	
+	/**
+	 * adds parameterized list of card object to the bottom of the card stack
+	 * 
+	 * @param cardsToAdd
+	 */
 	public void addToBottom(ArrayList<Card> cardsToAdd) {
-		getStack().addAll(0, cardsToAdd) ; 	// stack is recieved in the order as if it were dealt dealTopCard()
+		getStack().addAll(0, cardsToAdd) ; 	// stack is received in the order as if it were dealt dealTopCard()
 	}
 	
 	/**
@@ -141,7 +198,11 @@ public class CardStack {
 		getStack().clear();
 	}
 	
-	//STUBBs created to show how deck can be used as discard pile or hand - deck, discard pile, player hand, may all be sub classes to CardPile class???
+	/**
+	 * STUBB 
+	 * 
+	 * prints the stack of cards by iterating from bottom to top
+	 */
 	public void printStack() {
 		for(Card stack: getStack()) {
 			System.out.printf(stack.getValue() + " ");

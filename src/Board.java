@@ -20,7 +20,7 @@ public class Board {
 		CardStack discardPileToAdd;
 		CardStack deckToAdd;
 		for(int i = 0; i < numOfPlayers; i++) {
-			playerToAdd = new CardStack("player_  " + (i + 1));
+			playerToAdd = new CardStack("player_" + (i + 1));
 			getPlayers().add(playerToAdd);
 		}
 		for(int i = 0; i < numOfDiscardPiles; i++) {
@@ -58,7 +58,10 @@ public class Board {
 	}
 	
 	
-	//STUBS
+	/**
+	 * STUBB
+	 * prints the board 
+	 */
 	public void printBoard() {
 		for(CardStack playerStack: getPlayers()) {
 			playerStack.printStack();
