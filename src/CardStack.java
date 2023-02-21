@@ -148,6 +148,7 @@ public class CardStack {
 		}
 		System.out.println();
 		System.out.println(getStackName() + " Stack Size: " + getStack().size());
+		System.out.println();
 	}
 
 }
