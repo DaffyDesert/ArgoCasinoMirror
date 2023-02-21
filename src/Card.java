@@ -11,7 +11,7 @@ public class Card {
 	private String rank;
 	private String suit;
 	private String value;
-	private boolean isFlipped;
+	private boolean faceDown;
 	
 	/**
 	 * Constructor
@@ -22,6 +22,7 @@ public class Card {
 		setRank(rank);
 		setSuit(suit);
 		value = getRank() + getSuit().charAt(0); // e.g rank = 7 suit = Hearts -> value ="7H"
+		faceDown = true;
 	}
 
 	/**
@@ -77,15 +78,24 @@ public class Card {
 	 * return the value of the card
 	 */
 	public String getValue() {
+//		if (isFaceDown() == true)
+//			return "FD";
 		return value;
 	}
 	
-	public boolean isFlipped() {
-		return isFlipped;
+	public boolean isFaceDown() {
+		return faceDown;
 	}
 
-	public void setFlipped(boolean isFlipped) {
-		this.isFlipped = isFlipped;
+	public void setFaceDown(boolean isFlipped) {
+		this.faceDown = isFlipped;
+	}
+
+	public void flipCard() {
+		if(faceDown == true)
+			setFaceDown(false);
+		else
+			setFaceDown(true);
 	}
 
 	public String toString() {
