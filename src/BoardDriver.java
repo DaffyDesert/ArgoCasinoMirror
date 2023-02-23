@@ -1,9 +1,10 @@
+import javax.swing.JFrame;
 
 public class BoardDriver {
 
 	public static void main(String[] args) {
 		
-		int numOfPlayers = 5;
+		int numOfPlayers = 2;
 		int numOfDiscardPiles = 2;
 		int numOfDecks = 1;
 		
@@ -35,9 +36,16 @@ public class BoardDriver {
 		testBoard.printBoard();
 		System.out.println("*** PRINTING GAME BOARD AFTER PLAYER 1 RECIEVES ALL CARDS FROM DISCARD PILE 2 TO THE BOTTOM OF PLAYER 1 STACK ***");
 		System.out.println();
-		testBoard.getPlayers().get(0).addToBottom(testBoard.getDiscardPiles().get(1).getStack());
+		testBoard.getDiscardPiles().get(1).dealTopCard(testBoard.getDiscardPiles().get(1).getStack().size());
 		testBoard.printBoard();
 	
-	}
+		JFrame gui = new JFrame("Test Board");
+		
+		gui.add(testBoard.drawBoard(null));
+		gui.setVisible(true);
+		gui.setSize(750, 750);
+		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+	}
+		
 }

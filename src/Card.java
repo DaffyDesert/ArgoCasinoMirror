@@ -1,3 +1,14 @@
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 /**
  * Card class that holds a:
  * rank: ace, 2-10, jack, queen, king (13 possible values)
@@ -11,10 +22,14 @@
  */
 public class Card {
 
+	private static final int CARD_WIDTH = 100;	//in pixels
+	private static final int CARD_HEIGHT = 145; //in pixels
+	
 	private String rank;
 	private String suit;
 	private String value;
 	private boolean faceDown;
+	private Image cardImage;
 	
 	/**
 	 * Constructor
@@ -26,6 +41,30 @@ public class Card {
 		setSuit(suit);
 		value = getRank() + getSuit().charAt(0); // e.g rank = 7 suit = Hearts -> value ="7H"
 		faceDown = true;
+		try {
+			File imageFile = new File("imgs/" + getValue() + ".png");
+			cardImage = ImageIO.read(imageFile);
+			cardImage = cardImage.getScaledInstance(getCardWidth(), getCardHeight(), Image.SCALE_DEFAULT);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+}
+
+	/**
+	 * 
+	 * @return  CARD_WIDTH
+	 */
+	public int getCardWidth() {
+		return CARD_WIDTH;
+	}
+
+	/**
+	 * 
+	 * @return CARD_HEIGHT
+	 */
+	public int getCardHeight() {
+		return CARD_HEIGHT;
 	}
 
 	/**
@@ -51,7 +90,7 @@ public class Card {
 		else if(rank == 12)
 			this.rank = "K";
 		else
-			this.rank = Integer.toString(rank);		
+			this.rank = Integer.toString(rank+1);		
 	}
 
 	/**
@@ -82,8 +121,8 @@ public class Card {
 	 * @return the value of the card
 	 */
 	public String getValue() {
-		if (isFaceDown() == true)
-			return "FD";
+//		if (isFaceDown() == true)
+//			return "FD";
 		return value;
 	}
 	
@@ -121,5 +160,15 @@ public class Card {
 	public String toString() {
 		return getRank() + " of " + getSuit();
 	}
-	
+	public JPanel draw(Graphics2D g2D)
+	{
+		Color feltGreen = new Color(10, 108, 3);
+		JPanel card = new JPanel();
+		JLabel cardImg = new JLabel(new ImageIcon(cardImage));
+		card.setBackground(feltGreen);
+		
+		card.add(cardImg);
+		
+		return card;
+	}
 }

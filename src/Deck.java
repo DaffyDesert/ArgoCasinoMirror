@@ -4,6 +4,7 @@
  *
  * cards: array list of cards representing the deck object
  */
+@SuppressWarnings("serial")
 public class Deck extends CardStack{
 
 	/**
