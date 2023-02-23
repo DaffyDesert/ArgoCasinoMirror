@@ -11,9 +11,7 @@ Card Class:
   * each card object has a draw function that returns a JPanel of the Card Image
 
 CardStack:
- * Class used to implement what a stack of cards should be expected to do
- ** shuffle the stack
- ** deal to and from top or bottom any number of cards
+ * Class used to implement what a stack of cards should be expected to do (shuffle the stack, deal from the top or bottom of a stack, deal to the top or bottom of a stack, etc... 
  * Allows for better abstraction between a deck, player hand, dealer hand, discard piles, etc..
  * stackName - name of the stack object
  * stack - list of card objects to handle 
