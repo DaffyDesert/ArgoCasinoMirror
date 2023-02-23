@@ -41,17 +41,4 @@ public class ThreadTestGui {
 	    button.addActionListener(ButtonPress);
 	    
 	}
-	
-	class TestThread implements Runnable{
-		public JPanel display() {
-			JPanel buttonPanel = new JPanel();
-			FlowLayout layout = new FlowLayout();
-			
-			buttonPanel.setLayout(layout);
-			JButton button = new JButton("Press Me!");
-		}
-		public void run() {
-			
-		}
-	}
 }
