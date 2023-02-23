@@ -18,13 +18,15 @@ Card Class:
 
 CardStack:
  * Class used to implement what a stack of cards should expected to do /n
-  
- * Allows for better abstraction between a deck, player hand, dealer hand, 
- * discard piles, etc..
-  
+ * Allows for better abstraction between a deck, player hand, dealer hand, discard piles, etc..
  * stackName - name of the stack object
- * stack - list of card objects to handle
- * 
-- holds an arrayList of card objects
-
+ * stack - list of card objects to handle 
 - each stack object has a draw function that returns a JPanel of the stack of card images with the stack name listed below (player_1, discard_pile_1, etc...)
+
+Deck extends CardStack:
+ * only holds a default constructor that creates a standard deck of 52 playing cards
+
+Board
+ * Board class that will create a playing area for stack of cards to be created and manipulated
+ * Class should eventually be abstract class to more defined GameBoard classes such as WarBoard, BlackJackBoard, etc..
+ * HAS STUBB draw function that returns a JPanel of the Card Image (this should be removed because defined GameBoard classes should be drawing how their board is laid out)
