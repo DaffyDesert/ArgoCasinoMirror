@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 import javax.swing.JPanel;
-=======
-import javax.swing.*;
->>>>>>> 9759778c32b52cdcff5990fe82f4a1291499420e
+
 
 public interface Game {
 	/*
