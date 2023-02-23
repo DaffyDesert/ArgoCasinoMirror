@@ -5,11 +5,10 @@
 ###### Team members: 
 
 
-How to install:
-<Provide details on how to install, especially of setup is required other than a normal eclipse project setup.
 
-How to execute: <What file will start the program>
+Card Class:
+- when a card is constructed a specific .png file is associated to it based on the value of the card (AH = AH.png )
+- each card object has a draw function that returns a JPanel of the Card Image
 
-
-How to Interact:
-<List of some basic steps to get the user started using the application>
+CardStack:
+- each stack object has a draw function that returns a JPanel of the stack of card images with the stack name listed below (player_1, discard_pile_1, etc...)
