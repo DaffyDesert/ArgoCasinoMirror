@@ -176,6 +176,13 @@ public class CardStack extends JComponent{
 			topCards.add(dealTopCard());
 		return topCards;
 	}
+	
+	/**
+	 * Flips the top card of the stack
+	 */
+	public void flipTopCard() {
+		getStack().get(stackSize-1).flipCard();
+	}
 
 	/**
 	 * Shuffles the deck (the size of the deck does not matter) 
