@@ -1,10 +1,4 @@
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Graphics2D;
 import java.util.ArrayList;
-
-import javax.swing.BoxLayout;
-import javax.swing.JPanel;
 
 /**
  * Board class that will create a playing area for cards and stack of cards to be created and manipulated
@@ -76,48 +70,5 @@ public class Board {
 			discardStack.printStack();
 		}
 		deck.printStack();
-	}
-	
-	/**
-	 * STUBB
-	 * 
-	 * How a board is drawn should be dictated by the type of Board it is - this should be implemented in the WarBoard, etc .. classes
-	 * 
-	 * paint the stack (gui version of printStack() STUBB)
-	 */
-	public JPanel drawBoard(Graphics2D g) {
-		Color feltGreen = new Color(10, 108, 3);
-		JPanel board = new JPanel(new BorderLayout());
-		JPanel playerArea = new JPanel();
-		JPanel discardArea = new JPanel();
-		JPanel deckArea = new JPanel();
-
-		board.setBounds(0, 0, 500, 900);
-		board.setBackground(feltGreen);
-		
-		playerArea.setLayout(new BoxLayout(playerArea, BoxLayout.X_AXIS));
-		playerArea.setBackground(feltGreen);
-
-		discardArea.setLayout(new BoxLayout(discardArea, BoxLayout.X_AXIS));
-		discardArea.setBackground(feltGreen);
-		
-		deckArea.setLayout(new BorderLayout());
-		deckArea.setBackground(feltGreen);
-		
-		for(CardStack playerStacks: getPlayers()) {
-			playerArea.add(playerStacks.draw(g));
-		}
-
-		for(CardStack discardStacks: getDiscardPiles()) {
-			discardArea.add(discardStacks.draw(g));
-		}
-
-		deckArea.add(getDeck().draw(g), BorderLayout.CENTER);
-		
-		board.add(playerArea, BorderLayout.SOUTH);
-		board.add(discardArea, BorderLayout.NORTH);
-		board.add(deckArea);
-		
-		return board;
 	}
 }

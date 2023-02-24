@@ -1,13 +1,5 @@
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Random;
-
-import javax.swing.BoxLayout;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 /**
  * Class used to implement what a stack of cards should expected to do /n
@@ -21,12 +13,10 @@ import javax.swing.JPanel;
  * @author danielMiller
  *
  */
-@SuppressWarnings("serial")
-public class CardStack extends JComponent{
+public class CardStack {
 	
 	private String stackName;
 	private ArrayList<Card> stack = new ArrayList<>();
-	private int stackSize;
 	
 	/**
 	 * default constructor that makes an empty stack of cards (a holding place for card objects)
@@ -35,7 +25,6 @@ public class CardStack extends JComponent{
 	public CardStack() {
 		setStackName("Stack");
 		stack.clear();
-		stackSize = stack.size();
 	}
 
 	/**
@@ -45,7 +34,6 @@ public class CardStack extends JComponent{
 	public CardStack(String stackName) {
 		stack.clear();
 		setStackName(stackName);
-		stackSize = stack.size();
 	}
 	
 	/**
@@ -55,7 +43,6 @@ public class CardStack extends JComponent{
 	public CardStack(String stackName, Card card) {
 		setStack(card);
 		setStackName(stackName);
-		stackSize = stack.size();
 	}
 	
 	/**
@@ -65,7 +52,6 @@ public class CardStack extends JComponent{
 	public CardStack(String stackName, ArrayList<Card> stack) {
 		setStack(stack);
 		setStackName(stackName);
-		stackSize = stack.size();
 	}
 	
 	/**
@@ -90,10 +76,6 @@ public class CardStack extends JComponent{
 	 */
 	public ArrayList<Card> getStack() {
 		return stack;
-	}
-
-	public int getStackSize() {
-		return stackSize;
 	}
 
 	/**
@@ -176,13 +158,6 @@ public class CardStack extends JComponent{
 			topCards.add(dealTopCard());
 		return topCards;
 	}
-	
-	/**
-	 * Flips the top card of the stack
-	 */
-	public void flipTopCard() {
-		getStack().get(stackSize-1).flipCard();
-	}
 
 	/**
 	 * Shuffles the deck (the size of the deck does not matter) 
@@ -215,7 +190,6 @@ public class CardStack extends JComponent{
 				stacksToBeDealtTo.get(y).addToTop(dealTopCard());
 		return stacksToBeDealtTo;
 	}
-	
 	/**
 	 * function to clear the stack
 	 * only used in constructor atm - could be removed?
@@ -223,40 +197,11 @@ public class CardStack extends JComponent{
 	private void emptyStack() {
 		getStack().clear();
 	}
-
-	/**
-	 * Returns the card stack in the form of a JPanel
-	 * 
-	 * @param g
-	 * @return CardStack in the form of a JPanel
-	 */
-	public JPanel draw(Graphics2D g) {
-		Color feltGreen = new Color(10, 108, 3);
-		JPanel cardStack = new JPanel();
-		JPanel cardStackArea = new JPanel(new BorderLayout());
-		JPanel cardStackNameArea = new JPanel();
-		cardStackNameArea.add(new JLabel(getStackName()));
-		cardStackNameArea.setBackground(feltGreen);
-		cardStackArea.setBackground(feltGreen);
-				
-		//cardStackArea.setBounds(0, 0, 100, 145); //100/145 hard coded for now - should be values from getCardWidth/Height()'s
-		//cardStackArea.setBorder(getBorder());
-		for(Card cardToDraw: getStack()) {
-			cardStackArea.add(cardToDraw.draw(g), BorderLayout.CENTER); 
-		}
-		
-		cardStack.setBackground(feltGreen);
-		cardStack.setLayout(new BoxLayout(cardStack, BoxLayout.Y_AXIS));
-		cardStack.add(cardStackArea);
-		cardStack.add(cardStackNameArea);
-
-		return cardStack;
-	}
 	
 	/**
 	 * STUBB 
 	 * 
-	 * prints the stack of cards to console by iterating from bottom to top
+	 * prints the stack of cards by iterating from bottom to top
 	 */
 	public void printStack() {
 		for(Card stack: getStack()) {
@@ -266,7 +211,7 @@ public class CardStack extends JComponent{
 		System.out.println(getStackName() + " Stack Size: " + getStack().size());
 		System.out.println();
 	}
-	
+
 }
 
 
