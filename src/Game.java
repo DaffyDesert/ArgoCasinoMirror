@@ -24,4 +24,6 @@ public interface Game {
 	public void stopGame(); //Stops the game. Calls stopWatch();
 	public JPanel display(); //Returns JPanel to main GUI which displays the game.
 	public boolean isOver(); //Checks if the game is over.
+	public void run(); //Runs the game's logic
+	public void turn(); //Handles the logic for each of the game's turns
 }
