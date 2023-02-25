@@ -3,14 +3,10 @@ import javax.swing.JPanel;
 
 public interface Game {
 	/*
-	 * Objects to be constant and unchanging across each game
+	 * Member variables!!
 	 */
-	public Stopwatch watch = new Stopwatch(); //The stop watch
-	public Thread watchThread = new Thread(watch); //The thread that allows the watch to run alongside the program.
-	
-	/*
-	 * Objects that will be different between each game.
-	 */
+	//private Stopwatch watch = new Stopwatch(); //The stop watch
+	//private Thread watchThread = new Thread(watch); //The thread that allows the watch to run alongside the program.
 	//public Board gameBoard;
 	
 	/*
