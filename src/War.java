@@ -8,6 +8,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * War class will be a JPanel that will contain 2 deck objects and 1 table. Class 
+ * will also take have all methods that it takes to play a game of War
+ * @author Daniel Padgett
+ *
+ */
 @SuppressWarnings("serial")
 public class War extends JPanel implements ActionListener, MouseListener {
 
@@ -18,10 +24,12 @@ public class War extends JPanel implements ActionListener, MouseListener {
 	JLabel text;
 	ImageIcon table;
 	Timer timer;
-	boolean gameOver;
-
+	
+	/*
+	 * War constructor creates a gui that will show two decks and a table.
+	 * The player can start each turn by simply clicking the table.
+	 */
 	War() {
-		gameOver = false;
 		this.setLayout(null);
 
 		table = new ImageIcon("tabletop.png");
@@ -45,27 +53,41 @@ public class War extends JPanel implements ActionListener, MouseListener {
 		tableLabel.addMouseListener(this);
 	}
 
-	/*
-	 * compare function will be given two cards to check, then will determine which
-	 * one is of a higher rank returns 1 if enemy wins returns 0 if player wins
+	/**
+	 * Takes in two cards and returns the result from the player's 
+	 * perspective. 1 = loss, 0 = win
+	 * @param the player's card 
+	 * @param the enemy's card
+	 * @return result from the player's perspective
 	 */
 	public int compare(Card playerCard, Card enemyCard) {
-		int playerSuit = turnSuitToInt(playerCard.getSuit());
-		int enemySuit = turnSuitToInt(enemyCard.getSuit());
+		int playerRank = turnRankToInt(playerCard.getRank());
+		int enemyRank = turnRankToInt(enemyCard.getRank());
 
-		if (playerSuit == enemySuit) {
-			// if cards are of the same suit then a "battle" will occur
-		} else if (playerSuit < enemySuit) {
+		if (playerRank == enemyRank) { // if cards are of the same suit then a "war" will occur
+			
+		}
+		else if(playerRank == 0) { // "if player has an Ace, player wins"
+			return 0;
+		}
+		else if(enemyRank == 0) { // "if enemy has an Ace, player loses"
+			return 1;
+		}
+		else if (playerRank < enemyRank) { // "if player's card is less than the enemy's, then return 1(defeat)"
 			return 1;
 		}
 		return 0;
 	}
+	
+	
 
-	/*
-	 * turnSuitToInt function is a helper to the compare function so it can easily
-	 * identify the suit through integers
+	/**
+	 * Helper function to assist the compare function to turn the
+	 * rank of a card in the form of a string into an integer.
+	 * @param the suit of a card
+	 * @return the integer it is supposed to represent
 	 */
-	private int turnSuitToInt(String cardSuit) {
+	private int turnRankToInt(String cardSuit) {
 		if (cardSuit.compareTo("A") == 0)
 			return 0;
 		else if (cardSuit.compareTo("J") == 0)
@@ -76,17 +98,23 @@ public class War extends JPanel implements ActionListener, MouseListener {
 			return 12;
 		else
 			return Integer.parseInt(cardSuit);
-
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 	}
 
+	/**
+	 * Mouse pressed will activate when the player clicks the table
+	 * object in the gui. This will then move the top card from the 
+	 * player's deck onto the table. Then, 1000ms later(1 second) the
+	 * enemy's top card will be moved.
+	 * @param The mouse event
+	 */
 	@Override
 	public void mousePressed(MouseEvent e) {
 		if (e.getComponent() == getComponent(2)) {
-			System.out.println("2");
+			text.setVisible(false);
 			playerDeck.setLocation(300, 350);
 			Timer timer = new Timer(1000, new ActionListener() {
 			    public void actionPerformed(ActionEvent e) {
@@ -108,6 +136,10 @@ public class War extends JPanel implements ActionListener, MouseListener {
 
 	@Override
 	public void mouseExited(MouseEvent e) {
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {		
 	}
 
 }
