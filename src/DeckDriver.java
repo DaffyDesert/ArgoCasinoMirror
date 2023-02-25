@@ -3,7 +3,7 @@ public class DeckDriver {
 
 	public static void main(String[] args) {
 		
-		CardStack cardDeck = new Deck("deck");
+		CardStack cardDeck = new CardStack("deck");
 		//Card ace = new Card(0, 0);
 		
 		CardStack discardPile = new CardStack();  	//create a discard pile with standard 52 cards
