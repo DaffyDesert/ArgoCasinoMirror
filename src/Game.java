@@ -12,8 +12,6 @@ public interface Game {
 	 * Objects that will be different between each game.
 	 */
 	//public Board gameBoard;
-	//public Player player; //May be replaced with game's respective player class, which should extend Player class.
-	//public Player enemy; //Where applicable
 	
 	/*
 	 * Methods that should be implemented in each game. This list may grow as time goes on
