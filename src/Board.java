@@ -19,12 +19,12 @@ public class Board {
 
 	private ArrayList<CardStack> players = new ArrayList<>();
 	private ArrayList<CardStack> discardPiles = new ArrayList<>();
-	private CardStack deck = new Deck("52 Card Deck");
+	private CardStack deck = new CardStack("52 Card Deck");
 	
 	public Board(int numOfPlayers, int numOfDiscardPiles, int numOfDecks) {
 		CardStack playerToAdd;
 		CardStack discardPileToAdd;
-		CardStack deckToAdd;
+
 		for(int i = 0; i < numOfPlayers; i++) {
 			playerToAdd = new CardStack("player_" + (i + 1));
 			getPlayers().add(playerToAdd);
@@ -33,13 +33,12 @@ public class Board {
 			discardPileToAdd = new CardStack("discard_pile_" + (i + 1));
 			getDiscardPiles().add(discardPileToAdd);
 		}
-		if (numOfDecks > 1) {
-			for(int i = 1; i < numOfDecks; i++) {
-				deckToAdd = new Deck("");
-				getDeck().addToTop(deckToAdd.getStack());;
-			}
-		getDeck().setStackName("x" + numOfDecks + " 52 Card Deck");
-		}
+		for(int i = 0; i < numOfDecks; i++)
+			deck.addDeckToStack();
+			
+		if (numOfDecks > 1) 
+			getDeck().setStackName("x" + numOfDecks + " 52 Card Deck");
+		
 	}
 	
 	/**
