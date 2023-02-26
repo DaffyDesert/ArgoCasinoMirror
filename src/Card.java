@@ -25,7 +25,7 @@ public class Card {
 	private static final int CARD_WIDTH = 100;	//in pixels
 	private static final int CARD_HEIGHT = 145; //in pixels
 	
-	private String rank;
+	private int rank;
 	private String suit;
 	private String value;
 	private boolean faceDown;
@@ -33,13 +33,15 @@ public class Card {
 	
 	/**
 	 * Constructor
-	 * @param rank - ace, 2-10, jack, queen, king (13 possible values)
+	 *  sets card ranking Ace High
+	 * @param rank - ace, 2-10, jack, queen, king (13 possible integer values 0 to 12)
 	 * @param suit - heart, club, diamond, spade
 	 */
-	public Card(int rank, int suit) {
-		setRank(rank);
+	public Card(int rank, int suit) { 
+		this.rank = rank;
 		setSuit(suit);
-		value = getRank() + getSuit().charAt(0); // e.g rank = 7 suit = Hearts -> value ="7H"
+		setValue();
+		
 		faceDown = true;
 	}
 
@@ -63,28 +65,28 @@ public class Card {
 	 * return rank of the card
 	 * @return value
 	 */
-	public String getRank() {
+	public int getRank() {
 		return rank;
 	}
-	
-	/**
-	 * Set the of rank the cards
-	 * 
-	 * @param rank - rank of card (ace, 1-9, jack, queen, king)
-	 */
-	public void setRank(int rank) {
-		if(rank == 0)
-			this.rank = "A";
-		else if(rank == 10)
-			this.rank = "J";
-		else if(rank == 11)
-			this.rank = "Q";
-		else if(rank == 12)
-			this.rank = "K";
-		else
-			this.rank = Integer.toString(rank+1);		
-	}
 
+	/**
+	 * set the value of the suit
+	 * 
+	 * e.g rank = 7 and suit = Hearts -> value ="7H"
+	 */
+	public void setValue() {
+		if(getRank() == 9)
+			this.value = "J" + getSuit().charAt(0); 
+		else if(getRank() == 10)
+			this.value = "Q" + getSuit().charAt(0);
+		else if(getRank() == 11)
+			this.value = "K" + getSuit().charAt(0);
+		else if(getRank() == 12)
+			this.value = "A" + getSuit().charAt(0);
+		else
+			this.value = Integer.toString(rank+2) + getSuit().charAt(0);		
+
+	}
 	/**
 	 * Set the suit of the cards 
 	 * @param suit - suit to set (heart, diamonds, spades, clubs)
