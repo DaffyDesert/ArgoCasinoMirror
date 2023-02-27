@@ -99,7 +99,8 @@ public class War extends JPanel implements Game, ActionListener, MouseListener {
 
 	@Override
 	public JPanel display() {
-		return null;
+		JPanel panel = new JPanel();
+		return panel;
 	}
 
 	@Override
@@ -114,7 +115,7 @@ public class War extends JPanel implements Game, ActionListener, MouseListener {
 
 	@Override
 	public void turn() {
-
+		
 	}
 
 	@Override
@@ -129,32 +130,25 @@ public class War extends JPanel implements Game, ActionListener, MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		endText.setVisible(true);
-		stopGame();
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
