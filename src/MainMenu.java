@@ -7,9 +7,6 @@ public class MainMenu {
 	private JPanel windowPane;
 	private JPanel mainMenuPanel;
 	private JPanel gameSelectionPanel;
-	//Uncomment these when it's time to get War functionality working.
-	//private int activeGame = 0;
-	//private boolean gameActive = false;
 	
 	public MainMenu() {
 		//Initializes all panels to new JPanel objects
@@ -164,12 +161,5 @@ public class MainMenu {
 //		
 //		displayMainMenu();
 //	}
-//	
-//	public boolean isGameActive() {
-//		return gameActive;
-//	}
-//	
-//	public int getActiveGame() {
-//		return activeGame;
-//	}
+	
 }
