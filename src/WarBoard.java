@@ -61,34 +61,21 @@ public class WarBoard {
 	
 	/**
 	 * 
-	 * For the war move draws two cards from each deck and adds it to the victory pile
+	 *
 	 * uses the compare method as recursive function 
 	 * 
 	 * @param enemyStack
 	 * @param playerStack
 	 * @return True-player won False-enemy won
 	 */
-	public boolean goToWar(CardStack enemyStack, CardStack playerStack) {
-		CardStack enemy = new CardStack();
-		enemy.addToBottom(enemyStack.dealTopCard(2));
+	public boolean goToWar(CardStack enemyStack, CardStack playerStack) {		
+		victoryDeck.add(enemyStack.dealTopCard());
+		victoryDeck.add(playerStack.dealTopCard());
 		
-		CardStack player = new CardStack();
-		player.addToBottom(playerStack.dealTopCard(2));
+		Card enemyCard = enemyStack.dealTopCard();
+		Card playerCard = playerStack.dealTopCard();
 		
-		Card enemyCard = enemy.getStack().get(1);
-		Card playerCard = player.getStack().get(1);
-		
-		victoryDeck.add(enemy.getStack().get(1));
-		victoryDeck.add(player.getStack().get(1));
-	
-
-		
-		if(!compare(enemyCard,playerCard, enemyStack,playerStack)) {
-			return false;
-		}
-		else {
-			return true;
-		}
+		return compare(enemyCard,playerCard,enemyStack,playerStack);
 	}
 
 

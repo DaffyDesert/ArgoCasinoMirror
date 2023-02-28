@@ -27,7 +27,7 @@ public class demo {
 		war.turn(enemy, player);
 		enemy.printStack();
 		enemy.dealTopCard(2);
-		
+
 		
 		
 		System.out.println("Test goToWar no recusrion");
