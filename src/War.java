@@ -61,7 +61,7 @@ public class War extends JPanel implements Game, ActionListener, MouseListener {
 	 */
 	@Override
 	public void startWatch() {
-		stopwatch.startTimer();
+		thread.start();
 	}
 
 	/**
@@ -102,7 +102,10 @@ public class War extends JPanel implements Game, ActionListener, MouseListener {
 		JPanel panel = new JPanel();
 		return panel;
 	}
-
+	
+	/**
+	* TODO: When warboard is functional, add functionality to this method
+	/
 	@Override
 	public int isOver() {
 		return 0;
