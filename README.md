@@ -5,7 +5,8 @@
 ###### Team members: RoeMello Holliday, Zachary Wilson, Daniel Padgett, Daniel Miller, Alexander DeAngelis
 
 
-How to install:
+
+#### How to install:
 
 1.) Download the repository.
 
@@ -18,7 +19,8 @@ How to install:
 5.) Right-click on the package explorer in eclipse, select "Refresh"
 
 
-How to execute: 
+
+#### How to execute: 
 
 1.) Open eclipse project
 
@@ -27,7 +29,8 @@ How to execute:
 3.) Select the "Run" option in the top left
 
 
-How to Interact:
+
+#### How to Interact:
 
 On launch, you'll be greeted with a main menu with 3 options. One of these options is currently unavailable. The other two are "Start Game" and "Exit."
 
