@@ -1,20 +1,19 @@
 import java.awt.*;
 import javax.swing.*;
 
+@SuppressWarnings("serial")
 public class GameWindow extends JFrame{
 	MainMenu mainmenu;
 	
 	public GameWindow() {
 		super("Argo Casino!");
-		setSize(1270, 720);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //May have to change to do nothing on close in order to kill the thread.
-		setLayout(new FlowLayout());
+		setSize(1270, 720); //Minimized resolution
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
-	}
-	
-	public void run() {
-		mainmenu = new MainMenu();
-		add(mainmenu.display());
-		setVisible(true);
+		
+		mainmenu = new MainMenu(); //Creates all the menus
+		add(mainmenu.display()); //Displays all the menus
+		
+		setVisible(true); 
 	}
 }
