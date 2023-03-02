@@ -35,10 +35,10 @@ public class WarBoard extends Board{
 	 * !!! ENEMY MUST DEAL TO SPOILS STACK FIRST !!!
 	 * 
 	 */
-	public void turn() {
+	public boolean turn() {
 		getWinnerSpoils().addToTop(getEnemyStack().dealTopCard());
 		getWinnerSpoils().addToTop(getPlayerStack().dealTopCard());
-		compare();
+		return compare();
 	}
 	/**
 	 * Compares the top two cars of the winnerSpoils stack
@@ -48,27 +48,30 @@ public class WarBoard extends Board{
 	 * ties will call goToWar()
 	 * 
 	 */
-	private void compare() {
+	private boolean compare() {
 		int comparisonValue;
 		
-		comparisonValue = getWinnerSpoils().peekCard(getWinnerSpoils().getStackSize()-2).getRank()	//enemyCard Rank
+		comparisonValue = getWinnerSpoils().peekCard(getWinnerSpoils().getStackSize()-2).getRank()		//enemyCard Rank
 							-																			// subtracted by
-							getWinnerSpoils().peekCard(getWinnerSpoils().getStackSize()-1).getRank(); //playerCard Rank
+							getWinnerSpoils().peekCard(getWinnerSpoils().getStackSize()-1).getRank();	//playerCard Rank
 		
 		if(comparisonValue < 0) { //player win
 			getPlayerStack().addToBottom(getWinnerSpoils().getStack());
 			getWinnerSpoils().getStack().clear();
+			return true;
 		}
 		else if(comparisonValue > 0) { //enemy win
 			getEnemyStack().addToBottom(getWinnerSpoils().getStack());
 			getWinnerSpoils().getStack().clear();
+			return true;
 		}
 		else if(comparisonValue == 0) { //tie
-			goToWar();
+			return goToWar();
 		}
-		else
+		else {
 			System.out.print("ERROR AT compare()");
-		
+			return false;
+		}
 	}
 
 	/**
@@ -80,12 +83,34 @@ public class WarBoard extends Board{
 	 * @param playerStack
 	 * @return True-player won False-enemy won
 	 */
-	public void goToWar() {		
+	public boolean goToWar() {
+		if(checkWinStatus() != 2)
+			return false;
 		getWinnerSpoils().addToTop(getEnemyStack().dealTopCard());
 		getWinnerSpoils().addToTop(getPlayerStack().dealTopCard());
-		turn();
+		
+		return turn();
 	}
 
+	/**
+	 * statusReturnCode:
+	 * 2 = continue
+	 * 1 = player win
+	 * 0 = tie
+	 * -1 = enemy win
+	 * @return
+	 */
+	public int checkWinStatus() {
+		int statusReturnCode = 2;
+		if (getEnemyStack().getStackSize() == 0 && getPlayerStack().getStackSize() == 0) //TIE - EXTREMELY UNLIKLEY BUT POSSIBLE
+			statusReturnCode = 0;
+		else if(getPlayerStack().getStackSize() == 0)
+			statusReturnCode = -1;
+		else
+			statusReturnCode = 1;
+		
+		return statusReturnCode;
+	}
 
 		
 }
