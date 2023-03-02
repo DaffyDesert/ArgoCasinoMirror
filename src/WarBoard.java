@@ -6,10 +6,13 @@ import java.util.ArrayList;
  *
  */
 
-public class WarBoard {
+//Added extends Board because before it was not doing that.
+public class WarBoard extends Board{
 	private ArrayList<Card> victoryDeck;
 	
-	public WarBoard() {
+	//Added parameters and super-constructor call
+	public WarBoard(int numOfPlayers, int numOfDiscardPiles, int numOfDecks) {
+		super(numOfPlayers, numOfDiscardPiles, numOfDecks);
 		victoryDeck = new ArrayList<> ();
 	}
 	

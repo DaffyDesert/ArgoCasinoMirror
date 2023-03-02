@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * @date 2/18/23
  *
  */
-public class Board {
+public abstract class Board {//Made abstract for... reasons
 
 	private ArrayList<CardStack> players = new ArrayList<>();
 	private ArrayList<CardStack> discardPiles = new ArrayList<>();
@@ -91,7 +91,8 @@ public class Board {
 		JPanel discardArea = new JPanel();
 		JPanel deckArea = new JPanel();
 
-		board.setBounds(0, 0, 500, 900);
+		//Changed setBounds for experimenting, will change back.
+		board.setBounds(0, 0, 1270, 576);
 		board.setBackground(feltGreen);
 		
 		playerArea.setLayout(new BoxLayout(playerArea, BoxLayout.X_AXIS));

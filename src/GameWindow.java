@@ -13,7 +13,7 @@ public class GameWindow extends JFrame{
 		
 		mainmenu = new MainMenu(); //Creates all the menus
 		add(mainmenu.display()); //Displays all the menus
-		
+
 		setVisible(true); 
 	}
 }
