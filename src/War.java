@@ -23,7 +23,6 @@ public class War extends JPanel implements Game, ActionListener, MouseListener {
 	JLabel endText;
 	Stopwatch stopwatch;
 	Thread thread;
-
 	/**
 	 * War default constructor will set up the Panel. No layout manager is used.
 	 * It will initialize the startText label and set the position, font, and size.
@@ -33,7 +32,6 @@ public class War extends JPanel implements Game, ActionListener, MouseListener {
 	 */
 	War() {
 		this.setLayout(null);
-
 		startText = new JLabel("GAME START");
 		startText.setBounds(50, 100, 400, 100);
 		startText.setVerticalAlignment(SwingConstants.CENTER);
@@ -48,12 +46,6 @@ public class War extends JPanel implements Game, ActionListener, MouseListener {
 		stopwatch.display().setBounds(325, -25, 200, 100);
 		startGame();
 		thread = new Thread(stopwatch);
-
-		this.add(startText);
-		this.add(endText);
-		endText.setVisible(false);
-		this.add(stopwatch.display());
-		this.addMouseListener(this);
 	}
 
 	/**
@@ -61,7 +53,7 @@ public class War extends JPanel implements Game, ActionListener, MouseListener {
 	 */
 	@Override
 	public void startWatch() {
-		thread.start();
+		stopwatch.startTimer();
 	}
 
 	/**
@@ -100,12 +92,19 @@ public class War extends JPanel implements Game, ActionListener, MouseListener {
 	@Override
 	public JPanel display() {
 		JPanel panel = new JPanel();
+		panel.setLayout(null);
+		panel.add(startText);
+		panel.add(endText);
+		endText.setVisible(false);
+		panel.add(stopwatch.display());
+		panel.addMouseListener(this);
+		
 		return panel;
 	}
 	
 	/**
 	* TODO: When warboard is functional, add functionality to this method
-	/
+	*/
 	@Override
 	public int isOver() {
 		return 0;
