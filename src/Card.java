@@ -1,5 +1,4 @@
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +20,7 @@ import javax.swing.JPanel;
  * @version 1.0
  */
 public class Card {
-
+	
 	private static final int CARD_WIDTH = 100;	//in pixels
 	private static final int CARD_HEIGHT = 145; //in pixels
 	
@@ -156,7 +155,7 @@ public class Card {
 	/**
 	 * PRIVATE function used to set the image of the card based on its faceDown boolean value (true = backOfCard)
 	 */
-	private void setCardImage() {
+	public  void setCardImage() {
 		try {
 			File imageFile;
 			if(isFaceDown() == false)
@@ -172,13 +171,17 @@ public class Card {
 
 	}
 	
+	public Image getCardImage() {
+		return cardImage;
+	}
+	
 	/**
 	 * returns the card in the form a of a JPanel
 	 * 
 	 * @param g2D
 	 * @return
 	 */
-	public JPanel draw(Graphics2D g2D)
+	public JPanel draw()
 	{
 		setCardImage();
 		Color feltGreen = new Color(10, 108, 3);

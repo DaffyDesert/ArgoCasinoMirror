@@ -103,7 +103,7 @@ public class CardStack extends JComponent{
 	}
 
 	public int getStackSize() {
-		return stackSize;
+		return stack.size();
 	}
 
 	/**
@@ -160,7 +160,7 @@ public class CardStack extends JComponent{
 	 * @param cardsToAdd
 	 */
 	public void addToBottom(ArrayList<Card> cardsToAdd) {
-		getStack().addAll(0, cardsToAdd) ; 	// stack is received in the order as if it were dealt dealTopCard()
+		getStack().addAll(0, cardsToAdd) ;;// stack is received in the order as if it were dealt dealTopCard()
 	}
 	
 	/**
@@ -248,7 +248,7 @@ public class CardStack extends JComponent{
 	 * @param g
 	 * @return CardStack in the form of a JPanel
 	 */
-	public JPanel draw(Graphics2D g) {
+	public JPanel draw() {
 		Color feltGreen = new Color(10, 108, 3);
 		JPanel cardStack = new JPanel();
 		JPanel cardStackArea = new JPanel(new BorderLayout());
@@ -257,10 +257,8 @@ public class CardStack extends JComponent{
 		cardStackNameArea.setBackground(feltGreen);
 		cardStackArea.setBackground(feltGreen);
 				
-		//cardStackArea.setBounds(0, 0, 100, 145); //100/145 hard coded for now - should be values from getCardWidth/Height()'s
-		//cardStackArea.setBorder(getBorder());
 		for(Card cardToDraw: getStack()) {
-			cardStackArea.add(cardToDraw.draw(g), BorderLayout.CENTER); 
+			cardStackArea.add(cardToDraw.draw(), BorderLayout.CENTER); 
 		}
 		
 		cardStack.setBackground(feltGreen);

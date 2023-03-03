@@ -6,34 +6,14 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
 import javax.swing.*;
 
-/*This class handles the Stopwatch object which will be used for all games. Stopwatch implements the Runnable Interface
-This means that it can be used to create a thread which will run alongside our game program. This is to ensure the Timer updates during
-normal gameplay as it should. A thread can be created with this class by implementing the lines:
-	Stopwatch <name> = new Stopwatch();
-	Thread <name> = new Thread(<Stopwatch name>);
-	<thread name>.start();
-*/
 public class Stopwatch implements Runnable {
-	// These three variables are time objects and will hold times.
-	// startTime is the time the watch was started.
 	private LocalTime startTime;
-	// currTIme is the time the watch currently shows.
 	private LocalTime currTime;
-	// endTime is the final recorded time of the stopwatch.
 	private LocalTime endTime;
-
-	// Timer object is used to schedule tasks. In this case, the task will check the
-	// time every second and update the stopwatch accordingly
 	private Timer timer;
 	private UpdateTimer task;
-
-	// The time label that will be handled by this class
 	private JLabel label;
-
-	// Used by the run() method to check if the thread needs to be stopped.
 	private boolean stopped = false;
-
-	// Used to format the time objects when printing them.
 	private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("mm:ss");
 
 	// Constructor initializes a new timer and creates a placeholder label.
@@ -61,6 +41,10 @@ public class Stopwatch implements Runnable {
 		/*
 		 * Test System.out.println("Time Stopped.\nFinal Time: " + dtf.format(endTime));
 		 */
+	}
+	
+	public void updateLabel() {
+		label.setText("Final Time: ");
 	}
 
 	// Returns the Final Time for use in game score calculations, where applicable.
