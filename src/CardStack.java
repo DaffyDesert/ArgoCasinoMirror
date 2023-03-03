@@ -194,6 +194,14 @@ public class CardStack extends JComponent{
 		getStack().get(stackSize-1).flipCard();
 	}
 
+	public void flipStack() {
+		for(Card stackToFlip: getStack())
+			stackToFlip.flipCard();
+	}
+
+	public Card peekCard(int index) {
+		return stack.get(index);		
+	}
 	/**
 	 * Shuffles the deck (the size of the deck does not matter) 
 	 */
