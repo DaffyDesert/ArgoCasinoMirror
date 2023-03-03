@@ -19,8 +19,8 @@ import javax.swing.JPanel;
 public class WarBoard extends Board{
 	
 	//Added to Danny's stuff
-	CardStack playerZone;
-	CardStack enemyZone;
+	private CardStack playerZone;
+	private CardStack enemyZone;
 	
 	public WarBoard() {
 		super(2, 1, 1);
@@ -47,12 +47,23 @@ public class WarBoard extends Board{
 		return getDiscardPiles().get(0);
 	}
 	
+	
+	public CardStack getPlayerZone() {
+		return playerZone;
+	}
+
+	public CardStack getEnemyZone() {
+		return enemyZone;
+	}
+	
 	/**
 	 * each player moves their card to the winnerSpoil stack for comparison by compare()
 	 * !!! ENEMY MUST DEAL TO SPOILS STACK FIRST !!!
 	 * 
 	 */
 	public boolean turn() {
+		if(checkWinStatus() != 2)
+			return false;
 		Card enemyCard = getEnemyStack().dealTopCard();
 		Card playerCard = getPlayerStack().dealTopCard();
 		
@@ -120,6 +131,11 @@ public class WarBoard extends Board{
 		if(checkWinStatus() != 2)
 			return false;
 
+		getWinnerSpoils().addToTop(getEnemyStack().dealTopCard());
+		getWinnerSpoils().addToTop(getPlayerStack().dealTopCard());
+		
+		if(checkWinStatus() != 2)
+			return false;
 		
 		Card enemyCard = getEnemyStack().dealTopCard();
 		Card playerCard = getPlayerStack().dealTopCard();
@@ -129,9 +145,6 @@ public class WarBoard extends Board{
 		
 		getWinnerSpoils().addToTop(playerCard);
 		getWinnerSpoils().addToTop(enemyCard);
-
-		getWinnerSpoils().addToTop(getEnemyStack().dealTopCard());
-		getWinnerSpoils().addToTop(getPlayerStack().dealTopCard());
 		
 		return turn();
 	}

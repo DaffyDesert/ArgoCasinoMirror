@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.TimerTask;
+import java.util.Timer;
 
 import javax.swing.*;
 
@@ -10,7 +12,7 @@ import javax.swing.*;
  *
  */
 @SuppressWarnings("serial")
-public class War extends JPanel implements Game, ActionListener, MouseListener{
+public class War extends JPanel implements Game, MouseListener{
 	Graphics2D g;
 	JLabel startText;
 	JLabel endText;
@@ -19,7 +21,8 @@ public class War extends JPanel implements Game, ActionListener, MouseListener{
 	JPanel gameOverScreen;
 	WarBoard board;
 	Stopwatch stopwatch;
-	Thread thread;
+	Thread thread1;
+	java.util.Timer updateGUI;
 
 	/**
 	 * War default constructor will set up the Panel. No layout manager is used.
@@ -28,7 +31,7 @@ public class War extends JPanel implements Game, ActionListener, MouseListener{
 	 * Also, it will initialize the stopwatch and thread. As well as set the position 
 	 * for the Stopwatch.
 	 */
-	War() {//Removed setLayout(null);
+	War() {
 		
 		this.setBounds(0, 0, 1270, 720);
 		
@@ -46,7 +49,17 @@ public class War extends JPanel implements Game, ActionListener, MouseListener{
 
 		stopwatch = new Stopwatch();
 		stopwatch.display().setBounds(0, 0, 400, 100);
-		thread = new Thread(stopwatch);
+		thread1 = new Thread(stopwatch);
+		
+		updateGUI = new java.util.Timer();
+		updateGUI.scheduleAtFixedRate(new TimerTask() {
+			public void run() {
+				revalidate();
+				repaint();
+			}
+		}, 0, 16);
+		
+		this.addMouseListener(this);
 	}
 	
 	private GridBagConstraints setConstraint(int x, int y, int width, int height, int xpad, int ypad, double xweight, double yweight) {
@@ -67,7 +80,7 @@ public class War extends JPanel implements Game, ActionListener, MouseListener{
 	 */
 	@Override
 	public void startWatch() {
-		thread.start();
+		thread1.start();
 	}
 
 	/**
@@ -77,7 +90,7 @@ public class War extends JPanel implements Game, ActionListener, MouseListener{
 	@Override
 	public void startGame() {
 		startWatch();
-		Timer timer = new Timer(3500, new ActionListener() {
+		javax.swing.Timer timer = new javax.swing.Timer(3500, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				startText.setVisible(false);
@@ -138,12 +151,15 @@ public class War extends JPanel implements Game, ActionListener, MouseListener{
 
 	@Override
 	public void run() {
-
+		startGame();
+		
+		//While(true) check if game is over. If yes, break.
+		//StopGame(); GameOverScreen();
 	}
 
 	@Override
 	public void turn() {
-		
+		//Call board.turn();
 	}
 
 	@Override
@@ -152,31 +168,27 @@ public class War extends JPanel implements Game, ActionListener, MouseListener{
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-
-	}
-
-	@Override
 	public void mouseClicked(MouseEvent e) {
+		//Call this.turn();
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-
+		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-
+		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-
+		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-
+		
 	}
 }
