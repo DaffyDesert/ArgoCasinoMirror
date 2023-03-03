@@ -21,14 +21,21 @@ public class WarBoard extends Board{
 	//Added to Danny's stuff
 	private CardStack playerZone;
 	private CardStack enemyZone;
+	private JPanel boardPanel = new JPanel();
 	
 	public WarBoard() {
 		super(2, 1, 1);
 		getPlayers().get(0).setStackName("Enemy Stack");
 		getPlayers().get(1).setStackName("Player Stack");
 		getDiscardPiles().get(0).setStackName("Winner Spoils");
+		
+		System.out.println("Shuffling and Dealing...");
 		getDeck().shuffleStack();
 		getDeck().dealEvenlyTo(getPlayers());
+		
+		getPlayers().get(0).printStack();
+		getPlayers().get(1).printStack();
+		getDiscardPiles().get(0).printStack();
 		
 		playerZone = new CardStack();
 		enemyZone = new CardStack();
@@ -67,11 +74,21 @@ public class WarBoard extends Board{
 		Card enemyCard = getEnemyStack().dealTopCard();
 		Card playerCard = getPlayerStack().dealTopCard();
 		
+		getWinnerSpoils().addToTop(enemyCard);
+		getWinnerSpoils().addToTop(playerCard);
+		
+		enemyCard.flipCard();
+		playerCard.flipCard();
+		
 		playerZone.addToTop(playerCard);
 		enemyZone.addToTop(enemyCard);
 		
-		getWinnerSpoils().addToTop(enemyCard);
-		getWinnerSpoils().addToTop(playerCard);
+		drawBoard();
+		
+		getPlayerStack().printStack();
+		getEnemyStack().printStack();
+		getWinnerSpoils().printStack();
+		
 		return compare();
 	}
   
@@ -134,17 +151,6 @@ public class WarBoard extends Board{
 		getWinnerSpoils().addToTop(getEnemyStack().dealTopCard());
 		getWinnerSpoils().addToTop(getPlayerStack().dealTopCard());
 		
-		if(checkWinStatus() != 2)
-			return false;
-		
-		Card enemyCard = getEnemyStack().dealTopCard();
-		Card playerCard = getPlayerStack().dealTopCard();
-		
-		playerZone.addToTop(playerCard);
-		enemyZone.addToTop(enemyCard);
-		
-		getWinnerSpoils().addToTop(playerCard);
-		getWinnerSpoils().addToTop(enemyCard);
 		
 		return turn();
 	}
@@ -163,7 +169,7 @@ public class WarBoard extends Board{
 			statusReturnCode = 0;
 		else if(getPlayerStack().getStackSize() == 0)
 			statusReturnCode = -1;
-		else
+		else if(getEnemyStack().getStackSize() == 0)
 			statusReturnCode = 1;
 		
 		return statusReturnCode;
@@ -171,7 +177,7 @@ public class WarBoard extends Board{
 	
 	//Added to danny's stuff
 	public JPanel drawBoard() {
-		JPanel outerPanel = new JPanel();
+		boardPanel.removeAll();
 		JPanel panel = new JPanel();
 		JPanel area1 = new JPanel();
 		JPanel area2 = new JPanel();
@@ -179,10 +185,10 @@ public class WarBoard extends Board{
 		Color felt = new Color(10, 108, 3);
 		BoxLayout spacerLayout = new BoxLayout(spacer, BoxLayout.X_AXIS);
 		
-		outerPanel.setBounds(0, 0, 1270, 576);
-		outerPanel.setLayout(new FlowLayout());
-		outerPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-		outerPanel.setBackground(felt);
+		boardPanel.setBounds(0, 0, 1270, 576);
+		boardPanel.setLayout(new FlowLayout());
+		boardPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		boardPanel.setBackground(felt);
 		
 		panel.setBounds(0, 0, 1270, 576);
 		panel.setLayout(new BorderLayout());
@@ -210,9 +216,11 @@ public class WarBoard extends Board{
 		panel.add(area1, BorderLayout.NORTH);
 		panel.add(area2, BorderLayout.SOUTH);
 		
-		outerPanel.add(panel);
+		boardPanel.add(panel);
+		boardPanel.revalidate();
+		boardPanel.repaint();
 		
-		return outerPanel;
+		return boardPanel;
 	}
 
 }

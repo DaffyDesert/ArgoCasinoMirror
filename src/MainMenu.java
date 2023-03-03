@@ -151,12 +151,14 @@ public class MainMenu {
 	public void launchWar() {
 		War warGame = new War();
 		
+		System.out.println("Displaying game...");
 		windowPane.removeAll();
 		windowPane.add(warGame.display());
 		windowPane.revalidate();
 		windowPane.repaint();
+		System.out.println("Game Display on!");
 		
-		warGame.run();
+		warGame.startGame();
 		
 		//displayMainMenu();
 	}

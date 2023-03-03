@@ -39,12 +39,7 @@ public abstract class Board {//Made abstract for... reasons
 		if (numOfDecks > 1) 
 			getDeck().setStackName("x" + numOfDecks + " 52 Card Deck");
 		
-		for (int i = 0; i < 4; ++i) {
-			for (int j = 0; j < 13; ++j) {
-				Card newCard = new Card(j, i);
-				deck.addToTop(newCard);
-			}
-		}
+		deck.printStack();
 		
 	}
 	

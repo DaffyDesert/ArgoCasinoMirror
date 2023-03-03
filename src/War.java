@@ -13,7 +13,6 @@ import javax.swing.*;
  */
 @SuppressWarnings("serial")
 public class War extends JPanel implements Game, MouseListener{
-	Graphics2D g;
 	JLabel startText;
 	JLabel endText;
 	JPanel statusBar;
@@ -36,7 +35,7 @@ public class War extends JPanel implements Game, MouseListener{
 		this.setBounds(0, 0, 1270, 720);
 		
 		board = new WarBoard();
-
+		
 		startText = new JLabel("GAME START");
 		startText.setBounds(0, 0, 400, 100);
 		startText.setVerticalAlignment(SwingConstants.NORTH);
@@ -50,14 +49,6 @@ public class War extends JPanel implements Game, MouseListener{
 		stopwatch = new Stopwatch();
 		stopwatch.display().setBounds(0, 0, 400, 100);
 		thread1 = new Thread(stopwatch);
-		
-		updateGUI = new java.util.Timer();
-		updateGUI.scheduleAtFixedRate(new TimerTask() {
-			public void run() {
-				revalidate();
-				repaint();
-			}
-		}, 0, 16);
 		
 		this.addMouseListener(this);
 	}
@@ -104,7 +95,7 @@ public class War extends JPanel implements Game, MouseListener{
 	 */
 	@Override
 	public void stopWatch() {
-		stopwatch.stopTimer();
+		stopwatch.stopThread();
 	}
 	
 	/**
@@ -112,8 +103,8 @@ public class War extends JPanel implements Game, MouseListener{
 	 */
 	@Override
 	public void stopGame() {
-		stopwatch.stopTimer();
-		endText.setVisible(true);
+		stopWatch();
+		updateGUI.cancel();
 	}
 
 	@Override
@@ -145,31 +136,55 @@ public class War extends JPanel implements Game, MouseListener{
 	* TODO: When warboard is functional, add functionality to this method
 	*/
 	@Override
-	public int isOver() {
-		return 0;
-	}
-
-	@Override
-	public void run() {
-		startGame();
-		
-		//While(true) check if game is over. If yes, break.
-		//StopGame(); GameOverScreen();
+	public int isOver() { 
+		return board.checkWinStatus();
 	}
 
 	@Override
 	public void turn() {
-		//Call board.turn();
+		board.turn();
 	}
 
 	@Override
 	public JPanel GameOverScreen() {
-		return null;
+		JPanel gameOver = new JPanel();
+		gameOver.setLayout(new FlowLayout());
+		
+		gameOver.setBounds(0, 0, 1270, 720);
+		stopwatch.updateLabel();
+		gameOver.add(stopwatch.display());
+		
+		JLabel winLabel = new JLabel();
+		if (isOver() == 1) {
+			winLabel.setText("You win!!!");
+		}
+		else if (isOver() == -1){
+			winLabel.setText("You lose!!!");
+		}
+		else if (isOver() == 0) {
+			winLabel.setText("A Tie!?!?!?!");
+		}
+		
+		gameOver.add(winLabel);
+		
+		this.removeAll();
+		this.add(gameOver);
+		this.revalidate();
+		this.repaint();
+		
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return gameOver;
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		//Call this.turn();
+		this.turn();
 	}
 
 	@Override

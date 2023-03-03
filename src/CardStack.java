@@ -103,7 +103,7 @@ public class CardStack extends JComponent{
 	}
 
 	public int getStackSize() {
-		return stackSize;
+		return stack.size();
 	}
 
 	/**
@@ -160,7 +160,7 @@ public class CardStack extends JComponent{
 	 * @param cardsToAdd
 	 */
 	public void addToBottom(ArrayList<Card> cardsToAdd) {
-		getStack().addAll(0, cardsToAdd) ; 	// stack is received in the order as if it were dealt dealTopCard()
+		getStack().addAll(0, cardsToAdd) ;;// stack is received in the order as if it were dealt dealTopCard()
 	}
 	
 	/**
