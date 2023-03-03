@@ -53,6 +53,8 @@ public class WarBoard extends Board{
 	 * 
 	 */
 	public boolean turn() {
+		if(checkWinStatus() != 2)
+			return false;
 		Card enemyCard = getEnemyStack().dealTopCard();
 		Card playerCard = getPlayerStack().dealTopCard();
 		
@@ -120,6 +122,11 @@ public class WarBoard extends Board{
 		if(checkWinStatus() != 2)
 			return false;
 
+		getWinnerSpoils().addToTop(getEnemyStack().dealTopCard());
+		getWinnerSpoils().addToTop(getPlayerStack().dealTopCard());
+		
+		if(checkWinStatus() != 2)
+			return false;
 		
 		Card enemyCard = getEnemyStack().dealTopCard();
 		Card playerCard = getPlayerStack().dealTopCard();
@@ -129,9 +136,6 @@ public class WarBoard extends Board{
 		
 		getWinnerSpoils().addToTop(playerCard);
 		getWinnerSpoils().addToTop(enemyCard);
-
-		getWinnerSpoils().addToTop(getEnemyStack().dealTopCard());
-		getWinnerSpoils().addToTop(getPlayerStack().dealTopCard());
 		
 		return turn();
 	}

@@ -156,7 +156,7 @@ public class MainMenu {
 		windowPane.revalidate();
 		windowPane.repaint();
 		
-		//warGame.run();
+		warGame.run();
 		
 		//displayMainMenu();
 	}
