@@ -153,5 +153,5 @@ public class War extends JPanel implements Game, ActionListener, MouseListener {
 	public void mouseExited(MouseEvent e) {
 
 	}
-
+*/
 }
