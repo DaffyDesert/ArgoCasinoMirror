@@ -29,7 +29,6 @@ public class WarBoard extends Board{
 		getDiscardPiles().get(0).setStackName("Winner Spoils");
 		getDeck().shuffleStack();
 		getDeck().dealEvenlyTo(getPlayers());
-
 		
 		playerZone = new CardStack();
 		enemyZone = new CardStack();
@@ -42,18 +41,6 @@ public class WarBoard extends Board{
 	public CardStack getEnemyStack() {
 		return getPlayers().get(0);
 
-	}
-	
-	public CardStack getPlayerStack() {
-		return getPlayers().get(1);
-	}
-	
-	public CardStack getEnemyStack() {
-		return getPlayers().get(0);
-	}
-	
-	public CardStack getWinnerSpoils() {
-		return getDiscardPiles().get(0);
 	}
 	
 	public CardStack getWinnerSpoils() {
@@ -77,16 +64,6 @@ public class WarBoard extends Board{
 		return compare();
 	}
   
-	/**
-	 * each player moves their card to the winnerSpoil stack for comparison by compare()
-	 * !!! ENEMY MUST DEAL TO SPOILS STACK FIRST !!!
-	 * 
-	 */
-	public boolean turn() {
-		getWinnerSpoils().addToTop(getEnemyStack().dealTopCard());
-		getWinnerSpoils().addToTop(getPlayerStack().dealTopCard());
-		return compare();
-	}
   
 	/**
 	 * Compares the top two cars of the winnerSpoils stack
