@@ -19,8 +19,8 @@ import javax.swing.JPanel;
 public class WarBoard extends Board{
 	
 	//Added to Danny's stuff
-	CardStack playerZone;
-	CardStack enemyZone;
+	private CardStack playerZone;
+	private CardStack enemyZone;
 	
 	public WarBoard() {
 		super(2, 1, 1);
@@ -45,6 +45,15 @@ public class WarBoard extends Board{
 	
 	public CardStack getWinnerSpoils() {
 		return getDiscardPiles().get(0);
+	}
+	
+	
+	public CardStack getPlayerZone() {
+		return playerZone;
+	}
+
+	public CardStack getEnemyZone() {
+		return enemyZone;
 	}
 	
 	/**
