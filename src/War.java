@@ -32,7 +32,7 @@ public class War extends JPanel implements Game, ActionListener, MouseListener{
 		
 		this.setBounds(0, 0, 1270, 720);
 		
-		board = new WarBoard(2, 2, 2);
+		board = new WarBoard();
 
 		startText = new JLabel("GAME START");
 		startText.setBounds(0, 0, 400, 100);
@@ -47,27 +47,6 @@ public class War extends JPanel implements Game, ActionListener, MouseListener{
 		stopwatch = new Stopwatch();
 		stopwatch.display().setBounds(0, 0, 400, 100);
 		thread = new Thread(stopwatch);
-		//Removed startGame() from constructor, will be handled in run()
-
-		//Added statusBar panel to be displayed at the top of the War game panel.
-		statusBar = new JPanel();
-		statusBar.setBounds(0, 0, 1270, 144);
-		statusBar.setLayout(new FlowLayout());
-		statusBar.add(startText);
-		statusBar.add(stopwatch.display());
-		
-		//Creates layout manager for War();
-		this.setLayout(new GridBagLayout());
-		GridBagConstraints sbCon = setConstraint(0, 0, 10, 1, 635, 72, 0.0, 0.1);
-		GridBagConstraints gameCon = setConstraint(0, 1, 30, 30, 635, 288, 0.0, 9.0);
-		sbCon.anchor = GridBagConstraints.NORTH;
-		gameCon.anchor = GridBagConstraints.NORTH;
-		gameCon.fill = GridBagConstraints.BOTH;
-		
-		this.add(statusBar, sbCon);
-		this.add(board.drawBoard(), gameCon);
-		this.revalidate();
-		this.repaint();
 	}
 	
 	private GridBagConstraints setConstraint(int x, int y, int width, int height, int xpad, int ypad, double xweight, double yweight) {
@@ -126,6 +105,26 @@ public class War extends JPanel implements Game, ActionListener, MouseListener{
 
 	@Override
 	public JPanel display() {
+		//Added statusBar panel to be displayed at the top of the War game panel.
+		statusBar = new JPanel();
+		statusBar.setBounds(0, 0, 1270, 144);
+		statusBar.setLayout(new FlowLayout());
+		statusBar.add(startText);
+		statusBar.add(stopwatch.display());
+				
+		//Creates layout manager for War();
+		this.setLayout(new GridBagLayout());
+		GridBagConstraints sbCon = setConstraint(0, 0, 10, 1, 635, 72, 0.0, 0.1);
+		GridBagConstraints gameCon = setConstraint(0, 1, 30, 30, 635, 288, 0.0, 9.0);
+		sbCon.anchor = GridBagConstraints.NORTH;
+		gameCon.anchor = GridBagConstraints.NORTH;
+		gameCon.fill = GridBagConstraints.BOTH;
+				
+		this.add(statusBar, sbCon);
+		this.add(board.drawBoard(), gameCon);
+		this.revalidate();
+		this.repaint();
+		
 		return this;
 	}
 	

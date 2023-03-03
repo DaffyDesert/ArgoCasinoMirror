@@ -44,16 +44,6 @@ public class Card {
 		
 		faceDown = true;
 	}
-	
-	public Card(int rank, int suit, String filename) {
-		this.rank = rank;
-		setSuit(suit);
-		setValue();
-		
-		faceDown = true;
-		
-		
-	}
 
 	/**
 	 * 

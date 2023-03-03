@@ -11,138 +11,140 @@ import javax.swing.JPanel;
 /**
  * Handles the turns and moves in a game of war
  * @author zw_ch
+ * @author danielM @date 3/1/23
  *
  */
 
-//Added extends Board because before it was not doing that.
 public class WarBoard extends Board{
-	private ArrayList<Card> victoryDeck;
-	private CardStack playerZone; //Added these for GUI reasons
-	private CardStack enemyZone;
 	
-	//Added parameters and super-constructor call
-	public WarBoard(int numOfPlayers, int numOfDiscardPiles, int numOfDecks) {
-		super(numOfPlayers, numOfDiscardPiles, numOfDecks);
-		victoryDeck = new ArrayList<> ();
-		playerZone = new CardStack("Player's Zone");
-		enemyZone = new CardStack("Enemy's Zone");
-		
-		fillDeck();
+	//Added to Danny's stuff
+	CardStack playerZone;
+	CardStack enemyZone;
+	
+	public WarBoard() {
+		super(2, 1, 1);
+		getPlayers().get(0).setStackName("Enemy Stack");
+		getPlayers().get(1).setStackName("Player Stack");
+		getDiscardPiles().get(0).setStackName("Winner Spoils");
 		getDeck().shuffleStack();
 		getDeck().dealEvenlyTo(getPlayers());
+		
+		playerZone = new CardStack();
+		enemyZone = new CardStack();
 	}
 	
-	public void fillDeck() {
-		for (int i = 0; i < 4; ++i) {
-			for (int j = 0; j < 13; ++j) {
-				getDeck().addToTop(new Card(j, i));
-			}
-		}
+	public CardStack getPlayerStack() {
+		return getPlayers().get(1);
+	}
+	
+	public CardStack getEnemyStack() {
+		return getPlayers().get(0);
+	}
+	
+	public CardStack getWinnerSpoils() {
+		return getDiscardPiles().get(0);
 	}
 	
 	/**
-	 * compares the top cards of an enemy and card deck two see who has the higher card rank
-	 * calls the goToWar method if there is a tie
-	 * gives the cards in the victorydDeck to the winner
+	 * each player moves their card to the winnerSpoil stack for comparison by compare()
+	 * !!! ENEMY MUST DEAL TO SPOILS STACK FIRST !!!
 	 * 
-	 * 
-	 * @param enemyCard
-	 * @param playerCard
-	 * @param enemyStack
-	 * @param playerStack
-	 * @return True-player won False-enemy won
-	 *
 	 */
-	public boolean compare(Card enemyCard, Card playerCard, CardStack enemyStack, CardStack playerStack) {
+	public boolean turn() {
+		Card enemyCard = getEnemyStack().dealTopCard();
+		Card playerCard = getPlayerStack().dealTopCard();
 		
-		victoryDeck.add(playerCard);
-		victoryDeck.add(enemyCard);
-		//New stuff added for gui reasons
 		playerZone.addToTop(playerCard);
 		enemyZone.addToTop(enemyCard);
 		
-		if((enemyCard.getRank() == 0) && (playerCard.getRank() != 0)) {
-			enemyStack.addToBottom(victoryDeck);
-			victoryDeck.clear();
-			playerZone.emptyStack();
-			enemyZone.emptyStack();
-			return false;
-		}
-		else if(playerCard.getRank() == 0 && (enemyCard.getRank() != 0)) {
-			playerStack.addToBottom(victoryDeck);
-			victoryDeck.clear();
-			playerZone.emptyStack();
-			enemyZone.emptyStack();
+		getWinnerSpoils().addToTop(enemyCard);
+		getWinnerSpoils().addToTop(playerCard);
+		return compare();
+	}
+	/**
+	 * Compares the top two cars of the winnerSpoils stack
+	 * Assumes enemy added card to stack first
+	 * 
+	 * cards will be added to the bottom of the winning players stack (based on greatest rank value)
+	 * ties will call goToWar()
+	 * 
+	 */
+	private boolean compare() {
+		int comparisonValue;
+		
+		comparisonValue = getWinnerSpoils().peekCard(getWinnerSpoils().getStackSize()-2).getRank()		//enemyCard Rank
+							-																			// subtracted by
+							getWinnerSpoils().peekCard(getWinnerSpoils().getStackSize()-1).getRank();	//playerCard Rank
+		
+		if(comparisonValue < 0) { //player win
+			getPlayerStack().addToBottom(getWinnerSpoils().getStack());
+			getWinnerSpoils().getStack().clear();
+			playerZone.getStack().clear(); //New
+			enemyZone.getStack().clear();
 			return true;
 		}
-		else if(playerCard.getRank() > enemyCard.getRank()) {
-			playerStack.addToBottom(victoryDeck);
-			victoryDeck.clear();
-			playerZone.emptyStack();
-			enemyZone.emptyStack();
+		else if(comparisonValue > 0) { //enemy win
+			getEnemyStack().addToBottom(getWinnerSpoils().getStack());
+			getWinnerSpoils().getStack().clear();
+			playerZone.getStack().clear(); //New
+			enemyZone.getStack().clear();
 			return true;
 		}
-		else if(enemyCard.getRank() > playerCard.getRank()) {
-			enemyStack.addToBottom(victoryDeck);
-			victoryDeck.clear();
-			playerZone.emptyStack();
-			enemyZone.emptyStack();
-			return false;
+		else if(comparisonValue == 0) { //tie
+			return goToWar();
 		}
 		else {
-			return goToWar(enemyStack,playerStack);
+			System.out.print("ERROR AT compare()");
+			return false;
 		}
 	}
-	
-	
-	
+
 	/**
+	 * deals the two treasure cards(one from each player) to the winnerSpoils stack
 	 * 
-	 *
-	 * uses the compare method as recursive function 
+	 * then calls turn() to initiate a draw and comparision to see who wins the current spoils stack
 	 * 
 	 * @param enemyStack
 	 * @param playerStack
 	 * @return True-player won False-enemy won
 	 */
-	public boolean goToWar(CardStack enemyStack, CardStack playerStack) {	
-		//Added these for gui reasons
-		Card enemyFaceDown = enemyStack.dealTopCard();
-		Card playerFaceDown = playerStack.dealTopCard();
+	public boolean goToWar() {
+		if(checkWinStatus() != 2)
+			return false;
 		
-		victoryDeck.add(enemyFaceDown);
-		victoryDeck.add(playerFaceDown);
-		
-		playerZone.addToTop(playerFaceDown);
-		enemyZone.addToTop(enemyFaceDown);
-		
-		Card enemyCard = enemyStack.dealTopCard();
-		Card playerCard = playerStack.dealTopCard();
+		Card enemyCard = getEnemyStack().dealTopCard();
+		Card playerCard = getPlayerStack().dealTopCard();
 		
 		playerZone.addToTop(playerCard);
 		enemyZone.addToTop(enemyCard);
 		
-		return compare(enemyCard,playerCard,enemyStack,playerStack);
+		getWinnerSpoils().addToTop(playerCard);
+		getWinnerSpoils().addToTop(enemyCard);
+		
+		return turn();
 	}
 
-
-	public void turn(CardStack enemy, CardStack player) {
-		Card enemyCard = enemy.dealTopCard();
-		Card playerCard = player.dealTopCard();
-	
-		compare(enemyCard,playerCard,enemy,player);
-		if(!victoryDeck.isEmpty()) {
-			victoryDeck.clear();
-		}
-		if(!playerZone.getStack().isEmpty()) {
-			playerZone.emptyStack();
-		}
-		if(!enemyZone.getStack().isEmpty()) {
-			enemyZone.emptyStack();
-		}
-	
+	/**
+	 * statusReturnCode:
+	 * 2 = continue
+	 * 1 = player win
+	 * 0 = tie
+	 * -1 = enemy win
+	 * @return
+	 */
+	public int checkWinStatus() {
+		int statusReturnCode = 2;
+		if (getEnemyStack().getStackSize() == 0 && getPlayerStack().getStackSize() == 0) //TIE - EXTREMELY UNLIKLEY BUT POSSIBLE
+			statusReturnCode = 0;
+		else if(getPlayerStack().getStackSize() == 0)
+			statusReturnCode = -1;
+		else
+			statusReturnCode = 1;
+		
+		return statusReturnCode;
 	}
 	
+	//Added to danny's stuff
 	public JPanel drawBoard() {
 		JPanel outerPanel = new JPanel();
 		JPanel panel = new JPanel();

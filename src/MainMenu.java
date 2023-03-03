@@ -152,7 +152,7 @@ public class MainMenu {
 		War warGame = new War();
 		
 		windowPane.removeAll();
-		windowPane.add(warGame);
+		windowPane.add(warGame.display());
 		windowPane.revalidate();
 		windowPane.repaint();
 		

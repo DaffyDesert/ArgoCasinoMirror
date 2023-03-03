@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -193,6 +194,14 @@ public class CardStack extends JComponent{
 		getStack().get(stackSize-1).flipCard();
 	}
 
+	public void flipStack() {
+		for(Card stackToFlip: getStack())
+			stackToFlip.flipCard();
+	}
+
+	public Card peekCard(int index) {
+		return stack.get(index);		
+	}
 	/**
 	 * Shuffles the deck (the size of the deck does not matter) 
 	 */
@@ -229,8 +238,7 @@ public class CardStack extends JComponent{
 	 * function to clear the stack
 	 * only used in constructor atm - could be removed?
 	 */
-	//Made public, needed it for GUI reasons.
-	public void emptyStack() {
+	private void emptyStack() {
 		getStack().clear();
 	}
 
