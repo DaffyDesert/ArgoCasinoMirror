@@ -44,6 +44,16 @@ public class Card {
 		
 		faceDown = true;
 	}
+	
+	public Card(int rank, int suit, String filename) {
+		this.rank = rank;
+		setSuit(suit);
+		setValue();
+		
+		faceDown = true;
+		
+		
+	}
 
 	/**
 	 * 
@@ -178,7 +188,7 @@ public class Card {
 	 * @param g2D
 	 * @return
 	 */
-	public JPanel draw(Graphics2D g2D)
+	public JPanel draw()
 	{
 		setCardImage();
 		Color feltGreen = new Color(10, 108, 3);

@@ -84,40 +84,5 @@ public abstract class Board {//Made abstract for... reasons
 	 * 
 	 * paint the stack (gui version of printStack() STUBB)
 	 */
-	public JPanel drawBoard(Graphics2D g) {
-		Color feltGreen = new Color(10, 108, 3);
-		JPanel board = new JPanel(new BorderLayout());
-		JPanel playerArea = new JPanel();
-		JPanel discardArea = new JPanel();
-		JPanel deckArea = new JPanel();
-
-		//Changed setBounds for experimenting, will change back.
-		board.setBounds(0, 0, 1270, 576);
-		board.setBackground(feltGreen);
-		
-		playerArea.setLayout(new BoxLayout(playerArea, BoxLayout.X_AXIS));
-		playerArea.setBackground(feltGreen);
-
-		discardArea.setLayout(new BoxLayout(discardArea, BoxLayout.X_AXIS));
-		discardArea.setBackground(feltGreen);
-		
-		deckArea.setLayout(new BorderLayout());
-		deckArea.setBackground(feltGreen);
-		
-		for(CardStack playerStacks: getPlayers()) {
-			playerArea.add(playerStacks.draw(g));
-		}
-
-		for(CardStack discardStacks: getDiscardPiles()) {
-			discardArea.add(discardStacks.draw(g));
-		}
-
-		deckArea.add(getDeck().draw(g), BorderLayout.CENTER);
-		
-		board.add(playerArea, BorderLayout.SOUTH);
-		board.add(discardArea, BorderLayout.NORTH);
-		board.add(deckArea);
-		
-		return board;
-	}
+	
 }

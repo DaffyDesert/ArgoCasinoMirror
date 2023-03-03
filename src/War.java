@@ -33,7 +33,6 @@ public class War extends JPanel implements Game, ActionListener, MouseListener{
 		this.setBounds(0, 0, 1270, 720);
 		
 		board = new WarBoard(2, 2, 2);
-		gamePanel = board.drawBoard(g);
 
 		startText = new JLabel("GAME START");
 		startText.setBounds(0, 0, 400, 100);
@@ -66,7 +65,7 @@ public class War extends JPanel implements Game, ActionListener, MouseListener{
 		gameCon.fill = GridBagConstraints.BOTH;
 		
 		this.add(statusBar, sbCon);
-		this.add(gamePanel, gameCon);
+		this.add(board.drawBoard(), gameCon);
 		this.revalidate();
 		this.repaint();
 	}

@@ -1,6 +1,5 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -230,7 +229,8 @@ public class CardStack extends JComponent{
 	 * function to clear the stack
 	 * only used in constructor atm - could be removed?
 	 */
-	private void emptyStack() {
+	//Made public, needed it for GUI reasons.
+	public void emptyStack() {
 		getStack().clear();
 	}
 
@@ -240,7 +240,7 @@ public class CardStack extends JComponent{
 	 * @param g
 	 * @return CardStack in the form of a JPanel
 	 */
-	public JPanel draw(Graphics2D g) {
+	public JPanel draw() {
 		Color feltGreen = new Color(10, 108, 3);
 		JPanel cardStack = new JPanel();
 		JPanel cardStackArea = new JPanel(new BorderLayout());
@@ -252,7 +252,7 @@ public class CardStack extends JComponent{
 		//cardStackArea.setBounds(0, 0, 100, 145); //100/145 hard coded for now - should be values from getCardWidth/Height()'s
 		//cardStackArea.setBorder(getBorder());
 		for(Card cardToDraw: getStack()) {
-			cardStackArea.add(cardToDraw.draw(g), BorderLayout.CENTER); 
+			cardStackArea.add(cardToDraw.draw(), BorderLayout.CENTER); 
 		}
 		
 		cardStack.setBackground(feltGreen);
