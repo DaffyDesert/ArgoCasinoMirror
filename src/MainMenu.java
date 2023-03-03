@@ -14,6 +14,7 @@ public class MainMenu {
 		gameSelectionPanel = new JPanel();
 		mainMenuPanel = new JPanel();
 		
+		windowPane.setBounds(0, 0, 1270, 720);
 		createGameSelectMenu();
 		createMainMenu();
 		
@@ -22,6 +23,7 @@ public class MainMenu {
 	}
 	
 	private void createMainMenu() {
+		mainMenuPanel.setBounds(0, 0, 1270, 720);
 		mainMenuPanel.setLayout(new GridBagLayout());//Used to organize objects exactly as needed
 		
 		//Begins title card generation
@@ -67,6 +69,7 @@ public class MainMenu {
 	}
 	
 	private void createGameSelectMenu() {
+		gameSelectionPanel.setBounds(0, 0, 1270, 720);
 		gameSelectionPanel.setLayout(new GridBagLayout());
 		
 		JLabel title = new JLabel("Select a Game");
@@ -105,11 +108,11 @@ public class MainMenu {
 		});
 		
 		//Used when war class is functional.
-//		war.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				launchWar();
-//			}
-//		});
+		war.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				launchWar();
+			}
+		});
 	}
 	
 	//Quick helper function that formats GridConstraints in 1 line rather than several.
@@ -145,21 +148,17 @@ public class MainMenu {
 		return windowPane;
 	}
 	
-	//Function Stubs for when War class is functional
-//	public void launchWar() {
-//		warGame = new War();
-//		activeGame = 2;
-//		gameActive = true;
-//		
-//		windowPane.removeAll();
-//		windowPane.add(warGame.display());
-//		windowPane.revalidate();
-//		windowPane.repaint();
-//		
-//		
-//		warGame.run();
-//		
-//		displayMainMenu();
-//	}
+	public void launchWar() {
+		War warGame = new War();
+		
+		windowPane.removeAll();
+		windowPane.add(warGame.display());
+		windowPane.revalidate();
+		windowPane.repaint();
+		
+		//warGame.run();
+		
+		//displayMainMenu();
+	}
 	
 }

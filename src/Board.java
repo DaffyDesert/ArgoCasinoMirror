@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * @date 2/18/23
  *
  */
-public class Board {
+public abstract class Board {//Made abstract for... reasons
 
 	private ArrayList<CardStack> players = new ArrayList<>();
 	private ArrayList<CardStack> discardPiles = new ArrayList<>();
@@ -38,6 +38,13 @@ public class Board {
 			
 		if (numOfDecks > 1) 
 			getDeck().setStackName("x" + numOfDecks + " 52 Card Deck");
+		
+		for (int i = 0; i < 4; ++i) {
+			for (int j = 0; j < 13; ++j) {
+				Card newCard = new Card(j, i);
+				deck.addToTop(newCard);
+			}
+		}
 		
 	}
 	
@@ -84,39 +91,5 @@ public class Board {
 	 * 
 	 * paint the stack (gui version of printStack() STUBB)
 	 */
-	public JPanel drawBoard(Graphics2D g) {
-		Color feltGreen = new Color(10, 108, 3);
-		JPanel board = new JPanel(new BorderLayout());
-		JPanel playerArea = new JPanel();
-		JPanel discardArea = new JPanel();
-		JPanel deckArea = new JPanel();
-
-		board.setBounds(0, 0, 500, 900);
-		board.setBackground(feltGreen);
-		
-		playerArea.setLayout(new BoxLayout(playerArea, BoxLayout.X_AXIS));
-		playerArea.setBackground(feltGreen);
-
-		discardArea.setLayout(new BoxLayout(discardArea, BoxLayout.X_AXIS));
-		discardArea.setBackground(feltGreen);
-		
-		deckArea.setLayout(new BorderLayout());
-		deckArea.setBackground(feltGreen);
-		
-		for(CardStack playerStacks: getPlayers()) {
-			playerArea.add(playerStacks.draw(g));
-		}
-
-		for(CardStack discardStacks: getDiscardPiles()) {
-			discardArea.add(discardStacks.draw(g));
-		}
-
-		deckArea.add(getDeck().draw(g), BorderLayout.CENTER);
-		
-		board.add(playerArea, BorderLayout.SOUTH);
-		board.add(discardArea, BorderLayout.NORTH);
-		board.add(deckArea);
-		
-		return board;
-	}
+	
 }

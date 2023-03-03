@@ -178,7 +178,7 @@ public class Card {
 	 * @param g2D
 	 * @return
 	 */
-	public JPanel draw(Graphics2D g2D)
+	public JPanel draw()
 	{
 		setCardImage();
 		Color feltGreen = new Color(10, 108, 3);
