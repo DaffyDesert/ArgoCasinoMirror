@@ -105,7 +105,7 @@ public class War extends JPanel implements Game, ActionListener, MouseListener {
 	
 	/**
 	* TODO: When warboard is functional, add functionality to this method
-	/
+	*/
 	@Override
 	public int isOver() {
 		return 0;
