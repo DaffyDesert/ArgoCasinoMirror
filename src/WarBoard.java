@@ -84,7 +84,9 @@ public class WarBoard extends Board{
 		enemyZone.addToTop(enemyCard);
 		
 		drawBoard();
-		
+		enemyCard.flipCard(); 		//gotta flip the cards back 
+		playerCard.flipCard();		//before u give them to the winner
+
 		getPlayerStack().printStack();
 		getEnemyStack().printStack();
 		getWinnerSpoils().printStack();
