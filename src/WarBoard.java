@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
 
+
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -28,6 +29,7 @@ public class WarBoard extends Board{
 		getDiscardPiles().get(0).setStackName("Winner Spoils");
 		getDeck().shuffleStack();
 		getDeck().dealEvenlyTo(getPlayers());
+
 		
 		playerZone = new CardStack();
 		enemyZone = new CardStack();
@@ -39,6 +41,19 @@ public class WarBoard extends Board{
 	
 	public CardStack getEnemyStack() {
 		return getPlayers().get(0);
+
+	}
+	
+	public CardStack getPlayerStack() {
+		return getPlayers().get(1);
+	}
+	
+	public CardStack getEnemyStack() {
+		return getPlayers().get(0);
+	}
+	
+	public CardStack getWinnerSpoils() {
+		return getDiscardPiles().get(0);
 	}
 	
 	public CardStack getWinnerSpoils() {
@@ -61,6 +76,18 @@ public class WarBoard extends Board{
 		getWinnerSpoils().addToTop(playerCard);
 		return compare();
 	}
+  
+	/**
+	 * each player moves their card to the winnerSpoil stack for comparison by compare()
+	 * !!! ENEMY MUST DEAL TO SPOILS STACK FIRST !!!
+	 * 
+	 */
+	public boolean turn() {
+		getWinnerSpoils().addToTop(getEnemyStack().dealTopCard());
+		getWinnerSpoils().addToTop(getPlayerStack().dealTopCard());
+		return compare();
+	}
+  
 	/**
 	 * Compares the top two cars of the winnerSpoils stack
 	 * Assumes enemy added card to stack first
@@ -79,15 +106,19 @@ public class WarBoard extends Board{
 		if(comparisonValue < 0) { //player win
 			getPlayerStack().addToBottom(getWinnerSpoils().getStack());
 			getWinnerSpoils().getStack().clear();
+
 			playerZone.getStack().clear(); //New
 			enemyZone.getStack().clear();
+      
 			return true;
 		}
 		else if(comparisonValue > 0) { //enemy win
 			getEnemyStack().addToBottom(getWinnerSpoils().getStack());
 			getWinnerSpoils().getStack().clear();
+
 			playerZone.getStack().clear(); //New
 			enemyZone.getStack().clear();
+
 			return true;
 		}
 		else if(comparisonValue == 0) { //tie
@@ -111,6 +142,7 @@ public class WarBoard extends Board{
 	public boolean goToWar() {
 		if(checkWinStatus() != 2)
 			return false;
+
 		
 		Card enemyCard = getEnemyStack().dealTopCard();
 		Card playerCard = getPlayerStack().dealTopCard();
@@ -120,6 +152,9 @@ public class WarBoard extends Board{
 		
 		getWinnerSpoils().addToTop(playerCard);
 		getWinnerSpoils().addToTop(enemyCard);
+
+		getWinnerSpoils().addToTop(getEnemyStack().dealTopCard());
+		getWinnerSpoils().addToTop(getPlayerStack().dealTopCard());
 		
 		return turn();
 	}
@@ -189,4 +224,5 @@ public class WarBoard extends Board{
 		
 		return outerPanel;
 	}
+
 }
