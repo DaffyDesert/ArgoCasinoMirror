@@ -1,6 +1,5 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -253,7 +252,7 @@ public class CardStack extends JComponent{
 		JPanel cardStack = new JPanel();
 		JPanel cardStackArea = new JPanel(new BorderLayout());
 		JPanel cardStackNameArea = new JPanel();
-		cardStackNameArea.add(new JLabel(getStackName()));
+		cardStackNameArea.add(new JLabel( getStackName() + " Cards: " + getStackSize() ));
 		cardStackNameArea.setBackground(feltGreen);
 		cardStackArea.setBackground(feltGreen);
 				

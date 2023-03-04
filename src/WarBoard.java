@@ -1,15 +1,8 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -24,7 +17,6 @@ public class WarBoard extends Board{
 	//Added to Danny's stuff
 	private CardStack playerZone;
 	private CardStack enemyZone;
-	private JPanel boardPanel = new JPanel();
 	JPanel mainPanel;
 	
 	public WarBoard() {
@@ -68,11 +60,6 @@ public class WarBoard extends Board{
 		return enemyZone;
 	}
 	
-	/**
-	 * each player moves their card to the winnerSpoil stack for comparison by compare()
-	 * !!! ENEMY MUST DEAL TO SPOILS STACK FIRST !!!
-	 * 
-	 */
 	public boolean turn() {
 		if(checkWinStatus() != 2)
 			return false;
@@ -89,8 +76,8 @@ public class WarBoard extends Board{
 		enemyZone.addToTop(enemyCard);
 		
 		drawBoard();
-		enemyCard.flipCard(); 		//gotta flip the cards back 
-		playerCard.flipCard();		//before u give them to the winner
+		enemyCard.flipCard(); 
+		playerCard.flipCard();		
 
 		getPlayerStack().printStack();
 		getEnemyStack().printStack();
@@ -118,7 +105,6 @@ public class WarBoard extends Board{
 		if(comparisonValue < 0) { //player win
 			getPlayerStack().addToBottom(getWinnerSpoils().getStack());
 			getWinnerSpoils().getStack().clear();
-
 			playerZone.getStack().clear(); //New
 			enemyZone.getStack().clear();
       
@@ -127,7 +113,6 @@ public class WarBoard extends Board{
 		else if(comparisonValue > 0) { //enemy win
 			getEnemyStack().addToBottom(getWinnerSpoils().getStack());
 			getWinnerSpoils().getStack().clear();
-
 			playerZone.getStack().clear(); //New
 			enemyZone.getStack().clear();
 
@@ -145,7 +130,7 @@ public class WarBoard extends Board{
 	/**
 	 * deals the two treasure cards(one from each player) to the winnerSpoils stack
 	 * 
-	 * then calls turn() to initiate a draw and comparision to see who wins the current spoils stack
+	 * then calls turn() to initiate a draw and comparison to see who wins the current spoils stack
 	 * 
 	 * @param enemyStack
 	 * @param playerStack
@@ -185,42 +170,6 @@ public class WarBoard extends Board{
 	//Added to danny's stuff
 	public JPanel drawBoard() {
 		Color felt = new Color(10, 108, 3);
-		JLabel empty = new JLabel();
-		
-		
-		/*boardPanel.removeAll(); 
-		JPanel area1 = new JPanel();
-		JPanel area2 = new JPanel();
-		JPanel spacer = new JPanel();
-		Color felt = new Color(10, 108, 3);
-		BoxLayout spacerLayout = new BoxLayout(spacer, BoxLayout.X_AXIS);
-		
-		boardPanel.setBounds(0, 0, 1270, 576);
-		boardPanel.setLayout(new BorderLayout());
-		boardPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-		boardPanel.setBackground(felt);
-		
-		area1.setLayout(new BorderLayout());
-		area1.setBackground(felt);
-		area2.setLayout(new BorderLayout());
-		area2.setBackground(felt);
-		
-		spacer.setLayout(spacerLayout);
-		spacer.setBackground(felt);
-		spacer.add(Box.createHorizontalStrut(300));
-		spacer.add(Box.createVerticalStrut(100));
-		
-		area1.add(getPlayers().get(0).draw(), BorderLayout.WEST);
-		area1.add(spacer, BorderLayout.CENTER);
-		area1.add(enemyZone.draw(), BorderLayout.SOUTH);
-		
-		area2.add(getPlayers().get(1).draw(), BorderLayout.EAST);
-		area2.add(spacer, BorderLayout.CENTER);
-		area2.add(playerZone.draw(), BorderLayout.NORTH);
-		
-		boardPanel.add(area1,BorderLayout.NORTH);
-		boardPanel.add(spacer);
-		boardPanel.add(area2,BorderLayout.SOUTH); */
 		
 		mainPanel.removeAll();
 		mainPanel.setLayout(new GridLayout());
@@ -249,9 +198,6 @@ public class WarBoard extends Board{
 		mainPanel.add(playerSide);
 		mainPanel.add(middle);
 		mainPanel.add(enemySide);
-		
-		//boardPanel.revalidate();
-		//boardPanel.repaint();
 		
 		mainPanel.revalidate();
 		mainPanel.repaint();
