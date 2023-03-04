@@ -19,26 +19,26 @@ import javax.swing.JPanel;
 public class WarBoard extends Board{
 	
 	//Added to Danny's stuff
-	private CardStack playerZone;
-	private CardStack enemyZone;
+	//private CardStack playerZone;
+	//private CardStack enemyZone;
 	private JPanel boardPanel = new JPanel();
 	
 	public WarBoard() {
-		super(2, 1, 1);
+		super(2, 3, 1);
 		getPlayers().get(0).setStackName("Enemy Stack");
 		getPlayers().get(1).setStackName("Player Stack");
 		getDiscardPiles().get(0).setStackName("Winner Spoils");
+		getDiscardPiles().get(1).setStackName("Player Zone");
+		getDiscardPiles().get(2).setStackName("Enemy Zone");
 		
 		System.out.println("Shuffling and Dealing...");
 		getDeck().shuffleStack();
 		getDeck().dealEvenlyTo(getPlayers());
 		
-		getPlayers().get(0).printStack();
-		getPlayers().get(1).printStack();
-		getDiscardPiles().get(0).printStack();
+		printBoard();
 		
-		playerZone = new CardStack();
-		enemyZone = new CardStack();
+		//playerZone = new CardStack();
+		//enemyZone = new CardStack();
 	}
 	
 	public CardStack getPlayerStack() {
@@ -56,11 +56,11 @@ public class WarBoard extends Board{
 	
 	
 	public CardStack getPlayerZone() {
-		return playerZone;
+		return getDiscardPiles().get(1);
 	}
 
 	public CardStack getEnemyZone() {
-		return enemyZone;
+		return getDiscardPiles().get(2);
 	}
 	
 	/**
@@ -80,17 +80,15 @@ public class WarBoard extends Board{
 		enemyCard.flipCard();
 		playerCard.flipCard();
 		
-		playerZone.addToTop(playerCard);
-		enemyZone.addToTop(enemyCard);
+		getPlayerZone().addToTop(playerCard);
+		getEnemyZone().addToTop(enemyCard);
 		
 		drawBoard();
 		enemyCard.flipCard(); 		//gotta flip the cards back 
 		playerCard.flipCard();		//before u give them to the winner
 
-		getPlayerStack().printStack();
-		getEnemyStack().printStack();
-		getWinnerSpoils().printStack();
-		
+		printBoard();
+
 		return compare();
 	}
   
@@ -114,8 +112,8 @@ public class WarBoard extends Board{
 			getPlayerStack().addToBottom(getWinnerSpoils().getStack());
 			getWinnerSpoils().getStack().clear();
 
-			playerZone.getStack().clear(); //New
-			enemyZone.getStack().clear();
+			getPlayerZone().getStack().clear(); //New
+			getEnemyZone().getStack().clear();
       
 			return true;
 		}
@@ -123,8 +121,8 @@ public class WarBoard extends Board{
 			getEnemyStack().addToBottom(getWinnerSpoils().getStack());
 			getWinnerSpoils().getStack().clear();
 
-			playerZone.getStack().clear(); //New
-			enemyZone.getStack().clear();
+			getPlayerZone().getStack().clear(); //New
+			getEnemyZone().getStack().clear();
 
 			return true;
 		}
@@ -209,9 +207,9 @@ public class WarBoard extends Board{
 		
 		area1.add(getPlayers().get(1).draw(), BorderLayout.WEST);
 		area1.add(spacer, BorderLayout.CENTER);
-		area1.add(enemyZone.draw(), BorderLayout.SOUTH);
+		area1.add(getEnemyZone().draw(), BorderLayout.SOUTH);
 		
-		area2.add(playerZone.draw(), BorderLayout.NORTH);
+		area2.add(getPlayerZone().draw(), BorderLayout.NORTH);
 		area2.add(spacer, BorderLayout.CENTER);
 		area2.add(getPlayers().get(0).draw(), BorderLayout.EAST);
 		
