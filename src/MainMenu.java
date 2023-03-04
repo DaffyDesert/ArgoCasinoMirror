@@ -13,8 +13,7 @@ public class MainMenu {
 		windowPane = new JPanel();
 		gameSelectionPanel = new JPanel();
 		mainMenuPanel = new JPanel();
-		
-		windowPane.setBounds(0, 0, 1270, 720);
+		windowPane.setBackground(new java.awt.Color(0, 122, 51));
 		createGameSelectMenu();
 		createMainMenu();
 		
@@ -23,31 +22,44 @@ public class MainMenu {
 	}
 	
 	private void createMainMenu() {
-		mainMenuPanel.setBounds(0, 0, 1270, 720);
 		mainMenuPanel.setLayout(new GridBagLayout());//Used to organize objects exactly as needed
+		
+		
 		
 		//Begins title card generation
 		JLabel title = new JLabel("Argo Casino");
+		title.setForeground(new java.awt.Color(0, 156, 222));
 		title.setVerticalTextPosition(JLabel.NORTH);
 		title.setHorizontalTextPosition(JLabel.CENTER);
 		title.setFont(new Font("Serif", Font.PLAIN, 72));
 		GridBagConstraints titleConstraints = setConstraint(1, 0, 1, 1, 0, 5);
 		mainMenuPanel.add(title, titleConstraints);
-		
+		mainMenuPanel.setBackground(new java.awt.Color(0, 122, 51));
 		//Begins option generation
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridBagLayout());
 		GridBagConstraints buttonPanelConstraints = setConstraint(1, 1, 1, 2, 0, 0);
 		
 		JButton startButton = new JButton("Start Game");
+		startButton.setForeground(new java.awt.Color(0, 156, 222));
+		startButton.setBackground(new java.awt.Color(0, 122, 51));
+		startButton.setBorder(null);
 		GridBagConstraints startConstraint = setConstraint(0, 0, 3, 1, 0, 0);
 		buttonPanel.add(startButton, startConstraint);
 		
 		JButton userMenuButton = new JButton("Coming Soon!");
 		GridBagConstraints userConstraint = setConstraint(0, 1, 3, 1, 0, 0);
+		userMenuButton.setForeground(new java.awt.Color(0, 156, 222));
+		userMenuButton.setBackground(new java.awt.Color(0, 122, 51));
+		userMenuButton.setBorder(null);
 		buttonPanel.add(userMenuButton, userConstraint);
+		buttonPanel.setBackground(new java.awt.Color(0, 122, 51));
+		
 		
 		JButton ExitButton = new JButton("Exit");
+		ExitButton.setForeground(new java.awt.Color(0, 156, 222));
+		ExitButton.setBackground(new java.awt.Color(0, 122, 51));
+		ExitButton.setBorder(null);
 		GridBagConstraints exitConstraint = setConstraint(0, 2, 3, 1, 0, 0);
 		buttonPanel.add(ExitButton, exitConstraint);
 		
@@ -69,36 +81,50 @@ public class MainMenu {
 	}
 	
 	private void createGameSelectMenu() {
-		gameSelectionPanel.setBounds(0, 0, 1270, 720);
 		gameSelectionPanel.setLayout(new GridBagLayout());
 		
 		JLabel title = new JLabel("Select a Game");
+		title.setForeground(new java.awt.Color(0, 156, 222));
 		title.setVerticalTextPosition(JLabel.NORTH);
 		title.setHorizontalTextPosition(JLabel.CENTER);
 		title.setFont(new Font("Serif", Font.PLAIN, 72));
 		GridBagConstraints titleConstraints = setConstraint(1, 0, 1, 1, 0, 5);
 		gameSelectionPanel.add(title, titleConstraints);
+		gameSelectionPanel.setBackground(new java.awt.Color(0, 122, 51));
 		
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridBagLayout());
 		GridBagConstraints buttonPanelConstraints = setConstraint(1, 1, 1, 2, 0, 0);
 		
 		JButton solitaire = new JButton("Coming Soon!");
+		solitaire.setForeground(new java.awt.Color(0, 156, 222));
+		solitaire.setBackground(new java.awt.Color(0, 122, 51));
+		solitaire.setBorder(null);
 		GridBagConstraints sConstraint = setConstraint(0, 0, 1, 1, 0, 0);
 		buttonPanel.add(solitaire, sConstraint);
 		
 		JButton war = new JButton("War");
+		war.setForeground(new java.awt.Color(0, 156, 222));
+		war.setBackground(new java.awt.Color(0, 122, 51));
+		war.setBorder(null);
 		GridBagConstraints warConstraint = setConstraint(1, 0, 1, 1, 0, 0);
 		buttonPanel.add(war, warConstraint);
 		
 		JButton blackjack = new JButton("Coming Soon!");
+		blackjack.setForeground(new java.awt.Color(0, 156, 222));
+		blackjack.setBackground(new java.awt.Color(0, 122, 51));
+		blackjack.setBorder(null);
 		GridBagConstraints bjConstraint = setConstraint(2, 0, 1, 1, 0, 0);
 		buttonPanel.add(blackjack, bjConstraint);
 		
 		JButton back = new JButton("Go Back");
+		back.setForeground(new java.awt.Color(0, 156, 222));
+		back.setBackground(new java.awt.Color(0, 122, 51));
+		back.setBorder(null);
 		GridBagConstraints backConstraint = setConstraint(1, 1, 1, 1, 0, 0);
 		buttonPanel.add(back, backConstraint);
 		
+		buttonPanel.setBackground(new java.awt.Color(0, 122, 51));
 		gameSelectionPanel.add(buttonPanel, buttonPanelConstraints);
 		
 		back.addActionListener(new ActionListener() {
@@ -108,11 +134,11 @@ public class MainMenu {
 		});
 		
 		//Used when war class is functional.
-		war.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				launchWar();
-			}
-		});
+//		war.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				launchWar();
+//			}
+//		});
 	}
 	
 	//Quick helper function that formats GridConstraints in 1 line rather than several.
@@ -148,19 +174,21 @@ public class MainMenu {
 		return windowPane;
 	}
 	
-	public void launchWar() {
-		War warGame = new War();
-		
-		System.out.println("Displaying game...");
-		windowPane.removeAll();
-		windowPane.add(warGame.display());
-		windowPane.revalidate();
-		windowPane.repaint();
-		System.out.println("Game Display on!");
-		
-		warGame.startGame();
-		
-		//displayMainMenu();
-	}
+	//Function Stubs for when War class is functional
+//	public void launchWar() {
+//		warGame = new War();
+//		activeGame = 2;
+//		gameActive = true;
+//		
+//		windowPane.removeAll();
+//		windowPane.add(warGame.display());
+//		windowPane.revalidate();
+//		windowPane.repaint();
+//		
+//		
+//		warGame.run();
+//		
+//		displayMainMenu();
+//	}
 	
 }
