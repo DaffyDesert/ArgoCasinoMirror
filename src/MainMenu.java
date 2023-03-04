@@ -175,20 +175,20 @@ public class MainMenu {
 	}
 	
 	//Function Stubs for when War class is functional
-//	public void launchWar() {
-//		warGame = new War();
-//		activeGame = 2;
-//		gameActive = true;
-//		
-//		windowPane.removeAll();
-//		windowPane.add(warGame.display());
-//		windowPane.revalidate();
-//		windowPane.repaint();
-//		
-//		
-//		warGame.run();
-//		
-//		displayMainMenu();
-//	}
+	public void launchWar() {
+		warGame = new War();
+		activeGame = 2;
+		gameActive = true;
+		
+		windowPane.removeAll();
+		windowPane.add(warGame.display());
+		windowPane.revalidate();
+		windowPane.repaint();
+		
+		
+		warGame.run();
+		
+		displayMainMenu();
+	}
 	
 }
