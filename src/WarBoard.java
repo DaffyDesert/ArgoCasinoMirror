@@ -1,12 +1,8 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
-import java.util.ArrayList;
+import java.awt.Dimension;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 
-
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 /**
@@ -19,26 +15,27 @@ import javax.swing.JPanel;
 public class WarBoard extends Board{
 	
 	//Added to Danny's stuff
-	//private CardStack playerZone;
-	//private CardStack enemyZone;
-	private JPanel boardPanel = new JPanel();
+	private CardStack playerZone;
+	private CardStack enemyZone;
+	JPanel mainPanel;
 	
 	public WarBoard() {
-		super(2, 3, 1);
+		super(2, 1, 1);
 		getPlayers().get(0).setStackName("Enemy Stack");
 		getPlayers().get(1).setStackName("Player Stack");
 		getDiscardPiles().get(0).setStackName("Winner Spoils");
-		getDiscardPiles().get(1).setStackName("Player Zone");
-		getDiscardPiles().get(2).setStackName("Enemy Zone");
 		
 		System.out.println("Shuffling and Dealing...");
 		getDeck().shuffleStack();
 		getDeck().dealEvenlyTo(getPlayers());
 		
-		printBoard();
+		getPlayers().get(0).printStack();
+		getPlayers().get(1).printStack();
+		getDiscardPiles().get(0).printStack();
 		
-		//playerZone = new CardStack();
-		//enemyZone = new CardStack();
+		playerZone = new CardStack();
+		enemyZone = new CardStack();
+		mainPanel = new JPanel();
 	}
 	
 	public CardStack getPlayerStack() {
@@ -56,18 +53,13 @@ public class WarBoard extends Board{
 	
 	
 	public CardStack getPlayerZone() {
-		return getDiscardPiles().get(1);
+		return playerZone;
 	}
 
 	public CardStack getEnemyZone() {
-		return getDiscardPiles().get(2);
+		return enemyZone;
 	}
 	
-	/**
-	 * each player moves their card to the winnerSpoil stack for comparison by compare()
-	 * !!! ENEMY MUST DEAL TO SPOILS STACK FIRST !!!
-	 * 
-	 */
 	public boolean turn() {
 		if(checkWinStatus() != 2)
 			return false;
@@ -80,15 +72,17 @@ public class WarBoard extends Board{
 		enemyCard.flipCard();
 		playerCard.flipCard();
 		
-		getPlayerZone().addToTop(playerCard);
-		getEnemyZone().addToTop(enemyCard);
+		playerZone.addToTop(playerCard);
+		enemyZone.addToTop(enemyCard);
 		
 		drawBoard();
-		enemyCard.flipCard(); 		//gotta flip the cards back 
-		playerCard.flipCard();		//before u give them to the winner
+		enemyCard.flipCard(); 
+		playerCard.flipCard();		
 
-		printBoard();
-
+		getPlayerStack().printStack();
+		getEnemyStack().printStack();
+		getWinnerSpoils().printStack();
+		
 		return compare();
 	}
   
@@ -111,18 +105,16 @@ public class WarBoard extends Board{
 		if(comparisonValue < 0) { //player win
 			getPlayerStack().addToBottom(getWinnerSpoils().getStack());
 			getWinnerSpoils().getStack().clear();
-
-			getPlayerZone().getStack().clear(); //New
-			getEnemyZone().getStack().clear();
+			playerZone.getStack().clear(); //New
+			enemyZone.getStack().clear();
       
 			return true;
 		}
 		else if(comparisonValue > 0) { //enemy win
 			getEnemyStack().addToBottom(getWinnerSpoils().getStack());
 			getWinnerSpoils().getStack().clear();
-
-			getPlayerZone().getStack().clear(); //New
-			getEnemyZone().getStack().clear();
+			playerZone.getStack().clear(); //New
+			enemyZone.getStack().clear();
 
 			return true;
 		}
@@ -138,7 +130,7 @@ public class WarBoard extends Board{
 	/**
 	 * deals the two treasure cards(one from each player) to the winnerSpoils stack
 	 * 
-	 * then calls turn() to initiate a draw and comparision to see who wins the current spoils stack
+	 * then calls turn() to initiate a draw and comparison to see who wins the current spoils stack
 	 * 
 	 * @param enemyStack
 	 * @param playerStack
@@ -177,50 +169,40 @@ public class WarBoard extends Board{
 	
 	//Added to danny's stuff
 	public JPanel drawBoard() {
-		boardPanel.removeAll();
-		JPanel panel = new JPanel();
-		JPanel area1 = new JPanel();
-		JPanel area2 = new JPanel();
-		JPanel spacer = new JPanel();
 		Color felt = new Color(10, 108, 3);
-		BoxLayout spacerLayout = new BoxLayout(spacer, BoxLayout.X_AXIS);
 		
-		boardPanel.setBounds(0, 0, 1270, 576);
-		boardPanel.setLayout(new FlowLayout());
-		boardPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-		boardPanel.setBackground(felt);
+		mainPanel.removeAll();
+		mainPanel.setLayout(new GridLayout());
+		mainPanel.setPreferredSize(new Dimension(1270,720));
+		mainPanel.setBackground(felt); 
 		
-		panel.setBounds(0, 0, 1270, 576);
-		panel.setLayout(new BorderLayout());
-		panel.setOpaque(true);
-		panel.setBackground(felt);
+		JPanel playerSide = new JPanel();
+		playerSide.setLayout(new GridBagLayout());
+		playerSide.setPreferredSize(new Dimension(423,720));
+		playerSide.setBackground(felt);
+		playerSide.add(getPlayers().get(1).draw());
 		
-		area1.setLayout(new BorderLayout());
-		area1.setBackground(felt);
-		area2.setLayout(new BorderLayout());
-		area2.setBackground(felt);
+		JPanel middle = new JPanel();
+		middle.setLayout(new GridBagLayout());
+		middle.setPreferredSize(new Dimension(423,720));
+		middle.setBackground(felt);
+		middle.add(playerZone.draw());
+		middle.add(enemyZone.draw());
 		
-		spacer.setLayout(spacerLayout);
-		spacer.setBackground(felt);
-		spacer.add(Box.createHorizontalStrut(500));
-		spacer.add(Box.createVerticalStrut(300));
+		JPanel enemySide = new JPanel();
+		enemySide.setLayout(new GridBagLayout());
+		enemySide.setPreferredSize(new Dimension(423,720));
+		enemySide.setBackground(felt);
+		enemySide.add(getPlayers().get(0).draw());
 		
-		area1.add(getPlayers().get(1).draw(), BorderLayout.WEST);
-		area1.add(spacer, BorderLayout.CENTER);
-		area1.add(getEnemyZone().draw(), BorderLayout.SOUTH);
+		mainPanel.add(playerSide);
+		mainPanel.add(middle);
+		mainPanel.add(enemySide);
 		
-		area2.add(getPlayerZone().draw(), BorderLayout.NORTH);
-		area2.add(spacer, BorderLayout.CENTER);
-		area2.add(getPlayers().get(0).draw(), BorderLayout.EAST);
+		mainPanel.revalidate();
+		mainPanel.repaint();
 		
-		panel.add(area1, BorderLayout.NORTH);
-		panel.add(area2, BorderLayout.SOUTH);
-		
-		boardPanel.add(panel);
-		boardPanel.revalidate();
-		boardPanel.repaint();
-		
-		return boardPanel;
+		return mainPanel;
 	}
 
 }

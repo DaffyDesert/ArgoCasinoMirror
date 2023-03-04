@@ -1,6 +1,5 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -253,12 +252,10 @@ public class CardStack extends JComponent{
 		JPanel cardStack = new JPanel();
 		JPanel cardStackArea = new JPanel(new BorderLayout());
 		JPanel cardStackNameArea = new JPanel();
-		cardStackNameArea.add(new JLabel(getStackName()));
+		cardStackNameArea.add(new JLabel( getStackName() + " Cards: " + getStackSize() ));
 		cardStackNameArea.setBackground(feltGreen);
 		cardStackArea.setBackground(feltGreen);
 				
-		//cardStackArea.setBounds(0, 0, 100, 145); //100/145 hard coded for now - should be values from getCardWidth/Height()'s
-		//cardStackArea.setBorder(getBorder());
 		for(Card cardToDraw: getStack()) {
 			cardStackArea.add(cardToDraw.draw(), BorderLayout.CENTER); 
 		}
