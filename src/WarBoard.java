@@ -1,8 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.util.ArrayList;
-
+import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -179,8 +178,8 @@ public class WarBoard extends Board{
 	
 	//Added to danny's stuff
 	public JPanel drawBoard() {
-		boardPanel.removeAll();
-		JPanel panel = new JPanel();
+		boardPanel.removeAll(); // Biggest panel that holds everything else
+		JPanel panel = new JPanel(); 
 		JPanel area1 = new JPanel();
 		JPanel area2 = new JPanel();
 		JPanel spacer = new JPanel();
@@ -188,14 +187,10 @@ public class WarBoard extends Board{
 		BoxLayout spacerLayout = new BoxLayout(spacer, BoxLayout.X_AXIS);
 		
 		boardPanel.setBounds(0, 0, 1270, 576);
-		boardPanel.setLayout(new FlowLayout());
+		boardPanel.setLayout(new BorderLayout());
 		boardPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		boardPanel.setBackground(felt);
-		
-		panel.setBounds(0, 0, 1270, 576);
-		panel.setLayout(new BorderLayout());
-		panel.setOpaque(true);
-		panel.setBackground(felt);
+		boardPanel.setBackground(Color.black);
 		
 		area1.setLayout(new BorderLayout());
 		area1.setBackground(felt);
@@ -204,21 +199,23 @@ public class WarBoard extends Board{
 		
 		spacer.setLayout(spacerLayout);
 		spacer.setBackground(felt);
-		spacer.add(Box.createHorizontalStrut(500));
-		spacer.add(Box.createVerticalStrut(300));
+		spacer.add(Box.createHorizontalStrut(300));
+		spacer.add(Box.createVerticalStrut(100));
 		
-		area1.add(getPlayers().get(1).draw(), BorderLayout.WEST);
+		area1.add(getPlayers().get(0).draw(), BorderLayout.WEST);
 		area1.add(spacer, BorderLayout.CENTER);
 		area1.add(enemyZone.draw(), BorderLayout.SOUTH);
 		
-		area2.add(playerZone.draw(), BorderLayout.NORTH);
+		area2.add(getPlayers().get(1).draw(), BorderLayout.EAST);
 		area2.add(spacer, BorderLayout.CENTER);
-		area2.add(getPlayers().get(0).draw(), BorderLayout.EAST);
+		area2.add(playerZone.draw(), BorderLayout.NORTH);
 		
 		panel.add(area1, BorderLayout.NORTH);
 		panel.add(area2, BorderLayout.SOUTH);
 		
-		boardPanel.add(panel);
+		boardPanel.add(area1,BorderLayout.NORTH);
+		boardPanel.add(spacer);
+		boardPanel.add(area2,BorderLayout.SOUTH);;
 		boardPanel.revalidate();
 		boardPanel.repaint();
 		

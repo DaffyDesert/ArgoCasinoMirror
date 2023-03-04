@@ -1,8 +1,5 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.util.TimerTask;
-import java.util.Timer;
-
 import javax.swing.*;
 
 /**
@@ -112,10 +109,9 @@ public class War extends JPanel implements Game, MouseListener{
 		//Added statusBar panel to be displayed at the top of the War game panel.
 		statusBar = new JPanel();
 		statusBar.setBounds(0, 0, 1270, 144);
-		statusBar.setLayout(new BorderLayout());
-		//statusBar.add(startText);
+		statusBar.setLayout(new FlowLayout());
+		statusBar.add(startText);
 		statusBar.add(stopwatch.display());
-		statusBar.setBackground(Color.black);
 				
 		//Creates layout manager for War();
 		this.setLayout(new GridBagLayout());
@@ -134,7 +130,7 @@ public class War extends JPanel implements Game, MouseListener{
 	}
 	
 	/**
-	* TODO: When warboard is functional, add functionality to this method
+	* TODO: When warBoard is functional, add functionality to this method
 	*/
 	@Override
 	public int isOver() { 
