@@ -106,12 +106,14 @@ public class War extends JPanel implements Game, MouseListener{
 
 	@Override
 	public JPanel display() {
+		/*
 		//Added statusBar panel to be displayed at the top of the War game panel.
 		statusBar = new JPanel();
 		statusBar.setBounds(0, 0, 1270, 144);
-		statusBar.setLayout(new FlowLayout());
-		statusBar.add(startText);
-		statusBar.add(stopwatch.display());
+		statusBar.setLayout(new BorderLayout());
+		//statusBar.add(startText);
+		statusBar.add(stopwatch.display(), BorderLayout.SOUTH);
+		statusBar.setBackground(Color.black);
 				
 		//Creates layout manager for War();
 		this.setLayout(new GridBagLayout());
@@ -127,11 +129,36 @@ public class War extends JPanel implements Game, MouseListener{
 		this.repaint();
 		
 		return this;
+		*/
+		
+		statusBar = new JPanel();
+		statusBar.setBounds(0,0,1270,144);
+		statusBar.setLayout(new BorderLayout());
+		statusBar.add(stopwatch.display(), BorderLayout.SOUTH);
+		
+		this.setLayout(new GridBagLayout());
+		
+		GridBagConstraints sbCon = new GridBagConstraints();
+		sbCon.fill = GridBagConstraints.HORIZONTAL;
+		sbCon.gridy = 0;		
+		sbCon.ipadx = 1270;
+		sbCon.ipady = 40;
+		
+		GridBagConstraints gameCon = new GridBagConstraints();
+		gameCon.fill = GridBagConstraints.HORIZONTAL;
+		gameCon.gridy = 1;
+		gameCon.ipadx = 1270;
+		gameCon.ipady = 400;
+		
+
+		this.add(statusBar,sbCon);
+		this.add(board.drawBoard(), gameCon);
+		
+		this.revalidate();
+		this.repaint();
+		return this;
 	}
 	
-	/**
-	* TODO: When warBoard is functional, add functionality to this method
-	*/
 	@Override
 	public int isOver() { 
 		return board.checkWinStatus();
