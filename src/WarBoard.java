@@ -1,5 +1,10 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -175,8 +180,9 @@ public class WarBoard extends Board{
 	
 	//Added to danny's stuff
 	public JPanel drawBoard() {
-		boardPanel.removeAll(); // Biggest panel that holds everything else
-		JPanel panel = new JPanel(); 
+		Color felt = new Color(10, 108, 3);
+		/*
+		boardPanel.removeAll(); 
 		JPanel area1 = new JPanel();
 		JPanel area2 = new JPanel();
 		JPanel spacer = new JPanel();
@@ -187,7 +193,6 @@ public class WarBoard extends Board{
 		boardPanel.setLayout(new BorderLayout());
 		boardPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		boardPanel.setBackground(felt);
-		boardPanel.setBackground(Color.black);
 		
 		area1.setLayout(new BorderLayout());
 		area1.setBackground(felt);
@@ -207,16 +212,41 @@ public class WarBoard extends Board{
 		area2.add(spacer, BorderLayout.CENTER);
 		area2.add(playerZone.draw(), BorderLayout.NORTH);
 		
-		panel.add(area1, BorderLayout.NORTH);
-		panel.add(area2, BorderLayout.SOUTH);
-		
 		boardPanel.add(area1,BorderLayout.NORTH);
 		boardPanel.add(spacer);
-		boardPanel.add(area2,BorderLayout.SOUTH);;
+		boardPanel.add(area2,BorderLayout.SOUTH);*/
+		
+		JPanel mainPanel = new JPanel();
+		mainPanel.setLayout(new GridLayout());
+		mainPanel.setPreferredSize(new Dimension(1270,720));
+		mainPanel.setBackground(felt); 
+		
+		JPanel playerSide = new JPanel();
+		playerSide.setLayout(new GridBagLayout());
+		playerSide.setPreferredSize(new Dimension(423,720));
+		playerSide.setBackground(felt);
+		playerSide.add(getPlayers().get(1).draw());
+		playerSide.add(playerZone.draw());
+		
+		/*JPanel middle = new JPanel();
+		middle.setLayout(new GridLayout());
+		middle.setBackground(felt);*/
+		
+		JPanel enemySide = new JPanel();
+		enemySide.setLayout(new GridBagLayout());
+		enemySide.setPreferredSize(new Dimension(423,720));
+		enemySide.setBackground(felt);
+		enemySide.add(enemyZone.draw());
+		enemySide.add(getPlayers().get(0).draw());
+		
+		mainPanel.add(playerSide);
+		//mainPanel.add(middle);
+		mainPanel.add(enemySide);
+		
 		boardPanel.revalidate();
 		boardPanel.repaint();
 		
-		return boardPanel;
+		return mainPanel;
 	}
 
 }

@@ -147,10 +147,7 @@ public class War extends JPanel implements Game, MouseListener{
 		GridBagConstraints gameCon = new GridBagConstraints();
 		gameCon.fill = GridBagConstraints.HORIZONTAL;
 		gameCon.gridy = 1;
-		gameCon.ipadx = 1270;
-		gameCon.ipady = 400;
 		
-
 		this.add(statusBar,sbCon);
 		this.add(board.drawBoard(), gameCon);
 		
