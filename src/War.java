@@ -1,4 +1,3 @@
-
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -158,4 +157,3 @@ public class War extends JPanel implements Game, MouseListener{
 		
 	}
 }
-

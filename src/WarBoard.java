@@ -1,4 +1,3 @@
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
@@ -207,4 +206,3 @@ public class WarBoard extends Board{
 	}
 
 }
-
