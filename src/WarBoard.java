@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -8,6 +9,7 @@ import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -23,6 +25,7 @@ public class WarBoard extends Board{
 	private CardStack playerZone;
 	private CardStack enemyZone;
 	private JPanel boardPanel = new JPanel();
+	JPanel mainPanel;
 	
 	public WarBoard() {
 		super(2, 1, 1);
@@ -40,6 +43,7 @@ public class WarBoard extends Board{
 		
 		playerZone = new CardStack();
 		enemyZone = new CardStack();
+		mainPanel = new JPanel();
 	}
 	
 	public CardStack getPlayerStack() {
@@ -181,8 +185,10 @@ public class WarBoard extends Board{
 	//Added to danny's stuff
 	public JPanel drawBoard() {
 		Color felt = new Color(10, 108, 3);
-		/*
-		boardPanel.removeAll(); 
+		JLabel empty = new JLabel();
+		
+		
+		/*boardPanel.removeAll(); 
 		JPanel area1 = new JPanel();
 		JPanel area2 = new JPanel();
 		JPanel spacer = new JPanel();
@@ -214,9 +220,9 @@ public class WarBoard extends Board{
 		
 		boardPanel.add(area1,BorderLayout.NORTH);
 		boardPanel.add(spacer);
-		boardPanel.add(area2,BorderLayout.SOUTH);*/
+		boardPanel.add(area2,BorderLayout.SOUTH); */
 		
-		JPanel mainPanel = new JPanel();
+		mainPanel.removeAll();
 		mainPanel.setLayout(new GridLayout());
 		mainPanel.setPreferredSize(new Dimension(1270,720));
 		mainPanel.setBackground(felt); 
@@ -226,25 +232,29 @@ public class WarBoard extends Board{
 		playerSide.setPreferredSize(new Dimension(423,720));
 		playerSide.setBackground(felt);
 		playerSide.add(getPlayers().get(1).draw());
-		playerSide.add(playerZone.draw());
 		
-		/*JPanel middle = new JPanel();
-		middle.setLayout(new GridLayout());
-		middle.setBackground(felt);*/
+		JPanel middle = new JPanel();
+		middle.setLayout(new GridBagLayout());
+		middle.setPreferredSize(new Dimension(423,720));
+		middle.setBackground(felt);
+		middle.add(playerZone.draw());
+		middle.add(enemyZone.draw());
 		
 		JPanel enemySide = new JPanel();
 		enemySide.setLayout(new GridBagLayout());
 		enemySide.setPreferredSize(new Dimension(423,720));
 		enemySide.setBackground(felt);
-		enemySide.add(enemyZone.draw());
 		enemySide.add(getPlayers().get(0).draw());
 		
 		mainPanel.add(playerSide);
-		//mainPanel.add(middle);
+		mainPanel.add(middle);
 		mainPanel.add(enemySide);
 		
-		boardPanel.revalidate();
-		boardPanel.repaint();
+		//boardPanel.revalidate();
+		//boardPanel.repaint();
+		
+		mainPanel.revalidate();
+		mainPanel.repaint();
 		
 		return mainPanel;
 	}
