@@ -42,8 +42,10 @@ public class Stopwatch implements Runnable {
 		timer.cancel();
 	}
 	
-	public void updateLabel() {
-		label.setText("Final Time: ");
+	public void finalLabel() {
+		endTime = task.getTime();
+		timer.cancel();
+		label.setText("Final Time: " + endTime);
 	}
 
 	// Returns the Final Time for use in game score calculations, where applicable.

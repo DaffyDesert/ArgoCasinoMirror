@@ -100,7 +100,7 @@ public class War extends JPanel implements Game, MouseListener{
 		gameOver.setLayout(new FlowLayout());
 		
 		gameOver.setBounds(0, 0, 1270, 720);
-		stopwatch.updateLabel();
+		stopwatch.finalLabel();
 		gameOver.add(stopwatch.display());
 		
 		JLabel winLabel = new JLabel();
@@ -121,6 +121,14 @@ public class War extends JPanel implements Game, MouseListener{
 		this.revalidate();
 		this.repaint();
 		
+		
+		Timer timer = new Timer(8000, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
+		timer.start();
+		
 		return gameOver;
 	}
 
@@ -128,6 +136,7 @@ public class War extends JPanel implements Game, MouseListener{
 	public void mouseClicked(MouseEvent e) {
 		if (this.turn() == false) {
 			stopGame();
+			stopWatch();
 			showGameOverScreen();
 		}
 	}
