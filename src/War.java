@@ -11,7 +11,7 @@ public class War extends JPanel implements Game, MouseListener{
 	JPanel gameOverScreen;
 	WarBoard board;
 	Stopwatch stopwatch;
-	Thread thread1;
+	Thread thread;
 
 	War() {
 		this.setBounds(0, 0, 1270, 720);
@@ -20,7 +20,7 @@ public class War extends JPanel implements Game, MouseListener{
 		
 		stopwatch = new Stopwatch();
 		stopwatch.display().setBounds(0, 0, 400, 100);
-		thread1 = new Thread(stopwatch);
+		thread = new Thread(stopwatch);
 		
 		this.addMouseListener(this);
 	}
@@ -30,7 +30,7 @@ public class War extends JPanel implements Game, MouseListener{
 	 */
 	@Override
 	public void startWatch() {
-		thread1.start();
+		thread.start();
 	}
 
 	/**
@@ -90,8 +90,8 @@ public class War extends JPanel implements Game, MouseListener{
 	}
 
 	@Override
-	public void turn() {
-		board.turn();
+	public boolean turn() {
+		return board.turn();
 	}
 
 	@Override
@@ -121,18 +121,23 @@ public class War extends JPanel implements Game, MouseListener{
 		this.revalidate();
 		this.repaint();
 		
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		Timer timer = new Timer(8000, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
+		timer.start();
 		
 		return gameOver;
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		this.turn();
+		boolean value = false;
+		if (value == false) {
+			stopGame();
+			showGameOverScreen();
+		}
 	}
 
 	@Override

@@ -178,14 +178,13 @@ public class MainMenu {
 	public void launchWar() {
 		War warGame = new War();
 		
-		System.out.println("Loading game...");
-		windowPane.removeAll();
+		gameSelectionPanel.setVisible(false);
 		windowPane.add(warGame.display());
 		windowPane.revalidate();
 		windowPane.repaint();
-		System.out.println("Game should be displayed");
 		
-		//displayMainMenu();
+		warGame.startGame();
+		gameSelectionPanel.setVisible(true);
 	}
 	
 }

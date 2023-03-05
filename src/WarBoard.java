@@ -143,7 +143,6 @@ public class WarBoard extends Board{
 		getWinnerSpoils().addToTop(getEnemyStack().dealTopCard());
 		getWinnerSpoils().addToTop(getPlayerStack().dealTopCard());
 		
-		
 		return turn();
 	}
 
