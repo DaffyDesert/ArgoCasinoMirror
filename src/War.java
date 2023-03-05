@@ -121,13 +121,6 @@ public class War extends JPanel implements Game, MouseListener{
 		this.revalidate();
 		this.repaint();
 		
-		Timer timer = new Timer(8000, new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-			}
-		});
-		timer.start();
-		
 		return gameOver;
 	}
 
