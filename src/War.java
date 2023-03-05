@@ -12,7 +12,6 @@ public class War extends JPanel implements Game, MouseListener{
 	WarBoard board;
 	Stopwatch stopwatch;
 	Thread thread1;
-	java.util.Timer updateGUI;
 
 	War() {
 		this.setBounds(0, 0, 1270, 720);
@@ -57,7 +56,6 @@ public class War extends JPanel implements Game, MouseListener{
 	@Override
 	public void stopGame() {
 		stopWatch();
-		updateGUI.cancel();
 	}
 
 	@Override

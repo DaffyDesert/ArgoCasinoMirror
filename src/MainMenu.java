@@ -134,11 +134,11 @@ public class MainMenu {
 		});
 		
 		//Used when war class is functional.
-//		war.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				launchWar();
-//			}
-//		});
+		war.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				launchWar();
+			}
+		});
 	}
 	
 	//Quick helper function that formats GridConstraints in 1 line rather than several.
@@ -178,15 +178,14 @@ public class MainMenu {
 	public void launchWar() {
 		War warGame = new War();
 		
+		System.out.println("Loading game...");
 		windowPane.removeAll();
 		windowPane.add(warGame.display());
 		windowPane.revalidate();
 		windowPane.repaint();
+		System.out.println("Game should be displayed");
 		
-		
-		warGame.run();
-		
-		displayMainMenu();
+		//displayMainMenu();
 	}
 	
 }
