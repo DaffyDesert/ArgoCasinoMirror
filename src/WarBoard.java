@@ -15,26 +15,27 @@ import javax.swing.JPanel;
 public class WarBoard extends Board{
 	
 	//Added to Danny's stuff
-	private CardStack playerZone;
-	private CardStack enemyZone;
+	//private CardStack playerZone;
+	//private CardStack enemyZone;
 	JPanel mainPanel;
 	
 	public WarBoard() {
-		super(2, 1, 1);
+		super(2, 3, 1);
 		getPlayers().get(0).setStackName("Enemy Stack");
 		getPlayers().get(1).setStackName("Player Stack");
 		getDiscardPiles().get(0).setStackName("Winner Spoils");
+		getDiscardPiles().get(1).setStackName("Player Zone");
+		getDiscardPiles().get(2).setStackName("Enemy Zone");
 		
 		System.out.println("Shuffling and Dealing...");
 		getDeck().shuffleStack();
 		getDeck().dealEvenlyTo(getPlayers());
 		
-		getPlayers().get(0).printStack();
-		getPlayers().get(1).printStack();
-		getDiscardPiles().get(0).printStack();
+		//getPlayers().get(0).printStack();
+		//getPlayers().get(1).printStack();
+		//getDiscardPiles().get(0).printStack();
+		printBoard();
 		
-		playerZone = new CardStack();
-		enemyZone = new CardStack();
 		mainPanel = new JPanel();
 	}
 	
@@ -53,11 +54,11 @@ public class WarBoard extends Board{
 	
 	
 	public CardStack getPlayerZone() {
-		return playerZone;
+		return getDiscardPiles().get(1);
 	}
 
 	public CardStack getEnemyZone() {
-		return enemyZone;
+		return getDiscardPiles().get(2);
 	}
 	
 	public boolean turn() {
@@ -72,8 +73,8 @@ public class WarBoard extends Board{
 		enemyCard.flipCard();
 		playerCard.flipCard();
 		
-		playerZone.addToTop(playerCard);
-		enemyZone.addToTop(enemyCard);
+		getPlayerZone().addToTop(playerCard);
+		getEnemyZone().addToTop(enemyCard);
 		
 		drawBoard();
 		enemyCard.flipCard(); 
@@ -105,16 +106,16 @@ public class WarBoard extends Board{
 		if(comparisonValue < 0) { //player win
 			getPlayerStack().addToBottom(getWinnerSpoils().getStack());
 			getWinnerSpoils().getStack().clear();
-			playerZone.getStack().clear(); //New
-			enemyZone.getStack().clear();
+			getPlayerZone().getStack().clear(); //New
+			getEnemyZone().getStack().clear();
       
 			return true;
 		}
 		else if(comparisonValue > 0) { //enemy win
 			getEnemyStack().addToBottom(getWinnerSpoils().getStack());
 			getWinnerSpoils().getStack().clear();
-			playerZone.getStack().clear(); //New
-			enemyZone.getStack().clear();
+			getPlayerZone().getStack().clear(); //New
+			getEnemyZone().getStack().clear();
 
 			return true;
 		}
@@ -185,8 +186,8 @@ public class WarBoard extends Board{
 		middle.setLayout(new GridBagLayout());
 		middle.setPreferredSize(new Dimension(423,720));
 		middle.setBackground(felt);
-		middle.add(playerZone.draw());
-		middle.add(enemyZone.draw());
+		middle.add(getPlayerZone().draw());
+		middle.add(getEnemyZone().draw());
 		
 		JPanel enemySide = new JPanel();
 		enemySide.setLayout(new GridBagLayout());
