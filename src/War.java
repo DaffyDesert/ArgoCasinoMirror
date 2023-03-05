@@ -133,8 +133,7 @@ public class War extends JPanel implements Game, MouseListener{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		boolean value = false;
-		if (value == false) {
+		if (this.turn() == false) {
 			stopGame();
 			showGameOverScreen();
 		}
