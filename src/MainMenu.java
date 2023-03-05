@@ -176,9 +176,7 @@ public class MainMenu {
 	
 	//Function Stubs for when War class is functional
 	public void launchWar() {
-		warGame = new War();
-		activeGame = 2;
-		gameActive = true;
+		War warGame = new War();
 		
 		windowPane.removeAll();
 		windowPane.add(warGame.display());
