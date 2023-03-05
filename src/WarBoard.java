@@ -14,9 +14,6 @@ import javax.swing.JPanel;
 
 public class WarBoard extends Board{
 	
-	//Added to Danny's stuff
-	//private CardStack playerZone;
-	//private CardStack enemyZone;
 	JPanel mainPanel;
 	
 	public WarBoard() {
@@ -27,14 +24,8 @@ public class WarBoard extends Board{
 		getDiscardPiles().get(1).setStackName("Player Zone");
 		getDiscardPiles().get(2).setStackName("Enemy Zone");
 		
-		System.out.println("Shuffling and Dealing...");
 		getDeck().shuffleStack();
 		getDeck().dealEvenlyTo(getPlayers());
-		
-		//getPlayers().get(0).printStack();
-		//getPlayers().get(1).printStack();
-		//getDiscardPiles().get(0).printStack();
-		printBoard();
 		
 		mainPanel = new JPanel();
 	}
@@ -79,10 +70,6 @@ public class WarBoard extends Board{
 		drawBoard();
 		enemyCard.flipCard(); 
 		playerCard.flipCard();		
-
-		getPlayerStack().printStack();
-		getEnemyStack().printStack();
-		getWinnerSpoils().printStack();
 		
 		return compare();
 	}

@@ -132,6 +132,8 @@ public class War extends JPanel implements Game, MouseListener{
 		}
 	}
 
+	//Functions below are required by MouseListener interface but do not have functionality in our program as of right now.
+	
 	@Override
 	public void mousePressed(MouseEvent e) {
 		

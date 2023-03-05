@@ -86,6 +86,7 @@ public class Card {
 			this.value = Integer.toString(rank+2) + getSuit().charAt(0);		
 
 	}
+	
 	/**
 	 * Set the suit of the cards 
 	 * @param suit - suit to set (heart, diamonds, spades, clubs)
@@ -102,6 +103,7 @@ public class Card {
 		else
 			this.suit = "error";		
 	}
+	
 	/**
 	 * 
 	 * @return the suit of the card
@@ -165,7 +167,6 @@ public class Card {
 			cardImage = ImageIO.read(imageFile);
 			cardImage = cardImage.getScaledInstance(getCardWidth(), getCardHeight(), Image.SCALE_DEFAULT);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -178,7 +179,6 @@ public class Card {
 	/**
 	 * returns the card in the form a of a JPanel
 	 * 
-	 * @param g2D
 	 * @return
 	 */
 	public JPanel draw()

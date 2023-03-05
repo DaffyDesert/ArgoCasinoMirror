@@ -24,8 +24,6 @@ public class MainMenu {
 	private void createMainMenu() {
 		mainMenuPanel.setLayout(new GridBagLayout());//Used to organize objects exactly as needed
 		
-		
-		
 		//Begins title card generation
 		JLabel title = new JLabel("Argo Casino");
 		title.setForeground(new java.awt.Color(0, 156, 222));
@@ -35,6 +33,7 @@ public class MainMenu {
 		GridBagConstraints titleConstraints = setConstraint(1, 0, 1, 1, 0, 5);
 		mainMenuPanel.add(title, titleConstraints);
 		mainMenuPanel.setBackground(new java.awt.Color(0, 122, 51));
+		
 		//Begins option generation
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridBagLayout());
@@ -55,7 +54,6 @@ public class MainMenu {
 		buttonPanel.add(userMenuButton, userConstraint);
 		buttonPanel.setBackground(new java.awt.Color(0, 122, 51));
 		
-		
 		JButton ExitButton = new JButton("Exit");
 		ExitButton.setForeground(new java.awt.Color(0, 156, 222));
 		ExitButton.setBackground(new java.awt.Color(0, 122, 51));
@@ -64,6 +62,7 @@ public class MainMenu {
 		buttonPanel.add(ExitButton, exitConstraint);
 		
 		mainMenuPanel.add(buttonPanel, buttonPanelConstraints);
+		
 		
 		//Necessary actionlisteners below, used to make buttons do things
 		startButton.addActionListener(new ActionListener() {
@@ -83,6 +82,7 @@ public class MainMenu {
 	private void createGameSelectMenu() {
 		gameSelectionPanel.setLayout(new GridBagLayout());
 		
+		//Title generation
 		JLabel title = new JLabel("Select a Game");
 		title.setForeground(new java.awt.Color(0, 156, 222));
 		title.setVerticalTextPosition(JLabel.NORTH);
@@ -92,6 +92,7 @@ public class MainMenu {
 		gameSelectionPanel.add(title, titleConstraints);
 		gameSelectionPanel.setBackground(new java.awt.Color(0, 122, 51));
 		
+		//Button generation
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridBagLayout());
 		GridBagConstraints buttonPanelConstraints = setConstraint(1, 1, 1, 2, 0, 0);
@@ -124,9 +125,12 @@ public class MainMenu {
 		GridBagConstraints backConstraint = setConstraint(1, 1, 1, 1, 0, 0);
 		buttonPanel.add(back, backConstraint);
 		
+		//Puts it all together
 		buttonPanel.setBackground(new java.awt.Color(0, 122, 51));
 		gameSelectionPanel.add(buttonPanel, buttonPanelConstraints);
 		
+		
+		//Necessary actionlisteners below
 		back.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				displayMainMenu();
@@ -174,11 +178,10 @@ public class MainMenu {
 		return windowPane;
 	}
 	
-	//Function Stubs for when War class is functional
+	//launches a game of War and displays it.
 	public void launchWar() {
 		War warGame = new War();
 		
-		gameSelectionPanel.setVisible(false);
 		windowPane.add(warGame.display());
 		windowPane.revalidate();
 		windowPane.repaint();

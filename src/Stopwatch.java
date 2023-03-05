@@ -22,8 +22,10 @@ public class Stopwatch implements Runnable {
 		label = new JLabel("Current Time: 00:00", JLabel.CENTER);
 	}
 
-	// startTimer captures the current time, which is the Start Time, then passes it
-	// to the task object before scheduling the task with the timer.
+	/*
+	 * startTimer captures the current time, which is the Start Time, then passes it
+	 * to the task object before scheduling the task with the timer.
+	 */
 	public void startTimer() {
 		startTime = LocalTime.now();
 		task = new UpdateTimer(startTime);
@@ -38,9 +40,6 @@ public class Stopwatch implements Runnable {
 	public void stopTimer() {
 		endTime = task.getTime();
 		timer.cancel();
-		/*
-		 * Test System.out.println("Time Stopped.\nFinal Time: " + dtf.format(endTime));
-		 */
 	}
 	
 	public void updateLabel() {
@@ -52,15 +51,19 @@ public class Stopwatch implements Runnable {
 		return endTime;
 	}
 
-	// updateTime is called by the inner TimerTask class. It uses the time
-	// calculated by the TimerTask to update the timer label.
+	/*
+	 * updateTime is called by the inner TimerTask class. It uses the time
+	 * calculated by the TimerTask to update the timer label.
+	 */
 	public void updateTime(LocalTime time) {
 		currTime = time;
 		label.setText("Current Time: " + dtf.format(currTime));
 	}
 
-	// display is called by the game class to retrieve the timer panel for use in
-	// the game window
+	/*
+	 * display is called by the game class to retrieve the timer panel for use in
+	 * the game window
+	 */
 	public JLabel display() {
 		return label;
 	}
@@ -70,14 +73,10 @@ public class Stopwatch implements Runnable {
 	 * automatically by the Thread.start() method.
 	 */
 	public void run() {
-		/*
-		 * Test System.out.println("Stopwatch Thread is running...");
-		 */
 
 		startTimer();
 
-		// This while loop keeps the run() function running as long as it needs before
-		// the stopwatch is stopped by an outside source.
+		// This while loop keeps the run() function running as long as it needs before the stopwatch is stopped by an outside source.
 		while (true) {
 			if (stopped) {
 				break;
@@ -90,22 +89,15 @@ public class Stopwatch implements Runnable {
 	}
 
 	/*
-	 * stopThread is called by the Game class to stop the timer thread. This should
-	 * also be called by the exit button on the gui to stop the thread before
-	 * shutting the program down. This is because threads are unaffected when other
-	 * threads close down or stop. If this is not called properly, the GUI will
-	 * close but the thread will remain. This can be done using DO_NOTHING_ON_CLOSE
-	 * and a WindowListener.
+	 * changes a boolean variable which will lead the thread to stop itself in run()
 	 */
 	public void stopThread() {
 		stopped = true;
 	}
 
 	/*
-	 * UpdateTimer is an inner class of Stopwatch. This is because timers require
-	 * separate TimerTask objects in order to work. In this case, we need the time
-	 * to be passed from the TimerTask back to the stopwatch, so making it an inner
-	 * class works best.
+	 * UpdateTimer is an inner class of Stopwatch. It extends TimerTask and has methods that are used to return the time
+	 * in the format we need it in for display.
 	 */
 	class UpdateTimer extends TimerTask {
 		private LocalTime startTime;
@@ -156,22 +148,19 @@ public class Stopwatch implements Runnable {
 		 */
 		@Override
 		public void run() {
-			// DecimalFormat is used to format the decimals of the ints so they can parse
-			// properly into the time object
+			// DecimalFormat is used to format the decimals of the ints so they can parse properly into the time object
 			DecimalFormat decFormat = new DecimalFormat("00");
 
 			// Captures the current time.
 			LocalTime currentTime = LocalTime.now();
 
-			// Subtracts the start time from the current time to get the elapsed time in
-			// each time field.
+			// Subtracts the start time from the current time to get the elapsed time in each time field.
 			hours = currentTime.get(ChronoField.HOUR_OF_DAY) - startTime.get(ChronoField.HOUR_OF_DAY);
 			minutes = currentTime.get(ChronoField.MINUTE_OF_HOUR) - startTime.get(ChronoField.MINUTE_OF_HOUR);
 			seconds = currentTime.get(ChronoField.SECOND_OF_MINUTE) - startTime.get(ChronoField.SECOND_OF_MINUTE);
 			checkValues(currentTime);
 
-			// combines the hours, minutes, and seconds into one string formatted as
-			// hh:mm:ss and then parses it into a LocalTime object.
+			// combines the hours, minutes, and seconds into one string formatted as hh:mm:ss and then parses it into a LocalTime object.
 			String timeString = decFormat.format(hours) + ":" + decFormat.format(minutes) + ":"
 					+ decFormat.format(seconds);
 			watchTime = LocalTime.parse(timeString, dtf);

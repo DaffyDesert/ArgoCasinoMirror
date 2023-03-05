@@ -201,6 +201,7 @@ public class CardStack extends JComponent{
 	public Card peekCard(int index) {
 		return stack.get(index);		
 	}
+	
 	/**
 	 * Shuffles the deck (the size of the deck does not matter) 
 	 */
@@ -269,9 +270,8 @@ public class CardStack extends JComponent{
 	}
 	
 	/**
-	 * STUBB 
-	 * 
 	 * prints the stack of cards to console by iterating from bottom to top
+	 * used for testing purposes
 	 */
 	public void printStack() {
 		for(Card stack: getStack()) {

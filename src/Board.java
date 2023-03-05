@@ -5,11 +5,11 @@ import java.util.ArrayList;
  * 
  * Class should eventually be abstract class to more defined GameBoard classes such as WarBoard, BlackJackBoard, etc..
  *
- * @author daniel
+ * @author DanielM
  * @date 2/18/23
  *
  */
-public abstract class Board {//Made abstract for... reasons
+public abstract class Board {
 
 	private ArrayList<CardStack> players = new ArrayList<>();
 	private ArrayList<CardStack> discardPiles = new ArrayList<>();
@@ -32,8 +32,6 @@ public abstract class Board {//Made abstract for... reasons
 			
 		if (numOfDecks > 1) 
 			getDeck().setStackName("x" + numOfDecks + " 52 Card Deck");
-		
-		deck.printStack();
 		
 	}
 	
@@ -60,8 +58,7 @@ public abstract class Board {//Made abstract for... reasons
 	
 	
 	/**
-	 * STUBB
-	 * prints the board 
+	 * prints the board for terminal testing
 	 */
 	public void printBoard() {
 		for(CardStack playerStack: getPlayers()) {
@@ -72,13 +69,4 @@ public abstract class Board {//Made abstract for... reasons
 		}
 		deck.printStack();
 	}
-	
-	/**
-	 * STUBB
-	 * 
-	 * How a board is drawn should be dictated by the type of Board it is - this should be implemented in the WarBoard, etc .. classes
-	 * 
-	 * paint the stack (gui version of printStack() STUBB)
-	 */
-	
 }
