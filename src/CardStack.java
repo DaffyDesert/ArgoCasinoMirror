@@ -16,111 +16,58 @@ public class CardStack extends JComponent{
 	
 	private String stackName;
 	private ArrayList<Card> stack = new ArrayList<>();
-	private int stackSize;
+	
+	public String getStackName() {return stackName;}
+	public void setStackName(String stackName) {this.stackName = stackName;}
+	public ArrayList<Card> getStack() {return stack;}
+	public void setStack(ArrayList<Card> stack) {this.stack = stack;}
+	public int getStackSize() {return stack.size();}
 	
 	public CardStack() {
-		setStackName("Stack");
-		stack.clear();
-		stackSize = stack.size();
+		setStackName("");
 	}
-
 	public CardStack(String stackName) {
-		stack.clear();
 		setStackName(stackName);
-		stackSize = stack.size();
 	}
-	
-	public CardStack(String stackName, Card card) {
-		setStack(card);
-		setStackName(stackName);
-		stackSize = stack.size();
+	public void createStandardDeck() {
+		for(int i = 0; i < 13; ++i) {
+			stack.add(new Card(i, "H"));
+			stack.add(new Card(i, "D"));
+			stack.add(new Card(i, "S"));
+			stack.add(new Card(i, "C"));
+		}
 	}
-	
-	public CardStack(String stackName, ArrayList<Card> stack) {
-		setStack(stack);
-		setStackName(stackName);
-		stackSize = stack.size();
+	public void addToTop(Card card) {
+		stack.add(card);
 	}
-	
-	public void addDeckToStack() {
-		Card workingCard;
-		
-		for(int s = 0; s < 4; s++)				// int s 0, 1, 2, 3 == suit hearts, diamonds, spades, clubs
-			for(int r = 0; r < 13; r++) {		// int r 0-12 == ace, 2-10, jack, queen, king
-				workingCard = new Card(r, s);	// Card constructor follows above structure
-				getStack().add(workingCard);
-			}
+	public void addToBottom(Card card) {
+		stack.add(0,card);
 	}
-
-	public String getStackName() {
-		return stackName;
-	}
-
-	public void setStackName(String stackName) {
-		this.stackName = stackName;
-	}
-
-	public ArrayList<Card> getStack() {
-		return stack;
-	}
-
-	public int getStackSize() {
-		return stack.size();
-	}
-
-	private void setStack(Card card) {
-		emptyStack();
-		getStack().add(card);
-	}
-
-
-	private void setStack(ArrayList<Card> stack) {
-		emptyStack();
-		getStack().addAll(stack);
-	}
-
-	public void addToTop(Card cardToAdd) {
-		getStack().add(cardToAdd);
-	}
-	
-	public void addToTop(ArrayList<Card> cardsToAdd) {
-		getStack().addAll(cardsToAdd);
-	}
-	
-	public void addToBottom(Card cardToAdd) {
-		getStack().add(0, cardToAdd);
-	}
-	
-	public void addToBottom(ArrayList<Card> cardsToAdd) {
-		getStack().addAll(0, cardsToAdd) ;;// stack is received in the order as if it were dealt dealTopCard()
-	}
-	
 	public Card dealTopCard() {
-		Card topCard = getStack().get(getStack().size()-1);
-		getStack().remove(getStack().size()-1);
-		return topCard;
+		Card temp = stack.get(stack.size() - 1);
+		getStack().remove(stack.size() - 1);
+		return temp;
 	}
-	
-	public ArrayList<Card> dealTopCard(int numOfCards) {
-		ArrayList<Card> topCards = new ArrayList<>();
-		for(int i = 0; i < numOfCards; i++)
-			topCards.add(dealTopCard());
-		return topCards;
-	}
-	
-	public void flipTopCard() {
-		getStack().get(stackSize-1).flipCard();
-	}
-
-	public void flipStack() {
-		for(Card stackToFlip: getStack())
-			stackToFlip.flipCard();
-	}
-
 	public Card peekCard(int index) {
-		return stack.get(index);		
+		return stack.get(index);
+	}
+	public void shuffleStack() {
+		ArrayList<Card> shuffledDeck = new ArrayList<>();
+		Random r = new Random();
+		
+		while(!getStack().isEmpty()) {
+			int cardToMove = r.nextInt(getStack().size());
+			shuffledDeck.add(getStack().get(cardToMove));
+		}
+		stack.clear();
+		
+		for(int i = 0; i < stack.size(); ++i) {
+			Card currCard = shuffledDeck.get(i);
+			stack.add(currCard);
+		}
 	}
 	
+	/*
 	public void shuffleStack() {
 		ArrayList<Card> shuffeledDeck = new ArrayList<>();
 		Random r = new Random();
@@ -177,7 +124,7 @@ public class CardStack extends JComponent{
 		System.out.println(getStackName() + " Stack Size: " + getStack().size());
 		System.out.println();
 	}
-	
+	*/
 }
 
 

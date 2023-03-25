@@ -18,94 +18,49 @@ public class Card {
 	
 	private int rank;
 	private String suit;
-	private String value;
 	private boolean faceDown;
 	private Image cardImage;
 	
-	public Card(int rank, int suit) { 
-		this.rank = rank;
+	public int getRank() {return rank;}
+	public void setRank(int rank) {this.rank = rank;}
+	public String getSuit() {return suit;}
+	public void setSuit(String suit) {this.suit = suit;}
+	public boolean isFaceDown() {return faceDown;}
+	public void setFaceDown(boolean faceDown) {this.faceDown = faceDown;}
+	
+	public Card(int rank, String suit) {
+		setRank(rank);
 		setSuit(suit);
-		setValue();
-		
-		faceDown = true;
+		setFaceDown(true);
 	}
-
-	public int getCardWidth() {
-		return CARD_WIDTH;
-	}
-
-	public int getCardHeight() {
-		return CARD_HEIGHT;
-	}
-
-	public int getRank() {
-		return rank;
-	}
-
-	public void setValue() {
-		if(getRank() == 9)
-			this.value = "J" + getSuit().charAt(0); 
-		else if(getRank() == 10)
-			this.value = "Q" + getSuit().charAt(0);
+	
+	private String rankToString() {
+		if(getRank() == 1)
+			return "A";
 		else if(getRank() == 11)
-			this.value = "K" + getSuit().charAt(0);
+			return "J";
 		else if(getRank() == 12)
-			this.value = "A" + getSuit().charAt(0);
+			return "Q";
+		else if(getRank() == 13)
+			return "K";
 		else
-			this.value = Integer.toString(rank+2) + getSuit().charAt(0);		
-
-	}
-	
-	public void setSuit(int suit) {
-		if(suit == 0)
-			this.suit = "Hearts";
-		else if(suit == 1)
-			this.suit = "Diamonds";
-		else if(suit == 2)
-			this.suit = "Spades";
-		else if(suit == 3)
-			this.suit = "Clubs";
-		else
-			this.suit = "error";		
-	}
-	
-	public String getSuit() {
-		return suit;
-	}
-	
-	public String getValue() {
-		return value;
-	}
-	
-
-	public boolean isFaceDown() {
-		return faceDown;
-	}
-
-	public void setFaceDown(boolean isFaceDown) {
-		this.faceDown = isFaceDown;
-	}
-
-	public void flipCard() {
-		if(faceDown == true)
-			setFaceDown(false);
-		else
-			setFaceDown(true);
+			return String.valueOf(getRank());
+		
 	}
 
 	public String toString() {
-		return getRank() + " of " + getSuit();
+		return rankToString() + getSuit();
 	}
 	
 	public  void setCardImage() {
 		try {
 			File imageFile;
 			if(isFaceDown() == false)
-				imageFile = new File("imgs/" + getValue() + ".png");
+				imageFile = new File("imgs/" + toString() + ".png");
 			else
 				imageFile = new File("imgs/FD.png");
 			cardImage = ImageIO.read(imageFile);
-			cardImage = cardImage.getScaledInstance(getCardWidth(), getCardHeight(), Image.SCALE_DEFAULT);
+			cardImage = cardImage.getScaledInstance(CARD_WIDTH, CARD_HEIGHT, Image.SCALE_DEFAULT);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

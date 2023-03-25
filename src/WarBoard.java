@@ -9,7 +9,6 @@ import javax.swing.JPanel;
  * WarBoard handles the logic for a game of War. It holds player 
  * card data and manipulates it on the game board. It also 
  * passes a JPanel display object to the War class for display.
-
  */
 
 public class WarBoard extends Board{
