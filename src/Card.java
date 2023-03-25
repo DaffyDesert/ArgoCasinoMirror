@@ -9,15 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- * Card class that holds a:
- * rank: ace, 2-10, jack, queen, king (13 possible values)
- * suit: heart, club, diamond, spade
- * value: combination of the rank and suit of a card (5H, KD)
- * faceDown: boolean if card value is showing or the back of the card is showing
- * 
- * @author danielMiller
- * @date 2/21/23
- * @version 1.0
+ * The Card class represents a playing card typical to most card games. It uses the Bicycle card deck as a guide for how it is designed.
  */
 public class Card {
 	
@@ -30,12 +22,6 @@ public class Card {
 	private boolean faceDown;
 	private Image cardImage;
 	
-	/**
-	 * Constructor
-	 *  sets card ranking Ace High
-	 * @param rank - ace, 2-10, jack, queen, king (13 possible integer values 0 to 12)
-	 * @param suit - heart, club, diamond, spade
-	 */
 	public Card(int rank, int suit) { 
 		this.rank = rank;
 		setSuit(suit);
@@ -44,35 +30,18 @@ public class Card {
 		faceDown = true;
 	}
 
-	/**
-	 * 
-	 * @return  CARD_WIDTH
-	 */
 	public int getCardWidth() {
 		return CARD_WIDTH;
 	}
 
-	/**
-	 * 
-	 * @return CARD_HEIGHT
-	 */
 	public int getCardHeight() {
 		return CARD_HEIGHT;
 	}
 
-	/**
-	 * return rank of the card
-	 * @return value
-	 */
 	public int getRank() {
 		return rank;
 	}
 
-	/**
-	 * set the value of the suit
-	 * 
-	 * e.g rank = 7 and suit = Hearts -> value ="7H"
-	 */
 	public void setValue() {
 		if(getRank() == 9)
 			this.value = "J" + getSuit().charAt(0); 
@@ -87,10 +56,6 @@ public class Card {
 
 	}
 	
-	/**
-	 * Set the suit of the cards 
-	 * @param suit - suit to set (heart, diamonds, spades, clubs)
-	 */
 	public void setSuit(int suit) {
 		if(suit == 0)
 			this.suit = "Hearts";
@@ -104,41 +69,23 @@ public class Card {
 			this.suit = "error";		
 	}
 	
-	/**
-	 * 
-	 * @return the suit of the card
-	 */
 	public String getSuit() {
 		return suit;
 	}
 	
-	/**
-	 * @return the value of the card
-	 */
 	public String getValue() {
 		return value;
 	}
 	
-	/**
-	 * 
-	 * @return if card is face down 
-	 */
+
 	public boolean isFaceDown() {
 		return faceDown;
 	}
 
-	/**
-	 * set faceDown value to the provided boolean parameter
-	 * 
-	 * @param isFaceDown - value to set faceDown equal to
-	 */
 	public void setFaceDown(boolean isFaceDown) {
 		this.faceDown = isFaceDown;
 	}
 
-	/**
-	 * changes the faceDown boolean value to it's opposite (turns true to false and false to true)
-	 */
 	public void flipCard() {
 		if(faceDown == true)
 			setFaceDown(false);
@@ -146,17 +93,10 @@ public class Card {
 			setFaceDown(true);
 	}
 
-	/**
-	 * returns a String representing the verbose value of a card
-	 * format:  "<rank> of <suit>"
-	 */
 	public String toString() {
 		return getRank() + " of " + getSuit();
 	}
 	
-	/**
-	 * PRIVATE function used to set the image of the card based on its faceDown boolean value (true = backOfCard)
-	 */
 	public  void setCardImage() {
 		try {
 			File imageFile;
@@ -176,11 +116,6 @@ public class Card {
 		return cardImage;
 	}
 	
-	/**
-	 * returns the card in the form a of a JPanel
-	 * 
-	 * @return
-	 */
 	public JPanel draw()
 	{
 		setCardImage();

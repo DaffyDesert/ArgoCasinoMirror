@@ -1,13 +1,7 @@
 import java.util.ArrayList;
 
 /**
- * Board class that will create a playing area for cards and stack of cards to be created and manipulated
- * 
- * Class should eventually be abstract class to more defined GameBoard classes such as WarBoard, BlackJackBoard, etc..
- *
- * @author DanielM
- * @date 2/18/23
- *
+ *	Board is an abstract class that is extended by the individual games’ Board classes. This handles any card logic that is shared between games.
  */
 public abstract class Board {
 
@@ -35,31 +29,19 @@ public abstract class Board {
 		
 	}
 	
-	/**
-	 * @return the players
-	 */
 	public ArrayList<CardStack> getPlayers() {
 		return players;
 	}
 
-	/**
-	 * @return the discardPiles
-	 */
 	public ArrayList<CardStack> getDiscardPiles() {
 		return discardPiles;
 	}
 
-	/**
-	 * @return the deck
-	 */
 	public CardStack getDeck() {
 		return deck;
 	}
 	
 	
-	/**
-	 * prints the board for terminal testing
-	 */
 	public void printBoard() {
 		for(CardStack playerStack: getPlayers()) {
 			playerStack.printStack();

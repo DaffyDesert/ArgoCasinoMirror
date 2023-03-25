@@ -6,10 +6,10 @@ import java.awt.GridLayout;
 import javax.swing.JPanel;
 
 /**
- * Handles the turns and moves in a game of war
- * @author zw_ch
- * @author danielM @date 3/1/23
- *
+ * WarBoard handles the logic for a game of War. It holds player 
+ * card data and manipulates it on the game board. It also 
+ * passes a JPanel display object to the War class for display.
+
  */
 
 public class WarBoard extends Board{
@@ -74,39 +74,30 @@ public class WarBoard extends Board{
 		return compare();
 	}
   
-  
-	/**
-	 * Compares the top two cars of the winnerSpoils stack
-	 * Assumes enemy added card to stack first
-	 * 
-	 * cards will be added to the bottom of the winning players stack (based on greatest rank value)
-	 * ties will call goToWar()
-	 * 
-	 */
 	private boolean compare() {
 		int comparisonValue;
 		
-		comparisonValue = getWinnerSpoils().peekCard(getWinnerSpoils().getStackSize()-2).getRank()		//enemyCard Rank
-							-																			// subtracted by
-							getWinnerSpoils().peekCard(getWinnerSpoils().getStackSize()-1).getRank();	//playerCard Rank
+		comparisonValue = getWinnerSpoils().peekCard(getWinnerSpoils().getStackSize()-2).getRank()		
+							-																			
+							getWinnerSpoils().peekCard(getWinnerSpoils().getStackSize()-1).getRank();	
 		
-		if(comparisonValue < 0) { //player win
+		if(comparisonValue < 0) { 
 			getPlayerStack().addToBottom(getWinnerSpoils().getStack());
 			getWinnerSpoils().getStack().clear();
-			getPlayerZone().getStack().clear(); //New
+			getPlayerZone().getStack().clear(); 
 			getEnemyZone().getStack().clear();
       
 			return true;
 		}
-		else if(comparisonValue > 0) { //enemy win
+		else if(comparisonValue > 0) { 
 			getEnemyStack().addToBottom(getWinnerSpoils().getStack());
 			getWinnerSpoils().getStack().clear();
-			getPlayerZone().getStack().clear(); //New
+			getPlayerZone().getStack().clear(); 
 			getEnemyZone().getStack().clear();
 
 			return true;
 		}
-		else if(comparisonValue == 0) { //tie
+		else if(comparisonValue == 0) {
 			return goToWar();
 		}
 		else {
@@ -115,15 +106,6 @@ public class WarBoard extends Board{
 		}
 	}
 
-	/**
-	 * deals the two treasure cards(one from each player) to the winnerSpoils stack
-	 * 
-	 * then calls turn() to initiate a draw and comparison to see who wins the current spoils stack
-	 * 
-	 * @param enemyStack
-	 * @param playerStack
-	 * @return True-player won False-enemy won
-	 */
 	public boolean goToWar() {
 		if(checkWinStatus() != 2)
 			return false;
@@ -134,14 +116,6 @@ public class WarBoard extends Board{
 		return turn();
 	}
 
-	/**
-	 * statusReturnCode:
-	 * 2 = continue
-	 * 1 = player win
-	 * 0 = tie
-	 * -1 = enemy win
-	 * @return
-	 */
 	public int checkWinStatus() {
 		int statusReturnCode = 2;
 		if (getEnemyStack().getStackSize() == 0 && getPlayerStack().getStackSize() == 0) //TIE - EXTREMELY UNLIKLEY BUT POSSIBLE
@@ -154,7 +128,6 @@ public class WarBoard extends Board{
 		return statusReturnCode;
 	}
 	
-	//Added to danny's stuff
 	public JPanel drawBoard() {
 		Color felt = new Color(10, 108, 3);
 		

@@ -3,13 +3,24 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+/**
+ * The MainMenu class handles the display and logic of the game’s main menu, which is 
+ * where users will return to both before and after any card game they play. The main 
+ * menu has 3 options: Start Game, User Menu, and Exit. User Menu has not been 
+ * implemented at this time. Exit will close the program. Start Game will bring the 
+ * user to a menu to select one of 3 games: Solitaire, War, or Blackjack. Solitaire 
+ * and Blackjack have not been implemented at this time. Selecting War will launch a game 
+ * of war. MainMenu also calls and launches games and passes their displays to the 
+ * GameWindow class for display.
+
+ */
+
 public class MainMenu {
 	private JPanel windowPane;
 	private JPanel mainMenuPanel;
 	private JPanel gameSelectionPanel;
 	
 	public MainMenu() {
-		//Initializes all panels to new JPanel objects
 		windowPane = new JPanel();
 		gameSelectionPanel = new JPanel();
 		mainMenuPanel = new JPanel();
@@ -17,14 +28,12 @@ public class MainMenu {
 		createGameSelectMenu();
 		createMainMenu();
 		
-		//Sets default menu on launch to be the main menu
 		windowPane.add(mainMenuPanel);
 	}
 	
 	private void createMainMenu() {
-		mainMenuPanel.setLayout(new GridBagLayout());//Used to organize objects exactly as needed
+		mainMenuPanel.setLayout(new GridBagLayout());
 		
-		//Begins title card generation
 		JLabel title = new JLabel("Argo Casino");
 		title.setForeground(new java.awt.Color(0, 156, 222));
 		title.setVerticalTextPosition(JLabel.NORTH);
@@ -34,7 +43,6 @@ public class MainMenu {
 		mainMenuPanel.add(title, titleConstraints);
 		mainMenuPanel.setBackground(new java.awt.Color(0, 122, 51));
 		
-		//Begins option generation
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridBagLayout());
 		GridBagConstraints buttonPanelConstraints = setConstraint(1, 1, 1, 2, 0, 0);
@@ -64,7 +72,6 @@ public class MainMenu {
 		mainMenuPanel.add(buttonPanel, buttonPanelConstraints);
 		
 		
-		//Necessary actionlisteners below, used to make buttons do things
 		startButton.addActionListener(new ActionListener() {
 			public void actionPerformed (ActionEvent e) {
 				displayGameSelect();
@@ -82,7 +89,6 @@ public class MainMenu {
 	private void createGameSelectMenu() {
 		gameSelectionPanel.setLayout(new GridBagLayout());
 		
-		//Title generation
 		JLabel title = new JLabel("Select a Game");
 		title.setForeground(new java.awt.Color(0, 156, 222));
 		title.setVerticalTextPosition(JLabel.NORTH);
@@ -92,7 +98,6 @@ public class MainMenu {
 		gameSelectionPanel.add(title, titleConstraints);
 		gameSelectionPanel.setBackground(new java.awt.Color(0, 122, 51));
 		
-		//Button generation
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridBagLayout());
 		GridBagConstraints buttonPanelConstraints = setConstraint(1, 1, 1, 2, 0, 0);
@@ -125,19 +130,15 @@ public class MainMenu {
 		GridBagConstraints backConstraint = setConstraint(1, 1, 1, 1, 0, 0);
 		buttonPanel.add(back, backConstraint);
 		
-		//Puts it all together
 		buttonPanel.setBackground(new java.awt.Color(0, 122, 51));
 		gameSelectionPanel.add(buttonPanel, buttonPanelConstraints);
 		
-		
-		//Necessary actionlisteners below
 		back.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				displayMainMenu();
 			}
 		});
 		
-		//Used when war class is functional.
 		war.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				launchWar();
@@ -145,7 +146,6 @@ public class MainMenu {
 		});
 	}
 	
-	//Quick helper function that formats GridConstraints in 1 line rather than several.
 	private GridBagConstraints setConstraint(int x, int y, int width, int height, int xpad, int ypad) {
 		GridBagConstraints newConstraint = new GridBagConstraints();
 		newConstraint.gridx = x;
@@ -157,7 +157,6 @@ public class MainMenu {
 		return newConstraint;
 	}
 	
-	//Changes the current view to the game selection screen
 	public void displayGameSelect() {
 		windowPane.removeAll();
 		windowPane.add(gameSelectionPanel);
@@ -165,7 +164,6 @@ public class MainMenu {
 		windowPane.repaint();
 	}
 	
-	//Changes the current view to the main menu screen
 	public void displayMainMenu() {
 		windowPane.removeAll();
 		windowPane.add(mainMenuPanel);
@@ -173,12 +171,10 @@ public class MainMenu {
 		windowPane.repaint();
 	}
 	
-	//Returns current view to the Game Window for display. Changes to current view will reflect
 	public JPanel display() {
 		return windowPane;
 	}
 	
-	//launches a game of War and displays it.
 	public void launchWar() {
 		War warGame = new War();
 		
