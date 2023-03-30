@@ -1,10 +1,17 @@
-public class BlackjackUser {
+public class User {
     private String name;
     private double currency;
     private boolean isAdmin;
     private int blackjackHighScore;
 
-    public BlackjackUser(String name, double currency, boolean isAdmin, int blackjackHighScore) {
+    public User() {
+    	name = "NoName";
+    	currency = 500;
+    	isAdmin = false;
+    	blackjackHighScore = 0;
+    }
+    
+    public User(String name, double currency, boolean isAdmin, int blackjackHighScore) {
         this.name = name;
         this.currency = currency;
         this.isAdmin = isAdmin;
