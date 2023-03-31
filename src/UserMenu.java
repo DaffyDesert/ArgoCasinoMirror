@@ -1,5 +1,10 @@
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -72,19 +77,80 @@ public class UserMenu {
 		selectedUser = Users.get(index);
 	}
 	
+	//File I/O simply is not working. Cannot get it to work the way I was before in intermediate
+	//Also not able to figure it out with online tutorials. Will try again when brain is less fried.
 	public void saveAllUserData() {
-			FileOutputStream outFileStream;
+		PrintWriter out;
+		File saveFile;
+		File generalSave;
+			
+		generalSave = new File("./general.txt");
+		
+		try {
+			generalSave.createNewFile();
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
+		try {
+			out = new PrintWriter(generalSave);
+			out.println(numUsers);
+			out.close();
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		for (int i = 0; i < numUsers; i++) {
+			saveFile = new File("./user" + i + ".txt");
 			
+			try {
+				saveFile.createNewFile();
+			} catch (IOException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			
+			try {
+				out = new PrintWriter(saveFile);
+				out.println(Users.get(i).toString());
+				out.close();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.exit(1);
+			}
 		}
 	}
 	
 	public void loadAllUserData() {
-		
+		User user1 = new User("DaffyDesert", 100, true, 0);
+		User user2 = new User("RoeMello", 500, false, 0);
+		User user3 = new User();
+		Users.add(user1);
+		Users.add(user2);
+		Users.add(user3);
+		numUsers = 3;
 	}
 	
 	public void deleteAllUserData() {
 		
+	}
+
+	public ArrayList<User> getUsers() {
+		return Users;
+	}
+
+	public int getNumUsers() {
+		return numUsers;
+	}
+
+	public void setNumUsers(int numUsers) {
+		this.numUsers = numUsers;
+	}
+
+	public void setSelectedUser(User selectedUser) {
+		this.selectedUser = selectedUser;
 	}
 }

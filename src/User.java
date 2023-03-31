@@ -1,3 +1,4 @@
+//This class is outdated. Roe has created a new one. Grab that before you start working again.
 public class User {
     private String name;
     private double currency;
@@ -16,6 +17,17 @@ public class User {
         this.currency = currency;
         this.isAdmin = isAdmin;
         this.blackjackHighScore = blackjackHighScore;
+    }
+    
+    @Override
+    public String toString() {
+    	if (isAdmin) {
+    		return name + " " + currency + " admin " + blackjackHighScore;
+    	}
+    	else {
+    		return name + " " + currency + " notadmin " + blackjackHighScore;
+    	}
+    	
     }
 
      // getters and setters
