@@ -87,6 +87,10 @@ public class Card {
 
 	}
 	
+	public void setRank(int rank) {
+		this.rank = rank;
+	}
+	
 	/**
 	 * Set the suit of the cards 
 	 * @param suit - suit to set (heart, diamonds, spades, clubs)

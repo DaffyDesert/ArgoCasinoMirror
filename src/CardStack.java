@@ -190,7 +190,7 @@ public class CardStack extends JComponent{
 	 * Flips the top card of the stack
 	 */
 	public void flipTopCard() {
-		getStack().get(stackSize-1).flipCard();
+		getStack().get(getStackSize() - 1).flipCard();
 	}
 
 	public void flipStack() {
@@ -238,7 +238,7 @@ public class CardStack extends JComponent{
 	 * function to clear the stack
 	 * only used in constructor atm - could be removed?
 	 */
-	private void emptyStack() {
+	public void emptyStack() {
 		getStack().clear();
 	}
 
