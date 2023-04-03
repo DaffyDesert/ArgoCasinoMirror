@@ -30,7 +30,7 @@ public class CardStack extends JComponent{
 		setStackName(stackName);
 	}
 	public void createStandardDeck() {
-		for(int i = 0; i < 13; ++i) {
+		for(int i = 1; i <= 13; ++i) {
 			stack.add(new Card(i, "H"));
 			stack.add(new Card(i, "D"));
 			stack.add(new Card(i, "S"));
@@ -52,18 +52,15 @@ public class CardStack extends JComponent{
 		return stack.get(index);
 	}
 	public void shuffleStack() {
-		ArrayList<Card> shuffledDeck = new ArrayList<>();
+		int size = stack.size();
 		Random r = new Random();
 		
-		while(!getStack().isEmpty()) {
-			int cardToMove = r.nextInt(getStack().size());
-			shuffledDeck.add(getStack().get(cardToMove));
-		}
-		stack.clear();
-		
-		for(int i = 0; i < stack.size(); ++i) {
-			Card currCard = shuffledDeck.get(i);
-			stack.add(currCard);
+		for(int i = 0; i < size; ++i) {
+			Card currCard = stack.get(i);
+			int randVal = i + r.nextInt(size - i);
+			Card randCard = stack.get(randVal);
+			stack.set(randVal, currCard);
+			stack.set(i, randCard);
 		}
 	}
 	

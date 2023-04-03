@@ -60,23 +60,28 @@ public class WarBoard extends Board{
 		getWinnerSpoils().addToTop(enemyCard);
 		getWinnerSpoils().addToTop(playerCard);
 		
-		enemyCard.flipCard();
-		playerCard.flipCard();
+		enemyCard.setFaceDown(false);
+		playerCard.setFaceDown(false);
 		
 		getPlayerZone().addToTop(playerCard);
 		getEnemyZone().addToTop(enemyCard);
 		
 		drawBoard();
-		enemyCard.flipCard(); 
-		playerCard.flipCard();		
+		enemyCard.setFaceDown(false);
+		playerCard.setFaceDown(false);		
 		
-		return compare();
+		return compare(playerCard, enemyCard);
 	}
   
-	private boolean compare() {
-		int comparisonValue;
+	public boolean compare(Card playerCard, Card enemyCard) {
+		if(playerCard.getRank() == 1 || playerCard.getRank() > enemyCard.getRank()) {
+			return true;
+		}
+		else 
+			return false;
 		
-		comparisonValue = getWinnerSpoils().peekCard(getWinnerSpoils().getStackSize()-2).getRank()		
+		
+		/*comparisonValue = getWinnerSpoils().peekCard(getWinnerSpoils().getStackSize()-2).getRank()		
 							-																			
 							getWinnerSpoils().peekCard(getWinnerSpoils().getStackSize()-1).getRank();	
 		
@@ -103,6 +108,7 @@ public class WarBoard extends Board{
 			System.out.print("ERROR AT compare()");
 			return false;
 		}
+		*/
 	}
 
 	public boolean goToWar() {
