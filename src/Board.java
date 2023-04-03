@@ -22,7 +22,7 @@ public abstract class Board {
 			getDiscardPiles().add(discardPileToAdd);
 		}
 		for(int i = 0; i < numOfDecks; i++)
-			deck.addDeckToStack();
+			deck.createStandardDeck();;
 			
 		if (numOfDecks > 1) 
 			getDeck().setStackName("x" + numOfDecks + " 52 Card Deck");

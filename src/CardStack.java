@@ -67,21 +67,7 @@ public class CardStack extends JComponent{
 		}
 	}
 	
-	/*
-	public void shuffleStack() {
-		ArrayList<Card> shuffeledDeck = new ArrayList<>();
-		Random r = new Random();
-		
-		while(!getStack().isEmpty()) {
-			int cardToMove = r.nextInt(getStack().size());
-			shuffeledDeck.add(getStack().get(cardToMove));
-			getStack().remove(cardToMove);
-		}
-		
-		setStack(shuffeledDeck);
-	}
-	
-	public ArrayList<CardStack> dealEvenlyTo(ArrayList<CardStack> stacksToBeDealtTo) {
+	public ArrayList<CardStack> dealEvenlyTo(ArrayList <CardStack> stacksToBeDealtTo) {
 		int numRecievingStacks = stacksToBeDealtTo.size();
 		int cardsEach = stack.size()/numRecievingStacks;
 
@@ -91,10 +77,15 @@ public class CardStack extends JComponent{
 		return stacksToBeDealtTo;
 	}
 	
-	private void emptyStack() {
-		getStack().clear();
+	public void printStack() {
+		for(Card stack: getStack()) {
+			System.out.printf(stack.toString() + " ");
+		}
+		System.out.println();
+		System.out.println(getStackName() + " Stack Size: " + getStack().size());
+		System.out.println();
 	}
-
+	
 	public JPanel draw() {
 		Color feltGreen = new Color(10, 108, 3);
 		JPanel cardStack = new JPanel();
@@ -116,15 +107,7 @@ public class CardStack extends JComponent{
 		return cardStack;
 	}
 	
-	public void printStack() {
-		for(Card stack: getStack()) {
-			System.out.printf(stack.getValue() + " ");
-		}
-		System.out.println();
-		System.out.println(getStackName() + " Stack Size: " + getStack().size());
-		System.out.println();
-	}
-	*/
+
 }
 
 
