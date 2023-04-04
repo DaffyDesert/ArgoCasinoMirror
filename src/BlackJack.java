@@ -3,7 +3,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class BlackJack  extends JPanel implements Game {
-	private Stopwatch stopWatch;
+	private Stopwatch stopwatch;
 	private Thread thread;
 	private JPanel board;
 	private JPanel statusBar;
@@ -15,68 +15,35 @@ public class BlackJack  extends JPanel implements Game {
 	private JPanel deckAndHandsPanel;
 	private JButton hit;
 	private JButton hold;
+	private BlackJackBoard blackJack;
+	int winCondition;
+	boolean turnIsOver;
 	
-	//These Cardstacks are for testing purposes and will be remove once I implement the blackjack board class
-	
-	//Player hand
-	private CardStack testHand;
-	
-	//Dealer hand
-	private CardStack testHand2;
-	
-	//Adds cards to the Player Hand
-	private CardStack testHandHit;
 	
 	public BlackJack() {
-		stopWatch = new Stopwatch();
-		thread = new Thread(stopWatch);
-		
-		//Remove this section when the blackjack board class is implemented 
-		Card testCard1 = new Card(0,0);
-		Card testCard2 = new Card(4,0);
-		Card testCard3 = new Card(5,0);
-		
-		Card testCard4 = new Card(1,0);
-		Card testCard5 = new Card(2,0);
-		Card testCard6 = new Card(3,0);
-		
-		
-		
-		testHand = new CardStack();
-		testHand2 = new CardStack();
-		
-		testHandHit = new CardStack();
-
-		testHand.addToBottom(testCard1);
-		testHand.addToBottom(testCard2);
-		testHand.addToBottom(testCard3);
-		
-		testHand2.addToBottom(testCard1);
-		testHand2.addToBottom(testCard2);
-		testHand2.addToBottom(testCard3);
-		
-		testHandHit.addToBottom(testCard4);
-		testHandHit.addToBottom(testCard5);
-		testHandHit.addToBottom(testCard6);
-		
-		
+		stopwatch = new Stopwatch();
+		thread = new Thread(stopwatch);
+		blackJack = new BlackJackBoard();
 	}
 	
 	@Override
 	public void startWatch() {
 		thread.start();
-		
 	}
 
 	@Override
 	public void startGame() {
 		startWatch();
-		
+		blackJack.setBoard();
+		if(blackJack.is21(blackJack.playerHand())) {
+			winCondition = 1;
+			board.add(showGameOverScreen(),BorderLayout.CENTER);
+		}
 	}
 
 	@Override
 	public void stopWatch() {
-		stopWatch.stopThread();
+		stopwatch.stopThread();
 		
 	}
 
@@ -165,14 +132,14 @@ public class BlackJack  extends JPanel implements Game {
 		statusBar.setBounds(0,0,1270,144);
 		statusBar.setLayout(new BorderLayout());
 		statusBar.setBackground(new java.awt.Color(0, 122, 51));
-		statusBar.add(stopWatch.display(), BorderLayout.SOUTH);
+		statusBar.add(stopwatch.display(), BorderLayout.SOUTH);
 	}
 	
 	public void playerHandPanelBuilder() {
 		playerHandPanel = new JPanel();	
 		playerHandPanel.setLayout(new FlowLayout());
 		playerHandPanel.setBackground(new java.awt.Color(0, 122, 51));
-		showCards(playerHandPanel,testHand,false);
+		showCards(playerHandPanel,blackJack.playerHand(),false);
 		playerHandPanel.revalidate();			
 	}
 	
@@ -180,27 +147,17 @@ public class BlackJack  extends JPanel implements Game {
 		dealerHandPanel = new JPanel();
 		dealerHandPanel.setLayout(new FlowLayout());
 		dealerHandPanel.setBackground(new java.awt.Color(0,122,51));		
-		showCards(dealerHandPanel,testHand2,true);
+		showCards(dealerHandPanel,blackJack.dealerHand(),true);
 		dealerHandPanel.revalidate();
 	}
 	
 	public void showCards(JPanel handPanel,CardStack hand, boolean faceDown) {
 		JLabel cards;
 		for(int i = 0; i < hand.getStackSize(); i++) {
-			
-			//sets the first card to be face down
-			if(i == 0) {
-				hand.getStack().get(i).setFaceDown(true);
-				hand.getStack().get(i).setCardImage();
-				cards = new JLabel(new ImageIcon(hand.getStack().get(i).getCardImage()));
-				handPanel.add(cards);
-			}
-			else {
-				hand.getStack().get(i).setFaceDown(faceDown);
-				hand.getStack().get(i).setCardImage();
-				cards = new JLabel(new ImageIcon(hand.getStack().get(i).getCardImage()));
-				handPanel.add(cards);
-			}
+			hand.getStack().get(i).setFaceDown(faceDown);
+			hand.getStack().get(i).setCardImage();
+			cards = new JLabel(new ImageIcon(hand.getStack().get(i).getCardImage()));
+			handPanel.add(cards);
 		}
 	}
 	
@@ -217,39 +174,45 @@ public class BlackJack  extends JPanel implements Game {
 	private class hitButtonListner implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			updatePlayerHand();
+			turn();
+			if(turnIsOver) {
+				board.add(showGameOverScreen(),BorderLayout.CENTER);
+			}
+			
 		}
 	}
 	
 	private class holdButtonListner implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			board.remove(deckAndHandsPanel);
-			board.remove(buttonPanel);
+			blackJack.stay();
+			winCondition = isOver();
 			board.add(showGameOverScreen(),BorderLayout.CENTER);
 		}
 	}
 	
 	public void updatePlayerHand() {
-		Card newCard = testHandHit.dealTopCard();
-		testHand.addToTop(newCard);
+		blackJack.hit(blackJack.playerHand());
 		playerHandPanelBuilder();
 		deckAndHandsPanel.add(playerHandPanel,BorderLayout.SOUTH);
 	}
 	
 	public void updateDealerHand() {
-		Card newCard = new Card(0,2);
-		testHand2.addToTop(newCard);
 		dealerHandPanelBuilder();
 		deckAndHandsPanel.add(dealerHandPanel,BorderLayout.NORTH);
 	}
 	
 	public void gameOverScreenPanelBuilder(int gameOverCondition) {
+		
+		board.remove(deckAndHandsPanel);
+		board.remove(buttonPanel);
+		
 		gameOverScreenPanel = new JPanel();
 		gameOverScreenPanel.setLayout(new BorderLayout());
 		gameOverScreenPanel.setBackground(new java.awt.Color(0,122,51));
 		
 		
-		showCardsFaceUp(dealerHandPanel,testHand2);
-		showCardsFaceUp(playerHandPanel,testHand);
+		showCardsFaceUp(dealerHandPanel,blackJack.dealerHand());
+		showCardsFaceUp(playerHandPanel,blackJack.playerHand());
 		
 		gameOverScreenPanel.add(dealerHandPanel,BorderLayout.NORTH);
 		gameOverScreenPanel.add(playerHandPanel,BorderLayout.SOUTH);
@@ -278,22 +241,55 @@ public class BlackJack  extends JPanel implements Game {
 
 	@Override
 	public int isOver() {
-		// TODO Auto-generated method stub
-		return 0;
+		int playerHandTotal = blackJack.handTotal(blackJack.playerHand());
+		int dealerHandTotal = blackJack.handTotal(blackJack.dealerHand());
+		CardStack playerHand = blackJack.playerHand();
+		CardStack dealerHand = blackJack.dealerHand();
+		
+		if(blackJack.isBust(playerHand)) {
+			return 2;
+		}
+		else if(blackJack.isBust(dealerHand)) {
+			return 1;
+		}
+		
+		else if((blackJack.is21(playerHand)) || (playerHandTotal > dealerHandTotal)) {
+			return 1;
+		}
+		
+		else if((blackJack.is21(dealerHand)) || (dealerHandTotal > playerHandTotal)){
+			return 3;
+		}
+		
+		else {
+			return 3;
+		}
+		
 	}
 
 	@Override
 	public boolean turn() {
-		// TODO Auto-generated method stub
-		return false;
+		if(blackJack.isBust(blackJack.playerHand())) {
+			winCondition = 2;
+			turnIsOver = true;
+		}
+		
+		else if(blackJack.is21(blackJack.playerHand())) {
+			winCondition = 1;
+			turnIsOver = true;
+		}
+		else {
+			turnIsOver = false;
+		}
+		return turnIsOver;
 	}
 
 	
 	
 	@Override
 	public JPanel showGameOverScreen() {
-		// going to use the isOver method as the parameter for the gameOverScreenBuilder
-		gameOverScreenPanelBuilder(2);
+		stopGame();
+		gameOverScreenPanelBuilder(winCondition);
 		return gameOverScreenPanel;
 	}
 
