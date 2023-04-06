@@ -64,14 +64,15 @@ public class CardStack extends JComponent{
 		}
 	}
 	
-	public ArrayList<CardStack> dealEvenlyTo(ArrayList <CardStack> stacksToBeDealtTo) {
-		int numRecievingStacks = stacksToBeDealtTo.size();
-		int cardsEach = stack.size()/numRecievingStacks;
-
-		for(int x = 0; x < cardsEach; x++)
-			for(int y = 0; y < numRecievingStacks; y++)
-				stacksToBeDealtTo.get(y).addToTop(dealTopCard());
-		return stacksToBeDealtTo;
+	public void dealEvenlyTo(CardStack mainDeck, CardStack cs1, CardStack cs2) {
+		
+		while(!mainDeck.getStack().isEmpty()) {
+			Card card1 = mainDeck.dealTopCard();
+			Card card2 = mainDeck.dealTopCard();
+			
+			cs1.addToTop(card1);
+			cs2.addToTop(card2);
+		}
 	}
 	
 	public void printStack() {

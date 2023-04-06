@@ -11,60 +11,46 @@ import javax.swing.JPanel;
  * passes a JPanel display object to the War class for display.
  */
 
-public class WarBoard extends Board{
+public class WarBoard{
 	
 	JPanel mainPanel;
+	CardStack playerStack;	
+	CardStack enemyStack;
+	CardStack winnerSpoils;
+	CardStack playerZone;
+	CardStack enemyZone;
 	
 	public WarBoard() {
-		super(2, 3, 1);
-		getPlayers().get(0).setStackName("Enemy Stack");
-		getPlayers().get(1).setStackName("Player Stack");
-		getDiscardPiles().get(0).setStackName("Winner Spoils");
-		getDiscardPiles().get(1).setStackName("Player Zone");
-		getDiscardPiles().get(2).setStackName("Enemy Zone");
+		CardStack standDeck = new CardStack();
+		playerStack = new CardStack("Player Stack");
+		enemyStack = new CardStack("Enemy Stack");
+		winnerSpoils = new CardStack("Winner Spoils");
+		playerZone = new CardStack();
+		enemyZone = new CardStack();
 		
-		getDeck().shuffleStack();
-		getDeck().dealEvenlyTo(getPlayers());
+		standDeck.createStandardDeck();
+		standDeck.shuffleStack();
+		standDeck.dealEvenlyTo(standDeck, playerStack, enemyStack);
+		playerStack.printStack();
+		enemyStack.printStack();
 		
 		mainPanel = new JPanel();
-	}
-	
-	public CardStack getPlayerStack() {
-		return getPlayers().get(1);
-	}
-	
-	public CardStack getEnemyStack() {
-		return getPlayers().get(0);
-
-	}
-	
-	public CardStack getWinnerSpoils() {
-		return getDiscardPiles().get(0);
-	}
-	
-	
-	public CardStack getPlayerZone() {
-		return getDiscardPiles().get(1);
-	}
-
-	public CardStack getEnemyZone() {
-		return getDiscardPiles().get(2);
 	}
 	
 	public boolean turn() {
 		if(checkWinStatus() != 2)
 			return false;
-		Card enemyCard = getEnemyStack().dealTopCard();
-		Card playerCard = getPlayerStack().dealTopCard();
+		Card enemyCard = enemyStack.dealTopCard();
+		Card playerCard = playerStack.dealTopCard();
 		
-		getWinnerSpoils().addToTop(enemyCard);
-		getWinnerSpoils().addToTop(playerCard);
+		winnerSpoils.addToTop(enemyCard);
+		winnerSpoils.addToTop(playerCard);
 		
 		enemyCard.setFaceDown(false);
 		playerCard.setFaceDown(false);
 		
-		getPlayerZone().addToTop(playerCard);
-		getEnemyZone().addToTop(enemyCard);
+		playerZone.addToTop(playerCard);
+		enemyZone.addToTop(enemyCard);
 		
 		drawBoard();
 		enemyCard.setFaceDown(false);
@@ -74,60 +60,51 @@ public class WarBoard extends Board{
 	}
   
 	public boolean compare(Card playerCard, Card enemyCard) {
-		if(playerCard.getRank() == 1 || playerCard.getRank() > enemyCard.getRank()) {
+		
+		System.out.println("Comparing cards: Player - " + playerCard.toString() + " Enemy Card - " + enemyCard.toString());
+		if(playerCard.getRank() == 1) {
+			while(!winnerSpoils.getStack().isEmpty()) 
+				playerStack.addToBottom(winnerSpoils.dealTopCard());
+			
 			return true;
 		}
-		else 
-			return false;
-		
-		
-		/*comparisonValue = getWinnerSpoils().peekCard(getWinnerSpoils().getStackSize()-2).getRank()		
-							-																			
-							getWinnerSpoils().peekCard(getWinnerSpoils().getStackSize()-1).getRank();	
-		
-		if(comparisonValue < 0) { 
-			getPlayerStack().addToBottom(getWinnerSpoils().getStack());
-			getWinnerSpoils().getStack().clear();
-			getPlayerZone().getStack().clear(); 
-			getEnemyZone().getStack().clear();
-      
-			return true;
-		}
-		else if(comparisonValue > 0) { 
-			getEnemyStack().addToBottom(getWinnerSpoils().getStack());
-			getWinnerSpoils().getStack().clear();
-			getPlayerZone().getStack().clear(); 
-			getEnemyZone().getStack().clear();
+		else if(enemyCard.getRank() == 1) {
+			while(!winnerSpoils.getStack().isEmpty()) 
+				enemyStack.addToBottom(winnerSpoils.dealTopCard());
 
 			return true;
 		}
-		else if(comparisonValue == 0) {
-			return goToWar();
+		else if(playerCard.getRank() > enemyCard.getRank()) {
+			while(!winnerSpoils.getStack().isEmpty()) 
+				playerStack.addToBottom(winnerSpoils.dealTopCard());
+			
+			return true;
 		}
 		else {
-			System.out.print("ERROR AT compare()");
-			return false;
+			while(!winnerSpoils.getStack().isEmpty()) 
+				enemyStack.addToBottom(winnerSpoils.dealTopCard());
+			
+			return true;
 		}
-		*/
 	}
 
 	public boolean goToWar() {
 		if(checkWinStatus() != 2)
 			return false;
 
-		getWinnerSpoils().addToTop(getEnemyStack().dealTopCard());
-		getWinnerSpoils().addToTop(getPlayerStack().dealTopCard());
+		winnerSpoils.addToTop(enemyStack.dealTopCard());
+		winnerSpoils.addToTop(playerStack.dealTopCard());
 		
 		return turn();
 	}
 
 	public int checkWinStatus() {
 		int statusReturnCode = 2;
-		if (getEnemyStack().getStackSize() == 0 && getPlayerStack().getStackSize() == 0) //TIE - EXTREMELY UNLIKLEY BUT POSSIBLE
+		if (enemyStack.getStackSize() == 0 && playerStack.getStackSize() == 0) //TIE - EXTREMELY UNLIKLEY BUT POSSIBLE
 			statusReturnCode = 0;
-		else if(getPlayerStack().getStackSize() == 0)
+		else if(playerStack.getStackSize() == 0)
 			statusReturnCode = -1;
-		else if(getEnemyStack().getStackSize() == 0)
+		else if(enemyStack.getStackSize() == 0)
 			statusReturnCode = 1;
 		
 		return statusReturnCode;
@@ -145,20 +122,20 @@ public class WarBoard extends Board{
 		playerSide.setLayout(new GridBagLayout());
 		playerSide.setPreferredSize(new Dimension(423,720));
 		playerSide.setBackground(felt);
-		playerSide.add(getPlayers().get(1).draw());
+		playerSide.add(playerStack.draw());
 		
 		JPanel middle = new JPanel();
 		middle.setLayout(new GridBagLayout());
 		middle.setPreferredSize(new Dimension(423,720));
 		middle.setBackground(felt);
-		middle.add(getPlayerZone().draw());
-		middle.add(getEnemyZone().draw());
+		middle.add(playerZone.draw());
+		middle.add(enemyZone.draw());
 		
 		JPanel enemySide = new JPanel();
 		enemySide.setLayout(new GridBagLayout());
 		enemySide.setPreferredSize(new Dimension(423,720));
 		enemySide.setBackground(felt);
-		enemySide.add(getPlayers().get(0).draw());
+		enemySide.add(enemyStack.draw());
 		
 		mainPanel.add(playerSide);
 		mainPanel.add(middle);
