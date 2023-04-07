@@ -3,14 +3,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -43,6 +35,8 @@ public class UserMenu {
 		JButton deleteButton;
 		JButton selectButton;
 		JButton backButton;
+		JButton manageButton;
+		JButton clearAllButton;
 		
 		UserListObj.setVisible(true);
 		UserListObj.setBounds(0, 0, 900, 510);
@@ -74,6 +68,16 @@ public class UserMenu {
 		selectButton.setBackground(new java.awt.Color(0, 122, 51));
 		selectButton.setBorder(null);
 		
+		manageButton = new JButton("View Selected User");
+		manageButton.setForeground(new java.awt.Color(0, 156, 222));
+		manageButton.setBackground(new java.awt.Color(0, 122, 51));
+		manageButton.setBorder(null);
+		
+		clearAllButton = new JButton("Clear All Data");
+		clearAllButton.setForeground(new java.awt.Color(0, 156, 222));
+		clearAllButton.setBackground(new java.awt.Color(0, 122, 51));
+		clearAllButton.setBorder(null);
+		
 		ButtonPanel = new JPanel();
 		ButtonPanel.setBackground(new java.awt.Color(0, 122, 51));
 		ButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 25, 0));
@@ -82,6 +86,8 @@ public class UserMenu {
 		ButtonPanel.add(copyButton);
 		ButtonPanel.add(deleteButton);
 		ButtonPanel.add(selectButton);
+		ButtonPanel.add(manageButton);
+		ButtonPanel.add(clearAllButton);
 		
 		MenuPane.setBounds(0, 0, 1270, 720);
 		MenuPane.setLayout(new BorderLayout());
@@ -99,6 +105,12 @@ public class UserMenu {
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				closeMenu();
+			}
+		});
+		
+		clearAllButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clearAllData();
 			}
 		});
 		
@@ -165,6 +177,14 @@ public class UserMenu {
 					deleteUserProcess(index - 1);
 				}
 			});
+			
+			manageButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					String selected = userList.getSelectedValue();
+					int index = Character.getNumericValue(selected.charAt(0));
+					manageUser(index - 1);
+				}
+			});
 		}
 		
 	}	
@@ -228,12 +248,84 @@ public class UserMenu {
 			}
 			else {
 				JOptionPane.showMessageDialog(dialogFrame, "You are not the owner of this User Profile\nOr you are not an administrator on\n"
-						+ "this system. Please get permission from the Profile owner\nOr an administrator to continue with\ndeletion.", "Warning", JOptionPane.WARNING_MESSAGE);
+						+ "this system. Please get permission from the Profile owner\nOr an administrator to continue with\ndeletion.", 
+						"Warning", JOptionPane.WARNING_MESSAGE);
 				return;
 			}
 		}
 		else {
 			JOptionPane.showMessageDialog(dialogFrame, "User Deletion Cancelled.");
+		}
+	}
+	
+	public void manageUser(int index) {
+		dialogFrame = new JFrame();
+		Object[] options = {"Promote to admin", "Revoke admin", "Go Back"};
+		int answer = JOptionPane.showOptionDialog(dialogFrame, users.getUser(index).statDisplay() + "\nWhat would you like to do with this user?",
+				"Manage User", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[2]);
+		if (answer == JOptionPane.YES_OPTION) {
+			if (users.getSelectedUser().isAdmin()) {
+				if (users.getUser(index).isAdmin()) {
+					JOptionPane.showMessageDialog(dialogFrame, "User is already an administrator");
+				}
+				else {
+					users.getUser(index).setAdmin(true);
+					users.saveAllData();
+					display();
+					JOptionPane.showMessageDialog(dialogFrame, "User promoted to administrator");
+				}
+			}
+			else {
+				JOptionPane.showMessageDialog(dialogFrame, "You are not the owner of this User Profile\nOr you are not an administrator on\n"
+						+ "this system. Please get permission from the Profile owner\nOr an administrator to continue with\nUser Management.", 
+						"Warning", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+		}
+		else if (answer == JOptionPane.NO_OPTION){
+			if (users.getSelectedUser().isAdmin()) {
+				if(users.getUser(index).isAdmin()) {
+					users.getUser(index).setAdmin(false);
+					users.saveAllData();
+					display();
+					JOptionPane.showMessageDialog(dialogFrame, "User administrator privileges revoked");
+				}
+				else {
+					JOptionPane.showMessageDialog(dialogFrame, "This user is not an administrator");
+				}
+			}
+			else {
+				JOptionPane.showMessageDialog(dialogFrame, "You are not the owner of this User Profile\nOr you are not an administrator on\n"
+						+ "this system. Please get permission from the Profile owner\nOr an administrator to continue with\nUser Management.", 
+						"Warning", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+		}
+	}
+	
+	public void clearAllData() {
+		dialogFrame = new JFrame();
+		int confirm1 = JOptionPane.showConfirmDialog(dialogFrame, "Are you sure you'd like to do this? This will delete ALL users on the system.", "HOLD ON", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+		if (confirm1 == JOptionPane.YES_OPTION) {
+			int confirm2 = JOptionPane.showConfirmDialog(dialogFrame, "Are you REALLY sure you'd like to do this?", "You're serious?", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+			if (confirm2 == JOptionPane.YES_OPTION) {
+				int confirm3 = JOptionPane.showConfirmDialog(dialogFrame, "Are you positive?", "Last Chance...", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+				if (confirm3 == JOptionPane.YES_OPTION) {
+					users.deleteAllData();
+					users.saveAllData();
+					display();
+					JOptionPane.showMessageDialog(dialogFrame, "All user data erased.");
+				}
+				else {
+					JOptionPane.showMessageDialog(dialogFrame, "Deletion Canceled");
+				}
+			}
+			else {
+				JOptionPane.showMessageDialog(dialogFrame, "Deletion Canceled");
+			}
+		}
+		else {
+			JOptionPane.showMessageDialog(dialogFrame, "Deletion Canceled");
 		}
 	}
 	

@@ -3,6 +3,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Users {
@@ -21,7 +23,8 @@ public class Users {
 	}
 	
 	public void addUser(String name, boolean isAdmin) {
-		userList.add(new User(name, startingCash, isAdmin, 0));
+		LocalTime time = LocalTime.of(0, 0, 0);
+		userList.add(new User(name, startingCash, isAdmin, 0, time, 0));
 		numUsers++;
 	}
 	
@@ -30,7 +33,9 @@ public class Users {
 		newUser.setName(userList.get(index).getName());
 		newUser.setCurrency(userList.get(index).getCurrency());
 		newUser.setAdmin(userList.get(index).isAdmin());
-		newUser.setHighScore(userList.get(index).getHighScore());
+		newUser.setBlackjackWinCount(userList.get(index).getBlackjackWinCount());
+		newUser.setWarBestTime(userList.get(index).getWarBestTime());
+		newUser.setSolitaireHighScore(userList.get(index).getSolitaireHighScore());
 		
 		userList.add(newUser);
 		numUsers++;
@@ -82,20 +87,23 @@ public class Users {
 				String name = "";
 				double currency;
 				String admin = "";
-				int score;
-				
+				int bjwin;
+				LocalTime warTime;
+				int sScore;
 
 				name = input.readLine();
 				currency = Double.parseDouble(input.readLine());
 				admin = input.readLine();
-				score = Integer.parseInt(input.readLine());
+				bjwin = Integer.parseInt(input.readLine());
+				warTime = LocalTime.parse(input.readLine(), DateTimeFormatter.ofPattern("HH:mm:ss"));
+				sScore = Integer.parseInt(input.readLine());
 				input.readLine();
 				
 				if (admin.equals("Admin")) {
-					userList.add(new User(name, currency, true, score));
+					userList.add(new User(name, currency, true, bjwin, warTime, sScore));
 				}
 				else if (admin.equals("notAdmin")) {
-					userList.add(new User(name, currency, false, score));
+					userList.add(new User(name, currency, false, bjwin, warTime, sScore));
 				}
 				
 			}

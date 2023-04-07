@@ -1,33 +1,51 @@
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 //This class is outdated. Roe has created a new one. Grab that before you start working again.
 public class User {
     private String name;
     private double currency;
     private boolean isAdmin;
-    private int blackjackHighScore;
+    private int blackjackWinCount;
+    private LocalTime warBestTime;
+    private int solitaireHighScore;
 
     public User() {
     	name = "NoName";
     	currency = 500;
     	isAdmin = false;
-    	blackjackHighScore = 0;
+    	blackjackWinCount = 0;
+    	warBestTime = LocalTime.of(0, 0, 0);
+    	solitaireHighScore = 0;
     }
     
-    public User(String name, double currency, boolean isAdmin, int blackjackHighScore) {
+    public User(String name, double currency, boolean isAdmin, int blackjackWinCount, LocalTime warBestTime, int solitaireHighScore) {
         this.name = name;
         this.currency = currency;
         this.isAdmin = isAdmin;
-        this.blackjackHighScore = blackjackHighScore;
+        this.blackjackWinCount = blackjackWinCount;
+        this.warBestTime = warBestTime;
+        this.solitaireHighScore = solitaireHighScore;
     }
     
     @Override
     public String toString() {
     	if (isAdmin) {
-    		return name + "\n" + currency + "\n" + "Admin" + "\n" + blackjackHighScore;
+    		return name + "\n" + currency + "\n" + "Admin" + "\n" + blackjackWinCount + "\n" +  warBestTime.format( DateTimeFormatter.ofPattern("HH:mm:ss")) + "\n" + solitaireHighScore;
     	}
     	else {
-    		return name + "\n" + currency + "\n" + "notAdmin" + "\n" + blackjackHighScore;
+    		return name + "\n" + currency + "\n" + "notAdmin" + "\n" + blackjackWinCount + "\n" +  warBestTime.format( DateTimeFormatter.ofPattern("HH:mm:ss")) + "\n" + solitaireHighScore;
     	}
     	
+    }
+    
+    public String statDisplay() {
+    	if (isAdmin) {
+    		return "Admin" + "\n" + "Username: " + name + "\n" + "Cash: $" + currency + "\n" + "BlackJack Wins: " + blackjackWinCount + "\n" + "Best Time in War: " + warBestTime.format( DateTimeFormatter.ofPattern("HH:mm:ss")) + "\n" + "Solitaire High Score: " + solitaireHighScore;
+    	}
+    	else {
+    		return "\n" + "Username: " + name + "\n" + "Cash: $" + currency + "\n" + "BlackJack Wins: " + blackjackWinCount + "\n" + "Best Time in War: " + warBestTime.format( DateTimeFormatter.ofPattern("HH:mm:ss")) + "\n" + "Solitaire High Score: " + solitaireHighScore;
+    	}
     }
 
      // getters and setters
@@ -55,11 +73,27 @@ public class User {
         isAdmin = admin;
     }
 
-    public int getHighScore() {
-        return blackjackHighScore;
-    }
+	public int getBlackjackWinCount() {
+		return blackjackWinCount;
+	}
 
-    public void setHighScore(int highScore) {
-        this.blackjackHighScore = highScore;
-    }
+	public void setBlackjackWinCount(int blackjackWinCount) {
+		this.blackjackWinCount = blackjackWinCount;
+	}
+
+	public LocalTime getWarBestTime() {
+		return warBestTime;
+	}
+
+	public void setWarBestTime(LocalTime warBestTime) {
+		this.warBestTime = warBestTime;
+	}
+
+	public int getSolitaireHighScore() {
+		return solitaireHighScore;
+	}
+
+	public void setSolitaireHighScore(int solitaireHighScore) {
+		this.solitaireHighScore = solitaireHighScore;
+	}
 }
