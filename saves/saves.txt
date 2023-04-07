@@ -1,0 +1,11 @@
+2
+Alex
+500.0
+Admin
+0
+
+Daniel
+500.0
+notAdmin
+0
+

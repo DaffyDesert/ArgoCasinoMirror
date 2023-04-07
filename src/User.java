@@ -22,10 +22,10 @@ public class User {
     @Override
     public String toString() {
     	if (isAdmin) {
-    		return name + " " + currency + " admin " + blackjackHighScore;
+    		return name + "\n" + currency + "\n" + "Admin" + "\n" + blackjackHighScore;
     	}
     	else {
-    		return name + " " + currency + " notadmin " + blackjackHighScore;
+    		return name + "\n" + currency + "\n" + "notAdmin" + "\n" + blackjackHighScore;
     	}
     	
     }

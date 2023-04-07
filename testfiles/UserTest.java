@@ -34,8 +34,8 @@ class UserTest {
 		System.out.println("Creating User 2: RoeMello");
 		newUser2 = new User("RoeMello", 200, true, 0);
 		
-		assertEquals("NoName 500.0 notadmin 0", newUser1.toString());
-		assertEquals("RoeMello 200.0 admin 0", newUser2.toString());
+		assertEquals("NoName\n500.0\nnotAdmin\n0", newUser1.toString());
+		assertEquals("RoeMello\n200.0\nAdmin\n0", newUser2.toString());
 	}
 
 }
