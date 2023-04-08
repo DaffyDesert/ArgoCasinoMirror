@@ -260,45 +260,55 @@ public class UserMenu {
 	
 	public void manageUser(int index) {
 		dialogFrame = new JFrame();
-		Object[] options = {"Promote to admin", "Revoke admin", "Go Back"};
+		Object[] options = {"Manage Admin Privileges", "Change Username", "Go Back"};
 		int answer = JOptionPane.showOptionDialog(dialogFrame, users.getUser(index).statDisplay() + "\nWhat would you like to do with this user?",
 				"Manage User", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[2]);
-		if (answer == JOptionPane.YES_OPTION) {
+		
+		if (answer == JOptionPane.YES_OPTION) { //Manage Admin Privileges
 			if (users.getSelectedUser().isAdmin()) {
-				if (users.getUser(index).isAdmin()) {
-					JOptionPane.showMessageDialog(dialogFrame, "User is already an administrator");
+				Object[] options2 = {"Promote to Admin", "Revoke Admin"};
+				int answer2 = JOptionPane.showOptionDialog(dialogFrame, users.getUser(index).statDisplay() + "\nWhat would you like to do with this user?", "Manage Administrative Privileges",
+						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, options2, options[2]);
+				if(answer2 == JOptionPane.YES_OPTION) {
+					if (users.getUser(index).isAdmin()) {
+						JOptionPane.showMessageDialog(dialogFrame, "User is already an administrator");
+					} else {
+						users.getUser(index).setAdmin(true);
+						users.saveAllData();
+						display();
+						JOptionPane.showMessageDialog(dialogFrame, "User promoted to administrator");
+					}
 				}
-				else {
-					users.getUser(index).setAdmin(true);
-					users.saveAllData();
-					display();
-					JOptionPane.showMessageDialog(dialogFrame, "User promoted to administrator");
+				else if (answer2 == JOptionPane.NO_OPTION) {
+					if(users.getUser(index).isAdmin()) {
+						users.getUser(index).setAdmin(false);
+						users.saveAllData();
+						display();
+						JOptionPane.showMessageDialog(dialogFrame, "User administrator privileges revoked");
+					}
+					else {
+						JOptionPane.showMessageDialog(dialogFrame, "This user is not an administrator");
+					}
 				}
 			}
 			else {
-				JOptionPane.showMessageDialog(dialogFrame, "You are not the owner of this User Profile\nOr you are not an administrator on\n"
-						+ "this system. Please get permission from the Profile owner\nOr an administrator to continue with\nUser Management.", 
+				JOptionPane.showMessageDialog(dialogFrame, "You are not an administrator on\n"
+						+ "this system. Please get permission from an administrator\nto continue with User Management.", 
 						"Warning", JOptionPane.WARNING_MESSAGE);
 				return;
 			}
 		}
-		else if (answer == JOptionPane.NO_OPTION){
-			if (users.getSelectedUser().isAdmin()) {
-				if(users.getUser(index).isAdmin()) {
-					users.getUser(index).setAdmin(false);
-					users.saveAllData();
-					display();
-					JOptionPane.showMessageDialog(dialogFrame, "User administrator privileges revoked");
-				}
-				else {
-					JOptionPane.showMessageDialog(dialogFrame, "This user is not an administrator");
-				}
+		else if (answer == JOptionPane.NO_OPTION){ //Change Username
+			if ((users.getSelectedUser().isAdmin()) || (users.getSelectedUserIndex() == index)) {
+				String newUsername = JOptionPane.showInputDialog(dialogFrame, "Choose what your new username will be.", "Change Username", JOptionPane.PLAIN_MESSAGE);
+				users.getUser(index).setName(newUsername);
+				users.saveAllData();
+				display();
+				JOptionPane.showMessageDialog(dialogFrame, "Username Successfully Changed");
 			}
 			else {
-				JOptionPane.showMessageDialog(dialogFrame, "You are not the owner of this User Profile\nOr you are not an administrator on\n"
-						+ "this system. Please get permission from the Profile owner\nOr an administrator to continue with\nUser Management.", 
-						"Warning", JOptionPane.WARNING_MESSAGE);
-				return;
+				JOptionPane.showMessageDialog(dialogFrame, "You are not an administrator on\nthis system nor the owner of this user profile.\n"
+						+ "Please get permission from the user or an administrator to continue.", "Warning", JOptionPane.WARNING_MESSAGE);
 			}
 		}
 	}
