@@ -3,8 +3,12 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
- * War class is gui based that will show the player what is happening in the game in real time.
+ * 	War handles the GUI and displays aspects of a game of war.
+ *  It passes the display of the game board to the MainMenu 
+ *  for proper display and calls WarBoard to perform game logic 
+ *  functions.
  */
+
 @SuppressWarnings("serial")
 public class War extends JPanel implements Game, MouseListener{
 	JPanel statusBar;
@@ -25,34 +29,21 @@ public class War extends JPanel implements Game, MouseListener{
 		this.addMouseListener(this);
 	}
 	
-	/**
-	 * Function will simply start the stopwatch's timer.
-	 */
 	@Override
 	public void startWatch() {
 		thread.start();
 	}
 
-	/**
-	 * Function will start the watch. And after 3.5 seconds, 
-	 * the displayed "Game Start" will be set to invisible.
-	 */
 	@Override
 	public void startGame() {
 		startWatch();
 	}
 	
-	/**
-	 * Function will simply stop the stopwatch's timer.
-	 */
 	@Override
 	public void stopWatch() {
 		stopwatch.stopThread();
 	}
 	
-	/**
-	 * Function will stop the watch and show the "Game Over" text
-	 */
 	@Override
 	public void stopGame() {
 		stopWatch();
@@ -141,7 +132,7 @@ public class War extends JPanel implements Game, MouseListener{
 		}
 	}
 
-	//Functions below are required by MouseListener interface but do not have functionality in our program as of right now.
+	//Functions below are required by MouseListener interface but do not have functionality
 	
 	@Override
 	public void mousePressed(MouseEvent e) {
