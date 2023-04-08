@@ -47,7 +47,7 @@ public class CardStack extends JComponent{
 		return stack.remove(stack.size() - 1);
 	}
   
-	}
+
 	public Card peekCard(int index) {
 		return stack.get(index);
 	}
