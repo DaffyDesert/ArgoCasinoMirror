@@ -4,6 +4,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
+
  * The MainMenu class handles the display and logic of the game’s main menu, which is 
  * where users will return to both before and after any card game they play. The main 
  * menu has 3 options: Start Game, User Menu, and Exit. User Menu has not been 
