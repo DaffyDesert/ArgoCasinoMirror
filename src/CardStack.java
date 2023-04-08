@@ -44,9 +44,7 @@ public class CardStack extends JComponent{
 		stack.add(0,card);
 	}
 	public Card dealTopCard() {
-		Card temp = stack.get(stack.size() - 1);
-		getStack().remove(stack.size() - 1);
-		return temp;
+		return stack.remove(stack.size() - 1);
 	}
 	public Card peekCard(int index) {
 		return stack.get(index);
@@ -89,7 +87,7 @@ public class CardStack extends JComponent{
 		JPanel cardStack = new JPanel();
 		JPanel cardStackArea = new JPanel(new BorderLayout());
 		JPanel cardStackNameArea = new JPanel();
-		cardStackNameArea.add(new JLabel( getStackName() + " Cards: " + getStackSize() ));
+		cardStackNameArea.add(new JLabel( getStackName() + " Cards: " + stack.size() ));
 		cardStackNameArea.setBackground(feltGreen);
 		cardStackArea.setBackground(feltGreen);
 				

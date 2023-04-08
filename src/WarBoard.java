@@ -53,15 +53,16 @@ public class WarBoard{
 		enemyZone.addToTop(enemyCard);
 		
 		drawBoard();
-		enemyCard.setFaceDown(false);
-		playerCard.setFaceDown(false);		
+		enemyCard.setFaceDown(true);
+		playerCard.setFaceDown(true);	
+		
+		playerZone.getStack().clear();
+		enemyZone.getStack().clear();
 		
 		return compare(playerCard, enemyCard);
 	}
   
 	public boolean compare(Card playerCard, Card enemyCard) {
-		
-		System.out.println("Comparing cards: Player - " + playerCard.toString() + " Enemy Card - " + enemyCard.toString());
 		if(playerCard.getRank() == 1) {
 			while(!winnerSpoils.getStack().isEmpty()) 
 				playerStack.addToBottom(winnerSpoils.dealTopCard());
