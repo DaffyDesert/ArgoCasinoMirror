@@ -46,6 +46,8 @@ public class CardStack extends JComponent{
 	public Card dealTopCard() {
 		return stack.remove(stack.size() - 1);
 	}
+  
+	}
 	public Card peekCard(int index) {
 		return stack.get(index);
 	}
@@ -72,7 +74,6 @@ public class CardStack extends JComponent{
 			cs2.addToTop(card2);
 		}
 	}
-	
 	public void printStack() {
 		for(Card stack: getStack()) {
 			System.out.printf(stack.toString() + " ");
