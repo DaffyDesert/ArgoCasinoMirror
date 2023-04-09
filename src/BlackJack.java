@@ -89,7 +89,7 @@ public class BlackJack  extends JPanel implements Game {
 	
 	
 	public void deckPanelBuilder() {
-		Card backOfCard = new Card(0,0);
+		Card backOfCard = new Card(0,"H");
 		backOfCard.setFaceDown(true);
 		backOfCard.setCardImage();
 		JLabel back = new JLabel(new ImageIcon(backOfCard.getCardImage()));
@@ -184,7 +184,7 @@ public class BlackJack  extends JPanel implements Game {
 	
 	private class holdButtonListner implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			blackJack.stay();
+			blackJack.playerStay();
 			winCondition = isOver();
 			board.add(showGameOverScreen(),BorderLayout.CENTER);
 		}

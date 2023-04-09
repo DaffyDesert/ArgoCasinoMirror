@@ -22,7 +22,7 @@ public class BlackJackBoard extends Board{
 	
 	public void setBoard() {
 		getDeck().shuffleStack();
-		setCardValues();
+		setCardPointValues();
 		
 		playerHand().addToTop(getDeck().dealTopCard()); 
 		playerHand().flipTopCard();
@@ -37,28 +37,25 @@ public class BlackJackBoard extends Board{
 
 	}
 	
-	public void setCardValues() {
+	public void setCardPointValues() {
 		
 		for (int i = 0; i < getDeck().getStackSize(); i++) {
 			
-			char faceValue = getDeck().peekCard(i).getValue().charAt(0);
-			int numericValue;
+			int defaultRank = getDeck().peekCard(i).getRank();
+			int pointValue;
 			
-			if(faceValue == 'J')
-				numericValue = 10;
-			else if(faceValue == 'Q')
-				numericValue = 10;
-			else if(faceValue == 'K')
-				numericValue = 10;
-			else if(faceValue == 'A')
-				numericValue = 11;
-			else if(faceValue == '1') //cover the 10 card
-				numericValue = 10;
-			
+			if(defaultRank == 11)//jack
+				pointValue = 10;
+			else if(defaultRank == 12)//queen
+				pointValue = 10;
+			else if(defaultRank == 13)//king
+				pointValue = 10;
+			else if(defaultRank == 1)//ace
+				pointValue = 11;
 			else
-				numericValue = Character.getNumericValue(getDeck().peekCard(i).getValue().charAt(0));
+				pointValue = defaultRank;
 			
-			getDeck().peekCard(i).setRank(numericValue);
+			getDeck().peekCard(i).setPointValue(pointValue);
 		}
 	}
 	
@@ -78,9 +75,9 @@ public class BlackJackBoard extends Board{
 	
 	public int handTotal(CardStack hand) {
 		int handTotal = 0;
-		for (int i = 0; i < hand.getStackSize(); i++)
-			handTotal += hand.peekCard(i).getRank();
-		
+		for (int i = 0; i < hand.getStackSize(); i++) {
+			handTotal += hand.peekCard(i).getPointValue();
+		}
 		if (handTotal > 21) {
 			for(int i = 0; i < acesInHand(hand); i++) {
 				handTotal -= 10;
@@ -97,7 +94,7 @@ public class BlackJackBoard extends Board{
 		
 		int acesInHand = 0;
 		for(int i = 0; i < hand.getStackSize(); i++)
-			if (hand.peekCard(i).getValue().charAt(0) == 'A')
+			if (hand.peekCard(i).toString().charAt(0) == 'A')
 				acesInHand++;
 		return acesInHand;
 	}
@@ -106,21 +103,33 @@ public class BlackJackBoard extends Board{
 		hand.addToTop(getDeck().dealTopCard());
 		hand.flipTopCard();
 		
-		if(is21(hand) || isBust(hand))
+		if(is21(hand) || isBust(hand) || dealerOver16AndNoBust())
 			return false;
 		else
 			return true;
 	}
 	
-	public void stay() {
+	public void playerStay() {
 		startDealerTurn();
 	}
 
 	public void startDealerTurn() {
-		while(handTotal(dealerHand()) <= 16) {
+		while(handTotal(dealerHand()) < 17) {
+			if(dealerOver16AndNoBust())
+				break;
 			hit(dealerHand());		
-			System.out.println(handTotal(dealerHand()));
 		}
+	}
+	
+	private boolean dealerOver16AndNoBust() {
+		int handTotal = 0;
+		for (int i = 0; i < dealerHand().getStackSize(); i++)
+			handTotal += dealerHand().peekCard(i).getPointValue();
+		if(handTotal >= 17 && handTotal <= 21)
+			return true;
+		else 
+			return false;
+
 	}
 	
 	
