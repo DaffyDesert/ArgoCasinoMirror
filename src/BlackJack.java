@@ -58,15 +58,15 @@ public class BlackJack  extends JPanel implements Game {
 		board = new JPanel();
 		board.removeAll();
 		board.setBackground(new java.awt.Color(0, 122, 51));
-		board.setLayout(new BorderLayout());
-		board.setPreferredSize(new Dimension(1270,620));
+		board.setLayout(new BorderLayout(0,100));
+		board.setPreferredSize(new Dimension(1200,670));
 		
 		statusBarPanelBuilder();
 		buttonPanelBuilder();
 		deckAndHandsPanelBuilder();
 		
-		board.add(statusBar,BorderLayout.NORTH);
-		board.add(deckAndHandsPanel,BorderLayout.CENTER);
+		board.add(statusBar,BorderLayout.EAST);
+		board.add(deckAndHandsPanel,BorderLayout.NORTH);
 		board.add(buttonPanel,BorderLayout.SOUTH);
 		board.revalidate();
 		board.repaint();
@@ -77,7 +77,7 @@ public class BlackJack  extends JPanel implements Game {
 		deckAndHandsPanel = new JPanel();
 		deckAndHandsPanel.setLayout(new BorderLayout());
 		deckAndHandsPanel.setBackground(new java.awt.Color(0, 122, 51));
-		deckAndHandsPanel.setPreferredSize(new Dimension(100,100));
+		deckAndHandsPanel.setPreferredSize(new Dimension(400,600));
 		deckPanelBuilder();
 		playerHandPanelBuilder();
 		dealerHandPanelBuilder();
@@ -108,8 +108,8 @@ public class BlackJack  extends JPanel implements Game {
 		hold = new JButton("Hold");
 		
 		buttonPanel.setLayout(new GridLayout());
-		buttonPanel.setPreferredSize(new Dimension(10,100));
-		buttonPanel.setBounds(0,0,1270,50);
+		buttonPanel.setPreferredSize(new Dimension(100,75));
+	
 		buttonPanel.setBackground(new java.awt.Color(0, 122, 51));
 		
 		hit.setForeground(new java.awt.Color(0, 156, 222));
@@ -131,10 +131,11 @@ public class BlackJack  extends JPanel implements Game {
 	
 	public void statusBarPanelBuilder() {
 		statusBar = new JPanel();
-		statusBar.setBounds(0,0,1270,144);
+	
 		statusBar.setLayout(new BorderLayout());
+		statusBar.setPreferredSize(new Dimension(250,15));
 		statusBar.setBackground(new java.awt.Color(0, 122, 51));
-		statusBar.add(stopwatch.display(), BorderLayout.SOUTH);
+		statusBar.add(stopwatch.display(), BorderLayout.EAST);
 	}
 	
 	public void playerHandPanelBuilder() {

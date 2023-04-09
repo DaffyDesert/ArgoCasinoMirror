@@ -193,10 +193,11 @@ public class MainMenu {
 	
 	public void launchBlackJack() {
 		Game blackJackGame = new BlackJack();
+		blackJackGame.startGame();
 		windowPane.add(blackJackGame.display());
+		
 		windowPane.revalidate();
 		windowPane.repaint();
-		blackJackGame.startGame();
 		gameSelectionPanel.setVisible(true);
 	}
 	
