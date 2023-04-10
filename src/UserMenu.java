@@ -320,7 +320,7 @@ public class UserMenu {
 		else if (answer == JOptionPane.NO_OPTION){ //Change Username
 			if ((users.getSelectedUser().isAdmin()) || (users.getSelectedUserIndex() == index)) {
 				String newUsername = JOptionPane.showInputDialog(dialogFrame, "Choose what your new username will be.", "Change Username", JOptionPane.PLAIN_MESSAGE);
-				users.getUser(index).setName(newUsername);
+				users.renameUser(index, newUsername);
 				users.saveAllData();
 				display();
 				JOptionPane.showMessageDialog(dialogFrame, "Username Successfully Changed");

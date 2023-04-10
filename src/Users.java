@@ -1,6 +1,5 @@
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -81,6 +80,32 @@ public class Users {
 		
 		userList.remove(index);
 		numUsers--;
+	}
+	
+	public void renameUser(int index, String username) {
+		try {
+			File userSave = new File(userList.get(index).getSaveFile());
+			BufferedReader input = new BufferedReader(new FileReader(userSave));
+			input.readLine();
+			String password = input.readLine();
+			input.close();
+			userSave.delete();
+			
+			userList.get(index).setName(username);
+			userSave = new File(userList.get(index).getSaveFile());
+			userSave.createNewFile();
+			
+			FileWriter output = new FileWriter(userSave);
+			output.write(userList.get(index).getName());
+			output.write("\n");
+			output.write(password);
+			output.write("\n");
+			output.close();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public boolean logIn(String password, int index) {
