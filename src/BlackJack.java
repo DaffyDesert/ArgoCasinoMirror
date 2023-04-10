@@ -58,15 +58,15 @@ public class BlackJack  extends JPanel implements Game {
 		board = new JPanel();
 		board.removeAll();
 		board.setBackground(new java.awt.Color(0, 122, 51));
-		board.setLayout(new BorderLayout(0,100));
-		board.setPreferredSize(new Dimension(1200,670));
+		board.setLayout(new BorderLayout());
+		board.setPreferredSize(new Dimension(1270,650));
 		
 		statusBarPanelBuilder();
 		buttonPanelBuilder();
 		deckAndHandsPanelBuilder();
 		
-		board.add(statusBar,BorderLayout.EAST);
-		board.add(deckAndHandsPanel,BorderLayout.NORTH);
+		board.add(statusBar,BorderLayout.NORTH);
+		board.add(deckAndHandsPanel,BorderLayout.CENTER);
 		board.add(buttonPanel,BorderLayout.SOUTH);
 		board.revalidate();
 		board.repaint();
@@ -77,7 +77,7 @@ public class BlackJack  extends JPanel implements Game {
 		deckAndHandsPanel = new JPanel();
 		deckAndHandsPanel.setLayout(new BorderLayout());
 		deckAndHandsPanel.setBackground(new java.awt.Color(0, 122, 51));
-		deckAndHandsPanel.setPreferredSize(new Dimension(400,600));
+		deckAndHandsPanel.setPreferredSize(new Dimension(50,50));
 		deckPanelBuilder();
 		playerHandPanelBuilder();
 		dealerHandPanelBuilder();
@@ -107,8 +107,8 @@ public class BlackJack  extends JPanel implements Game {
 		hit = new JButton("Hit");
 		hold = new JButton("Hold");
 		
-		buttonPanel.setLayout(new GridLayout());
-		buttonPanel.setPreferredSize(new Dimension(100,75));
+		buttonPanel.setLayout(new FlowLayout());
+		buttonPanel.setPreferredSize(new Dimension(700,50));
 	
 		buttonPanel.setBackground(new java.awt.Color(0, 122, 51));
 		
@@ -124,8 +124,8 @@ public class BlackJack  extends JPanel implements Game {
 		hold.setBorder(null);
 		hold.addActionListener(new holdButtonListner());
 		
-		buttonPanel.add(hit,BorderLayout.WEST);
-		buttonPanel.add(hold,BorderLayout.EAST);
+		buttonPanel.add(hit);
+		buttonPanel.add(hold);
 		
 	}
 	
@@ -135,7 +135,7 @@ public class BlackJack  extends JPanel implements Game {
 		statusBar.setLayout(new BorderLayout());
 		statusBar.setPreferredSize(new Dimension(250,15));
 		statusBar.setBackground(new java.awt.Color(0, 122, 51));
-		statusBar.add(stopwatch.display(), BorderLayout.EAST);
+		statusBar.add(stopwatch.display(), BorderLayout.NORTH);
 	}
 	
 	public void playerHandPanelBuilder() {
