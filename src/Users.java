@@ -1,11 +1,23 @@
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+
+/**
+ * A class representing the collection of all users in the Argo Casino game.
+ * @author Alexander DeAngelis
+ * @contributor Daniel Miller
+ *
+ */
 
 public class Users {
 	private ArrayList<User> userList;
@@ -22,10 +34,32 @@ public class Users {
 		loadAllData();
 	}
 	
-	public void addUser(String name, boolean isAdmin) {
+	public void addUser(String name, String password, boolean isAdmin) {
 		LocalTime time = LocalTime.of(0, 0, 0);
 		userList.add(new User(name, startingCash, isAdmin, 0, time, 0));
 		numUsers++;
+		
+		try {
+			String encryptedPw = generateHash(password);
+			
+			saveDir.mkdir();
+			File userSave = new File(userList.get(numUsers - 1).getSaveFile());
+			userSave.createNewFile();
+			
+			FileWriter output = new FileWriter(userSave);
+			output.write(userList.get(numUsers - 1).getName());
+			output.write("\n");
+			output.write(encryptedPw);
+			output.write("\n");
+			
+			output.close();
+			
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public void copyUser(int index) {
@@ -42,12 +76,38 @@ public class Users {
 	}
 	
 	public void deleteUser(int index) {
+		File userSave = new File(userList.get(index).getSaveFile());
+		userSave.delete();
+		
 		userList.remove(index);
 		numUsers--;
 	}
 	
-	public void logIn(int index) {
-		selectedUser = userList.get(index);
+	public boolean logIn(String password, int index) {
+		try {
+			String encryptedPw = generateHash(password);
+			
+			File userSave = new File(userList.get(index).getSaveFile());
+			BufferedReader input = new BufferedReader(new FileReader(userSave));
+			
+			input.readLine();
+			
+			String storedPw = input.readLine();
+			
+			if (!encryptedPw.equals(storedPw)) {
+				input.close();
+				return false;
+			}
+			else {
+				selectedUser = userList.get(index);
+				input.close();
+				return true;
+			}
+			
+		} catch (IOException | NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 	
 	public User getUser(int index) {
@@ -137,6 +197,11 @@ public class Users {
 	}
 	
 	public boolean deleteAllData() {
+		for (int i = 0; i < numUsers; ++i) {
+			File userFile = new File(userList.get(i).getSaveFile());
+			userFile.delete();
+		}
+		
 		numUsers = 0;
 		selectedUser = new User();
 		userList.clear();
@@ -157,4 +222,29 @@ public class Users {
 		}
 		return true;
 	}
+	
+	/**
+	 * The method that generates an encrypted password from user-input plain text.
+	 * @param pwrdClear The plain-text user input password
+	 * @return An encrypted password string
+	 * @throws NoSuchAlgorithmException
+	 * @author Daniel Miller
+	 */
+	private String generateHash(String pwrdClear) throws NoSuchAlgorithmException {
+		String hashString;
+		byte[] hashBytes;
+		BigInteger hashNumbers;
+		StringBuilder hashHex;
+		MessageDigest hashMD = MessageDigest.getInstance("SHA-256");
+        
+		hashBytes = hashMD.digest(pwrdClear.getBytes(StandardCharsets.UTF_8)); 	//turn clear password into SHA-256 byte array
+		hashNumbers = new BigInteger(1, hashBytes); 							//turn byte array into signed int number 
+		hashHex  = new StringBuilder(hashNumbers.toString(16)); 				// turn signed int number into hex value
+		while(hashHex.length() < 64) 											//pad hex value with leading zeros
+			hashHex.insert(0, '0');
+		hashString = hashHex.toString();
+		
+		return hashString;
+	}
+	
 }

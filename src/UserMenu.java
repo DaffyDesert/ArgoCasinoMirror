@@ -14,6 +14,12 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+/**
+ * This class handles all functions for GUI output with regards to the Argo Casino game's User menu.
+ * @author Alexander DeAngelis
+ *
+ */
+
 public class UserMenu {
 	private JPanel MenuPane; //The whole menu panel
 	private JPanel UserListObj; //The User list in the middle of the Menu, separate panel for cleanness
@@ -205,19 +211,32 @@ public class UserMenu {
 	}
 	
 	public void logIn(int index) {
-		users.logIn(index);
-		JOptionPane.showMessageDialog(dialogFrame, "Logged in as " + users.getSelectedUser().getName());
+		String password = (String)JOptionPane.showInputDialog(dialogFrame, "Please enter the user password.", "Log-in", 
+				JOptionPane.PLAIN_MESSAGE);
+		
+		if (users.logIn(password, index)) {
+			JOptionPane.showMessageDialog(dialogFrame, "Logged in as " + users.getSelectedUser().getName());
+		}
+		else {
+			JOptionPane.showMessageDialog(dialogFrame, "Failed to log in. Password does not match.");
+		}
 	}
 	
 	public void addUserProcess() {
 		dialogFrame = new JFrame();
 		String name = (String)JOptionPane.showInputDialog(dialogFrame, "What should the name be of this new user?", "User Creation", 
 				JOptionPane.PLAIN_MESSAGE);
-		if (users.getNumUsers() != 0) users.addUser(name, false);
-		else users.addUser(name, true);
 		
-		users.saveAllData();
-		display();
+		String password = (String)JOptionPane.showInputDialog(dialogFrame, "What should the password be of this new user?", "User Creation", 
+				JOptionPane.PLAIN_MESSAGE);
+		
+		if ((name != null) && (password != null)) {
+			if (users.getNumUsers() != 0) users.addUser(name, password, false);
+			else users.addUser(name, password, true);
+			
+			users.saveAllData();
+			display();
+		}
 	}
 	
 	public void copyUserProcess(int index) {

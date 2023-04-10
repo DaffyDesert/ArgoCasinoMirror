@@ -1,7 +1,11 @@
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-//This class is outdated. Roe has created a new one. Grab that before you start working again.
+/**
+ * A Class representing a User Profile in the Argo Casino Game.
+ * @author RoeMello Holiday
+ * @contributor Alexander DeAngelis
+ */
 public class User {
     private String name;
     private double currency;
@@ -28,6 +32,9 @@ public class User {
         this.solitaireHighScore = solitaireHighScore;
     }
     
+    /**
+     * @author Alexander DeAngelis
+     */
     @Override
     public String toString() {
     	if (isAdmin) {
@@ -39,6 +46,10 @@ public class User {
     	
     }
     
+    /**
+     * @author Alexander DeAngelis
+     * @return String representing a User's full stats for GUI output.
+     */
     public String statDisplay() {
     	if (isAdmin) {
     		return "Admin" + "\n" + "Username: " + name + "\n" + "Cash: $" + currency + "\n" + "BlackJack Wins: " + blackjackWinCount + "\n" + "Best Time in War: " + warBestTime.format( DateTimeFormatter.ofPattern("HH:mm:ss")) + "\n" + "Solitaire High Score: " + solitaireHighScore;
@@ -46,6 +57,14 @@ public class User {
     	else {
     		return "\n" + "Username: " + name + "\n" + "Cash: $" + currency + "\n" + "BlackJack Wins: " + blackjackWinCount + "\n" + "Best Time in War: " + warBestTime.format( DateTimeFormatter.ofPattern("HH:mm:ss")) + "\n" + "Solitaire High Score: " + solitaireHighScore;
     	}
+    }
+    
+    /**
+     * @author Alexander DeAngelis
+     * @return String representing the file in which the user's encrypted password is stored.
+     */
+    public String getSaveFile() {
+    	return "saves/" + name + ".txt";
     }
 
      // getters and setters
