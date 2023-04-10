@@ -50,15 +50,15 @@ is set to an admin by default and admins have the ability to delete other users,
 
 #### Change Log
 
-### Development v.1.0
+##### Development v.1.0
 -Functional Game window and Main Menu
 -Functional game of War
 
-### Development v.2.0
+##### Development v.2.0
 -Functional User Profile Menu
 -Functional Game of Blackjack
 
-#### Coming soon in Development v.3.0 / Full Release v.1.0
+###### Coming soon in Development v.3.0 / Full Release v.1.0
 -Functional Solitaire
 -Betting between games
 -Comprehensive Help Menu
