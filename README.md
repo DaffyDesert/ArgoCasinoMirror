@@ -32,9 +32,18 @@
 
 #### How to Interact:
 
-On launch, you'll be greeted with a main menu with 3 options. One of these options is currently unavailable. The other two are "Start Game" and "Exit."
+On launch, you'll be greeted with a main menu with 3 options. 
+
+"Start Game" will bring you to another Menu where you can select 1 of 2 currently available games. "War" will start up a game of War and "BlackJack" will
+start a game of Blackjack. 
+In War, you can click anywhere on the window and the program will automatically take the top card off of yours, and the enemy's deck and compare the two. The
+game ends when one player has 0 cards left.
+In Black Jack, you will be greeted with your current cards as well as an option to "hit" or "hold". The "hit" option will give you another card and hold will 
+reveal the cards the dealer has and determine who is the winner. 
+
+"User Menu" will bring you to another Menu where you can add new users to your machine. To add a new user you can click "Add New User" at the bottom of the screen
+and it will prompt for a personalized tag and a password. To log in as a user, you must click the "Select User" button and you will be prompted to input your password.
+From there this will save the number of wins in Black Jack as well as the best time in a game of War by selecting "View Selected User". The first person on the machine 
+is set to an admin by default and admins have the ability to delete other users, make others admins, and take away admin privileges. 
 
 "Exit" will close the program.
-
-"Start Game" will take you to a menu to choose a game. Currently, only one game is supported. Select "War" to play a game of War against an AI-controlled player.
-
