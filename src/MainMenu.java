@@ -1,6 +1,9 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 /**
@@ -19,6 +22,7 @@ public class MainMenu {
 	private JPanel windowPane;
 	private JPanel mainMenuPanel;
 	private JPanel gameSelectionPanel;
+	private Image seaShellPic;
 	
 	public MainMenu() {
 		windowPane = new JPanel();
@@ -50,6 +54,7 @@ public class MainMenu {
 		JButton startButton = new JButton("Start Game");
 		startButton.setForeground(new java.awt.Color(0, 156, 222));
 		startButton.setBackground(new java.awt.Color(0, 122, 51));
+		startButton.setFont(new Font("Arial", Font.PLAIN, 40));
 		startButton.setBorder(null);
 		GridBagConstraints startConstraint = setConstraint(0, 0, 3, 1, 0, 0);
 		buttonPanel.add(startButton, startConstraint);
@@ -58,6 +63,7 @@ public class MainMenu {
 		GridBagConstraints userConstraint = setConstraint(0, 1, 3, 1, 0, 0);
 		userMenuButton.setForeground(new java.awt.Color(0, 156, 222));
 		userMenuButton.setBackground(new java.awt.Color(0, 122, 51));
+		userMenuButton.setFont(new Font("Arial", Font.PLAIN, 40));
 		userMenuButton.setBorder(null);
 		buttonPanel.add(userMenuButton, userConstraint);
 		buttonPanel.setBackground(new java.awt.Color(0, 122, 51));
@@ -65,12 +71,24 @@ public class MainMenu {
 		JButton ExitButton = new JButton("Exit");
 		ExitButton.setForeground(new java.awt.Color(0, 156, 222));
 		ExitButton.setBackground(new java.awt.Color(0, 122, 51));
+		ExitButton.setFont(new Font("Arial", Font.PLAIN, 40));
 		ExitButton.setBorder(null);
 		GridBagConstraints exitConstraint = setConstraint(0, 2, 3, 1, 0, 0);
 		buttonPanel.add(ExitButton, exitConstraint);
 		
 		mainMenuPanel.add(buttonPanel, buttonPanelConstraints);
+		GridBagConstraints picConstraint = setConstraint(0, 3, 3, 1, 0, 0);
+		File imageFile = new File("imgs/seaShellCard.png");
+		try {
+			seaShellPic = ImageIO.read(imageFile);
+			seaShellPic = seaShellPic.getScaledInstance(500, 500, Image.SCALE_DEFAULT);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
+		JLabel pic = new JLabel(new ImageIcon(seaShellPic));
+		mainMenuPanel.add(pic,picConstraint);
 		
 		startButton.addActionListener(new ActionListener() {
 			public void actionPerformed (ActionEvent e) {
@@ -193,10 +211,11 @@ public class MainMenu {
 	
 	public void launchBlackJack() {
 		Game blackJackGame = new BlackJack();
+		blackJackGame.startGame();
 		windowPane.add(blackJackGame.display());
+		
 		windowPane.revalidate();
 		windowPane.repaint();
-		blackJackGame.startGame();
 		gameSelectionPanel.setVisible(true);
 	}
 	
