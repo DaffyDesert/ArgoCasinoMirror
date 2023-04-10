@@ -1,6 +1,6 @@
 # Title of Project: Argo Casino
 
-#### Project Description: A game package allowing players to enjoy multiple card based games.
+#### Project Description: A game package allowing players to enjoy multiple card based games. These games include War, Blackjack, and Solitaire.*
 
 ###### Team members: RoeMello Holliday, Zachary Wilson, Daniel Padgett, Daniel Miller, Alexander DeAngelis
 
@@ -12,7 +12,7 @@
 
 2.) Unzip the file in the location of your choice
 
-3.) Create a new java project in Eclipse
+3.) Create a new java project in the Eclipse IDE
 
 4.) Move all files from the repository folder into your new project folder
 
@@ -26,7 +26,7 @@
 
 2.) Open Main.java
 
-3.) Select the "Run" option in the top left
+3.) Select the green "Run Main.java" option in the top left
 
 
 
@@ -47,3 +47,21 @@ From there this will save the number of wins in Black Jack as well as the best t
 is set to an admin by default and admins have the ability to delete other users, make others admins, and take away admin privileges. 
 
 "Exit" will close the program.
+
+#### Change Log
+
+### Development v.1.0
+-Functional Game window and Main Menu
+-Functional game of War
+
+### Development v.2.0
+-Functional User Profile Menu
+-Functional Game of Blackjack
+
+#### Coming soon in Development v.3.0 / Full Release v.1.0
+-Functional Solitaire
+-Betting between games
+-Comprehensive Help Menu
+-Bug Fixes
+
+*As of the current build (Development v.2.0), Solitaire is unavailable.
