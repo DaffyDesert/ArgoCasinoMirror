@@ -1,5 +1,10 @@
 import javax.swing.JPanel;
 
+/**
+*  Handles the logic for a game of Black Jack. It receives data from BlackJack, 
+*  processes the data, then outputs data back to BlackJack to be shown in the GUI.
+*/
+
 public class BlackJackBoard extends Board{
 
 	JPanel mainPanel;
