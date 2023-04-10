@@ -4,7 +4,8 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
- * The MainMenu class handles the display and logic of the gameâ€™s main menu, which is 
+
+ * The MainMenu class handles the display and logic of the game’s main menu, which is 
  * where users will return to both before and after any card game they play. The main 
  * menu has 3 options: Start Game, User Menu, and Exit. User Menu has not been 
  * implemented at this time. Exit will close the program. Start Game will bring the 
@@ -19,12 +20,16 @@ public class MainMenu {
 	private JPanel windowPane;
 	private JPanel mainMenuPanel;
 	private JPanel gameSelectionPanel;
+	private UserMenu userMenu;
 	
 	public MainMenu() {
 		windowPane = new JPanel();
 		gameSelectionPanel = new JPanel();
 		mainMenuPanel = new JPanel();
 		windowPane.setBackground(new java.awt.Color(0, 122, 51));
+		
+		userMenu = new UserMenu();
+		
 		createGameSelectMenu();
 		createMainMenu();
 		
@@ -54,7 +59,7 @@ public class MainMenu {
 		GridBagConstraints startConstraint = setConstraint(0, 0, 3, 1, 0, 0);
 		buttonPanel.add(startButton, startConstraint);
 		
-		JButton userMenuButton = new JButton("Coming Soon!");
+		JButton userMenuButton = new JButton("User Menu");
 		GridBagConstraints userConstraint = setConstraint(0, 1, 3, 1, 0, 0);
 		userMenuButton.setForeground(new java.awt.Color(0, 156, 222));
 		userMenuButton.setBackground(new java.awt.Color(0, 122, 51));
@@ -75,6 +80,12 @@ public class MainMenu {
 		startButton.addActionListener(new ActionListener() {
 			public void actionPerformed (ActionEvent e) {
 				displayGameSelect();
+			}
+		});
+		
+		userMenuButton.addActionListener(new ActionListener() {
+			public void actionPerformed (ActionEvent e) {
+				displayUserMenu();
 			}
 		});
 		
@@ -176,6 +187,12 @@ public class MainMenu {
 		windowPane.repaint();
 	}
 	
+	public void displayUserMenu() {
+		windowPane.add(userMenu.display());
+		windowPane.revalidate();
+		windowPane.repaint();
+	}
+	
 	public JPanel display() {
 		return windowPane;
 	}
@@ -199,6 +216,8 @@ public class MainMenu {
 		windowPane.revalidate();
 		windowPane.repaint();
 		gameSelectionPanel.setVisible(true);
+		
 	}
 	
 }
+

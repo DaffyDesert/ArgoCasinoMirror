@@ -46,8 +46,8 @@ public class Card {
 			return "Q";
 		else if(getRank() == 13)
 			return "K";
-		else
-			return String.valueOf(getRank());
+
+		else return String.valueOf(getRank());
 	}
   
 	public String toString() {

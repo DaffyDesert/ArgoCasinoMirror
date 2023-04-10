@@ -51,7 +51,7 @@ public class CardStack extends JComponent{
 	public Card dealTopCard() {
 		return stack.remove(getStackSize() - 1);
 	}
-  
+ 
 	public void flipTopCard() {
 		if(peekCard(getStackSize() - 1).isFaceDown())
 			peekCard(getStackSize() - 1).setFaceDown(false);
