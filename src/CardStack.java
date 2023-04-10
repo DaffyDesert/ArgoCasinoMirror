@@ -37,30 +37,46 @@ public class CardStack extends JComponent{
 			stack.add(new Card(i, "C"));
 		}
 	}
+	
+	public void emptyStack() {this.stack.clear();}
+
 	public void addToTop(Card card) {
 		stack.add(card);
 	}
+	
 	public void addToBottom(Card card) {
 		stack.add(0,card);
 	}
+	
 	public Card dealTopCard() {
-		return stack.remove(stack.size() - 1);
+		return stack.remove(getStackSize() - 1);
 	}
-  
+ 
+	public void flipTopCard() {
+		if(peekCard(getStackSize() - 1).isFaceDown())
+			peekCard(getStackSize() - 1).setFaceDown(false);
+		else
+			peekCard(getStackSize() - 1).setFaceDown(true);
+	}
+	
 	public Card peekCard(int index) {
 		return stack.get(index);
 	}
-	public void shuffleStack() {
-		int size = stack.size();
-		Random r = new Random();
+
+	public void cutStack() {
 		
-		for(int i = 0; i < size; ++i) {
-			Card currCard = stack.get(i);
-			int randVal = i + r.nextInt(size - i);
-			Card randCard = stack.get(randVal);
-			stack.set(randVal, currCard);
-			stack.set(i, randCard);
+	}
+	
+	public void shuffleStack() {
+		Random randomIndex = new Random();
+		ArrayList<Card> tempStack = new ArrayList<>();
+		tempStack.addAll(0, getStack());
+		emptyStack();
+		
+		for(int i = 0; i < tempStack.size(); ++i) {
+			addToTop(tempStack.get(randomIndex.nextInt(tempStack.size())));
 		}
+		
 	}
 	
 	public void dealEvenlyTo(CardStack mainDeck, CardStack cs1, CardStack cs2) {
@@ -87,7 +103,7 @@ public class CardStack extends JComponent{
 		JPanel cardStack = new JPanel();
 		JPanel cardStackArea = new JPanel(new BorderLayout());
 		JPanel cardStackNameArea = new JPanel();
-		cardStackNameArea.add(new JLabel( getStackName() + " Cards: " + stack.size() ));
+		cardStackNameArea.add(new JLabel( getStackName() + " Cards: " + getStackSize() ));
 		cardStackNameArea.setBackground(feltGreen);
 		cardStackArea.setBackground(feltGreen);
 				

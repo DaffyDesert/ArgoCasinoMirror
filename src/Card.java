@@ -17,12 +17,15 @@ public class Card {
 	private static final int CARD_HEIGHT = 145; //in pixels
 	
 	private int rank;
+	private int pointValue;
 	private String suit;
 	private boolean faceDown;
 	private Image cardImage;
 	
 	public int getRank() {return rank;}
 	public void setRank(int rank) {this.rank = rank;}
+	public int getPointValue() {return pointValue;}
+	public void setPointValue(int pointValue) {this.pointValue = pointValue;}
 	public String getSuit() {return suit;}
 	public void setSuit(String suit) {this.suit = suit;}
 	public boolean isFaceDown() {return faceDown;}
@@ -43,6 +46,7 @@ public class Card {
 			return "Q";
 		else if(getRank() == 13)
 			return "K";
+
 		else return String.valueOf(getRank());
 	}
   

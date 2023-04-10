@@ -59,6 +59,7 @@ public class BlackJack  extends JPanel implements Game {
 		board.removeAll();
 		board.setBackground(new java.awt.Color(0, 122, 51));
 		board.setLayout(new BorderLayout());
+		board.setPreferredSize(new Dimension(1270,620));
 		
 		statusBarPanelBuilder();
 		buttonPanelBuilder();
@@ -76,7 +77,7 @@ public class BlackJack  extends JPanel implements Game {
 		deckAndHandsPanel = new JPanel();
 		deckAndHandsPanel.setLayout(new BorderLayout());
 		deckAndHandsPanel.setBackground(new java.awt.Color(0, 122, 51));
-		
+		deckAndHandsPanel.setPreferredSize(new Dimension(100,100));
 		deckPanelBuilder();
 		playerHandPanelBuilder();
 		dealerHandPanelBuilder();
@@ -84,16 +85,16 @@ public class BlackJack  extends JPanel implements Game {
 		deckAndHandsPanel.add(dealerHandPanel,BorderLayout.NORTH);
 		deckAndHandsPanel.add(deckPanel,BorderLayout.CENTER);
 		deckAndHandsPanel.add(playerHandPanel,BorderLayout.SOUTH);
-		
+		deckAndHandsPanel.revalidate();
+		deckAndHandsPanel.repaint();
 	}
 	
 	
 	public void deckPanelBuilder() {
-		Card backOfCard = new Card(0,0);
+		Card backOfCard = new Card(0,"H");
 		backOfCard.setFaceDown(true);
 		backOfCard.setCardImage();
-		JLabel back = new JLabel(new ImageIcon(backOfCard.getCardImage()));
-			
+		JLabel back = new JLabel(new ImageIcon(backOfCard.getCardImage()));	
 		deckPanel = new JPanel();
 		deckPanel.setLayout(new BorderLayout());
 		deckPanel.setBackground(new java.awt.Color(0, 122, 51));
@@ -107,7 +108,8 @@ public class BlackJack  extends JPanel implements Game {
 		hold = new JButton("Hold");
 		
 		buttonPanel.setLayout(new GridLayout());
-		buttonPanel.setPreferredSize(new Dimension(100,100));
+		buttonPanel.setPreferredSize(new Dimension(10,100));
+		buttonPanel.setBounds(0,0,1270,50);
 		buttonPanel.setBackground(new java.awt.Color(0, 122, 51));
 		
 		hit.setForeground(new java.awt.Color(0, 156, 222));
@@ -184,7 +186,7 @@ public class BlackJack  extends JPanel implements Game {
 	
 	private class holdButtonListner implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			blackJack.stay();
+			blackJack.playerStay();
 			winCondition = isOver();
 			board.add(showGameOverScreen(),BorderLayout.CENTER);
 		}

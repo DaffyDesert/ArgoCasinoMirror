@@ -127,7 +127,7 @@ public class MainMenu {
 		GridBagConstraints warConstraint = setConstraint(1, 0, 1, 1, 0, 0);
 		buttonPanel.add(war, warConstraint);
 		
-		JButton blackjack = new JButton("Coming Soon!");
+		JButton blackjack = new JButton("BlackJack");
 		blackjack.setForeground(new java.awt.Color(0, 156, 222));
 		blackjack.setBackground(new java.awt.Color(0, 122, 51));
 		blackjack.setBorder(null);
@@ -153,6 +153,11 @@ public class MainMenu {
 		war.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				launchWar();
+			}
+		});
+		blackjack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				launchBlackJack();
 			}
 		});
 	}
@@ -193,7 +198,7 @@ public class MainMenu {
 	}
 	
 	public void launchWar() {
-		War warGame = new War();
+		Game warGame = new War();
 		
 		windowPane.add(warGame.display());
 		windowPane.revalidate();
@@ -203,4 +208,15 @@ public class MainMenu {
 		gameSelectionPanel.setVisible(true);
 	}
 	
+	public void launchBlackJack() {
+		Game blackJackGame = new BlackJack();
+		windowPane.add(blackJackGame.display());
+		windowPane.revalidate();
+		windowPane.repaint();
+		blackJackGame.startGame();
+		gameSelectionPanel.setVisible(true);
+		
+	}
+	
 }
+
