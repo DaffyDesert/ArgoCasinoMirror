@@ -22,6 +22,7 @@ public class MainMenu {
 	private JPanel windowPane;
 	private JPanel mainMenuPanel;
 	private JPanel gameSelectionPanel;
+	
 	private Image seaShellPic;
 	
 	public MainMenu() {
