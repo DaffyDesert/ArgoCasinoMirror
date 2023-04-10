@@ -2,6 +2,12 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+/**
+*    Handles the GUI and display aspects of a game of blackjack. 
+*    It passes the display of the game to the main menu class. Uses 
+*    the blackjack board to handle card data and all functions needed in a game of blackjack. 
+*/
+
 public class BlackJack  extends JPanel implements Game {
 	private Stopwatch stopwatch;
 	private Thread thread;
