@@ -4,7 +4,7 @@
 
 ###### Team members: RoeMello Holliday, Zachary Wilson, Daniel Padgett, Daniel Miller, Alexander DeAngelis
 
-
+ 
 
 #### How to install:
 
@@ -18,7 +18,7 @@
 
 5.) Right-click on the package explorer in eclipse, select "Refresh"
 
-
+ 
 
 #### How to execute: 
 
@@ -28,7 +28,7 @@
 
 3.) Select the green "Run Main.java" option in the top left
 
-
+ 
 
 #### How to Interact:
 
@@ -47,6 +47,8 @@ From there this will save the number of wins in Black Jack as well as the best t
 is set to an admin by default and admins have the ability to delete other users, make others admins, and take away admin privileges. 
 
 "Exit" will close the program.
+
+ 
 
 #### Change Log
 
@@ -72,6 +74,6 @@ is set to an admin by default and admins have the ability to delete other users,
 
 -Bug Fixes
 
-
+ 
 
 *As of the current build (Development v.2.0), Solitaire is unavailable.
