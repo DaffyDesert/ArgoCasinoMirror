@@ -8,7 +8,7 @@ import javax.swing.*;
 
 /**
 
- * The MainMenu class handles the display and logic of the game’s main menu, which is 
+ * The MainMenu class handles the display and logic of the gameï¿½s main menu, which is 
  * where users will return to both before and after any card game they play. The main 
  * menu has 3 options: Start Game, User Menu, and Exit. User Menu has not been 
  * implemented at this time. Exit will close the program. Start Game will bring the 
@@ -216,6 +216,11 @@ public class MainMenu {
 		return windowPane;
 	}
 	
+	public void displayLaunchMessages() {
+		LaunchData ld = new LaunchData();
+		ld.displayLaunchMessages();
+	}
+	
 	public void launchWar() {
 		Game warGame = new War();
 		
@@ -237,6 +242,5 @@ public class MainMenu {
 		gameSelectionPanel.setVisible(true);
 		
 	}
-	
 }
 

@@ -10,6 +10,7 @@ import javax.swing.*;
 @SuppressWarnings("serial")
 public class GameWindow extends JFrame{
 	MainMenu mainmenu;
+	GameMenuBar menuBar;
 	
 	public GameWindow() {
 		super("Argo Casino!");
@@ -17,9 +18,14 @@ public class GameWindow extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
-		mainmenu = new MainMenu(); 
-		add(mainmenu.display()); 
+		mainmenu = new MainMenu();
+		add(mainmenu.display());
+		
+		menuBar = new GameMenuBar(mainmenu);
+		setJMenuBar(menuBar);
 
-		setVisible(true); 
+		setVisible(true);
+		
+		mainmenu.displayLaunchMessages();
 	}
 }
