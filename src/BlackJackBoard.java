@@ -15,9 +15,10 @@ public class BlackJackBoard {
 	public BlackJackBoard() {
 		
 		playerHand = new CardStack();
-		playerHand.setName("Player Hand");
+		playerHand().setName("Player Hand");
 		dealerHand = new CardStack();
-		dealerHand.setName("Dealer Hand");
+		dealerHand().setName("Dealer Hand");
+		deck = new CardStack();
 		for(int i = 0; i < 6; i++)
 			deck.createStandardDeck();			
 		getDeck().setStackName("x6-52 Card Deck");
