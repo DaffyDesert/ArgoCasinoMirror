@@ -241,7 +241,7 @@ public class BlackJack  extends JPanel implements Game {
 		}
 		
 		if(gameOverCondition == 3) {
-			JLabel message = new JLabel("                         You Loose");
+			JLabel message = new JLabel("                         You Lose");
 			message.setFont(new Font("Serif", Font.PLAIN, 72));
 			gameOverScreenPanel.add(message, BorderLayout.CENTER);
 		}
