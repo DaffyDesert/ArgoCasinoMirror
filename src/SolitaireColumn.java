@@ -22,9 +22,24 @@ public class SolitaireColumn {
 		}
 		else {
 			Card topCard = column.peekCard(column.getStackSize() - 1);
-			if(topCard.getRank() - card.getRank() != 1) {
-				column.getStack().add(card);
-				return true;
+			if(topCard.getRank() - card.getRank() == 1) {
+				if(topCard.getSuit().compareTo("C") == 0 || topCard.getSuit().compareTo("S") == 0) {
+					if(card.getSuit().compareTo("D") == 0 || card.getSuit().compareTo("H") == 0) {
+						column.getStack().add(card);
+						return true;
+					}
+					else 
+						return false;
+				}
+				else {
+					if(card.getSuit().compareTo("C") == 0 || card.getSuit().compareTo("S") == 0) {
+						column.getStack().add(card);
+						return true;
+					}
+					else
+						return false;
+				}
+				
 			}
 			else
 				return false;
