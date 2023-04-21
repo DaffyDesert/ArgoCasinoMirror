@@ -34,6 +34,12 @@ public class Users {
 	}
 	
 	public void addUser(String name, String password, boolean isAdmin) {
+		if (numUsers == 0) {
+			LaunchData ld = new LaunchData();
+			ld.setHasUsers(true);
+			ld.writeData();
+		}
+		
 		LocalTime time = LocalTime.of(0, 0, 0);
 		userList.add(new User(name, startingCash, isAdmin, 0, time, 0));
 		numUsers++;
@@ -58,7 +64,6 @@ public class Users {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public void copyUser(int index) {
@@ -80,6 +85,12 @@ public class Users {
 		
 		userList.remove(index);
 		numUsers--;
+		
+		if (numUsers == 0) {
+			LaunchData ld = new LaunchData();
+			ld.setHasUsers(false);
+			ld.writeData();
+		}
 	}
 	
 	public void renameUser(int index, String username) {
@@ -241,6 +252,10 @@ public class Users {
 			output.write((numUsers + 48));
 			output.write("\n");
 			output.close();
+			
+			LaunchData ld = new LaunchData();
+			ld.writeDefaultData();
+			
 		} catch(IOException e) {
 			e.printStackTrace();
 			return false;
