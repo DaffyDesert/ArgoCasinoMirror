@@ -112,7 +112,7 @@ public class WarBoard{
 	}
 	
 	public JPanel drawBoard() {
-		Color felt = new Color(10, 108, 3);
+		Color felt = new Color(0,122,51);
 		
 		mainPanel.removeAll();
 		mainPanel.setLayout(new GridLayout());
@@ -123,8 +123,9 @@ public class WarBoard{
 		playerSide.setLayout(new GridBagLayout());
 		playerSide.setPreferredSize(new Dimension(423,720));
 		playerSide.setBackground(felt);
+		playerStack.draw().setToolTipText("These are your cards on this side of the board");
 		playerSide.add(playerStack.draw());
-		
+
 		JPanel middle = new JPanel();
 		middle.setLayout(new GridBagLayout());
 		middle.setPreferredSize(new Dimension(423,720));
@@ -136,6 +137,7 @@ public class WarBoard{
 		enemySide.setLayout(new GridBagLayout());
 		enemySide.setPreferredSize(new Dimension(423,720));
 		enemySide.setBackground(felt);
+		enemyStack.draw().setToolTipText("These are the Enemy cards on this side of the board");
 		enemySide.add(enemyStack.draw());
 		
 		mainPanel.add(playerSide);

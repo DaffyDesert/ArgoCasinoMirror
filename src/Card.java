@@ -76,7 +76,7 @@ public class Card {
 	public JPanel draw()
 	{
 		setCardImage();
-		Color feltGreen = new Color(10, 108, 3);
+		Color feltGreen = new Color(0,122,51);
 		JPanel card = new JPanel();
 		JLabel cardImg = new JLabel(new ImageIcon(cardImage));
 		card.setBackground(feltGreen);

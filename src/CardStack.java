@@ -99,7 +99,7 @@ public class CardStack extends JComponent{
 	}
 	
 	public JPanel draw() {
-		Color feltGreen = new Color(10, 108, 3);
+		Color feltGreen = new Color(0,122,51);
 		JPanel cardStack = new JPanel();
 		JPanel cardStackArea = new JPanel(new BorderLayout());
 		JPanel cardStackNameArea = new JPanel();
@@ -115,6 +115,8 @@ public class CardStack extends JComponent{
 		cardStack.setLayout(new BoxLayout(cardStack, BoxLayout.Y_AXIS));
 		cardStack.add(cardStackArea);
 		cardStack.add(cardStackNameArea);
+		cardStack.setToolTipText("This is the " + getStackName());
+
 
 		return cardStack;
 	}
