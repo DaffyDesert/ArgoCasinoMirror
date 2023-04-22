@@ -73,20 +73,17 @@ public class CardStack extends JComponent{
 		tempStack.addAll(0, getStack());
 		emptyStack();
 		
-		for(int i = 0; i < tempStack.size(); ++i) {
-			addToTop(tempStack.get(randomIndex.nextInt(tempStack.size())));
+		while(!tempStack.isEmpty()) {
+			addToTop(tempStack.remove(randomIndex.nextInt(tempStack.size())));
 		}
 		
 	}
 	
-	public void dealEvenlyTo(CardStack mainDeck, CardStack cs1, CardStack cs2) {
+	public void dealEvenlyTo(CardStack cs1, CardStack cs2) {
 		
-		while(!mainDeck.getStack().isEmpty()) {
-			Card card1 = mainDeck.dealTopCard();
-			Card card2 = mainDeck.dealTopCard();
-			
-			cs1.addToTop(card1);
-			cs2.addToTop(card2);
+		while(!getStack().isEmpty()) {
+			cs1.addToTop(dealTopCard());
+			cs2.addToTop(dealTopCard());
 		}
 	}
 	public void printStack() {
@@ -103,7 +100,8 @@ public class CardStack extends JComponent{
 		JPanel cardStack = new JPanel();
 		JPanel cardStackArea = new JPanel(new BorderLayout());
 		JPanel cardStackNameArea = new JPanel();
-		cardStackNameArea.add(new JLabel( getStackName() + " Cards: " + getStackSize() ));
+		if(!(getStackName() == ""))
+			cardStackNameArea.add(new JLabel( getStackName() + " Cards: " + getStackSize() ));
 		cardStackNameArea.setBackground(feltGreen);
 		cardStackArea.setBackground(feltGreen);
 				
