@@ -8,6 +8,7 @@ import javax.swing.*;
 *    the blackjack board to handle card data and all functions needed in a game of blackjack. 
 */
 
+
 public class BlackJack  extends JPanel implements Game {
 	private Stopwatch stopwatch;
 	private Thread thread;
@@ -21,9 +22,13 @@ public class BlackJack  extends JPanel implements Game {
 	private JPanel deckAndHandsPanel;
 	private JButton hit;
 	private JButton hold;
+	private JRadioButton help;
+	private JToolTip hitToolTip;
+	private JToolTip holdToolTip;
+	
 	private BlackJackBoard blackJack;
-	int winCondition;
-	boolean turnIsOver;
+	private int winCondition;
+	private boolean turnIsOver;
 	
 	
 	public BlackJack() {
@@ -118,18 +123,21 @@ public class BlackJack  extends JPanel implements Game {
 	
 		buttonPanel.setBackground(new java.awt.Color(0, 122, 51));
 		
+		
+		
 		hit.setForeground(new java.awt.Color(0, 156, 222));
 		hit.setBackground(new java.awt.Color( 224, 60, 49));
 		hit.setFont(new Font("Arial", Font.PLAIN, 40));
 		hit.setBorder(null);
+		hit.setToolTipText("Adds cards to your hand");
 		hit.addActionListener(new hitButtonListner());
-		
 		hold.setForeground(new java.awt.Color(0, 156, 222));
 		hold.setBackground(new java.awt.Color(255, 184, 28));
 		hold.setFont(new Font("Arial", Font.PLAIN, 40));
 		hold.setBorder(null);
 		hold.addActionListener(new holdButtonListner());
 		
+
 		buttonPanel.add(hit);
 		buttonPanel.add(hold);
 		
@@ -137,11 +145,16 @@ public class BlackJack  extends JPanel implements Game {
 	
 	public void statusBarPanelBuilder() {
 		statusBar = new JPanel();
-	
+		help = new JRadioButton("Help");
+		help.setBackground(new java.awt.Color(0, 122, 51));
+		help.addActionListener(new helpButtinListner());
+		help.setBorder(null);
+		
 		statusBar.setLayout(new BorderLayout());
-		statusBar.setPreferredSize(new Dimension(250,15));
+		statusBar.setPreferredSize(new Dimension(1270,50));
 		statusBar.setBackground(new java.awt.Color(0, 122, 51));
 		statusBar.add(stopwatch.display(), BorderLayout.NORTH);
+		statusBar.add(help,BorderLayout.EAST);
 	}
 	
 	public void playerHandPanelBuilder() {
@@ -180,6 +193,32 @@ public class BlackJack  extends JPanel implements Game {
 			handPanel.add(cards);
 		}
 	}
+	
+	private class helpButtinListner implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(help.isSelected()) {
+				hitToolTip = new JToolTip();
+				holdToolTip = new JToolTip();
+				hitToolTip.setTipText("Adds cards to your hand");
+				holdToolTip.setTipText("Ends your turn");
+								
+				buttonPanel.add(hitToolTip);
+				buttonPanel.add(hit);
+				buttonPanel.add(hold);
+				buttonPanel.add(holdToolTip);
+			}
+			if(!(help.isSelected())){
+				buttonPanel.remove(hitToolTip);
+				buttonPanel.remove(holdToolTip);
+				buttonPanelBuilder();
+				
+				board.add(buttonPanel,BorderLayout.SOUTH);
+			}
+		}
+		
+	}
 	private class hitButtonListner implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			updatePlayerHand();
@@ -214,7 +253,11 @@ public class BlackJack  extends JPanel implements Game {
 		
 		board.remove(deckAndHandsPanel);
 		board.remove(buttonPanel);
-		
+		board.remove(statusBar);
+		statusBar.remove(help);
+		statusBar.setPreferredSize(new Dimension(1270,15));
+		board.add(statusBar,BorderLayout.NORTH);
+
 		gameOverScreenPanel = new JPanel();
 		gameOverScreenPanel.setLayout(new BorderLayout());
 		gameOverScreenPanel.setBackground(new java.awt.Color(0,122,51));
