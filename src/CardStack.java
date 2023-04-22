@@ -116,7 +116,7 @@ public class CardStack extends JComponent{
 		if(!(getStackName() == ""))
 			cardStack.setToolTipText("This is the " + getStackName());
 		else
-			cardStack.setToolTipText("These are the cards in play. \r\nYours on the left, enemy on the right.");
+			cardStack.setToolTipText("These are the cards in play. Yours on the left, enemy on the right.");
 
 		return cardStack;
 	}
