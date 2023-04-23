@@ -113,8 +113,10 @@ public class CardStack extends JComponent{
 		cardStack.setLayout(new BoxLayout(cardStack, BoxLayout.Y_AXIS));
 		cardStack.add(cardStackArea);
 		cardStack.add(cardStackNameArea);
-		cardStack.setToolTipText("This is the " + getStackName());
-
+		if(!(getStackName() == ""))
+			cardStack.setToolTipText("This is the " + getStackName());
+		else
+			cardStack.setToolTipText("These are the cards in play. Yours on the left, enemy on the right.");
 
 		return cardStack;
 	}
