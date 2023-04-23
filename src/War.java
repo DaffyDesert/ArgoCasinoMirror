@@ -146,12 +146,11 @@ public class War extends JPanel implements Game {
 	}
 
 		private class turnButtonListner implements ActionListener{
-
-    public void actionPerformed(ActionEvent e) {
-			if (turn() == false) {
-				stopGame();
-				stopWatch();
-				showGameOverScreen();
+			public void actionPerformed(ActionEvent e) {
+				if (turn() == false) {
+					stopGame();
+					stopWatch();
+					showGameOverScreen();
 			}
 		}
 	}
