@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JToolTip;
 import javax.swing.Timer;
 
 /**
@@ -69,7 +70,7 @@ public class War extends JPanel implements Game {
 		drawCardButton.setFont(new Font("Arial", Font.PLAIN, 40));
 		drawCardButton.setBorder(null);
 		drawCardButton.setToolTipText("Reveal the top cards to see who wins or if its a War!!!!!");
-		drawCardButton.addActionListener(new hitButtonListner());
+		drawCardButton.addActionListener(new turnButtonListner());
 
 		this.setLayout(new GridBagLayout());
 
@@ -144,9 +145,9 @@ public class War extends JPanel implements Game {
 		return gameOver;
 	}
 
-	
-	private class hitButtonListner implements ActionListener{
-		public void actionPerformed(ActionEvent e) {
+		private class turnButtonListner implements ActionListener{
+
+    public void actionPerformed(ActionEvent e) {
 			if (turn() == false) {
 				stopGame();
 				stopWatch();

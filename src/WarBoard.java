@@ -185,8 +185,12 @@ public class WarBoard{
 		middle.setBackground(felt);
 		middle.setLayout(new BoxLayout(middle, BoxLayout.Y_AXIS));
 		middle.add(playZone);
+
+		turnResultArea.setToolTipText("This is a text representation of the results of the turn");
 		middle.add(turnResultArea);
-		middle.add(turnOutcomeMessage);
+		turnOutcomeMessage.setToolTipText("This is a text representation of the results of the turn");
+
+    ssmiddle.add(turnOutcomeMessage);
 		
 		JPanel enemySide = new JPanel();
 		enemySide.setLayout(new GridBagLayout());
