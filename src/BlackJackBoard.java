@@ -5,24 +5,36 @@ import javax.swing.JPanel;
 *  processes the data, then outputs data back to BlackJack to be shown in the GUI.
 */
 
-public class BlackJackBoard extends Board{
+public class BlackJackBoard {
 
 	JPanel mainPanel;
+	CardStack playerHand;
+	CardStack dealerHand;
+	CardStack deck;
 	
 	public BlackJackBoard() {
 		
-		super(2, 0, 6);
-		
-		getPlayers().get(0).setStackName("Dealer Hand");
-		getPlayers().get(1).setStackName("Player Hand");
+		playerHand = new CardStack();
+		playerHand().setName("Player Hand");
+		dealerHand = new CardStack();
+		dealerHand().setName("Dealer Hand");
+		deck = new CardStack();
+		for(int i = 0; i < 6; i++)
+			deck.createStandardDeck();			
+		getDeck().setStackName("x6-52 Card Deck");
+
 	}
 	
 	public CardStack playerHand() {
-		return getPlayers().get(1);
+		return playerHand;
 	}
 	
 	public CardStack dealerHand() {
-		return getPlayers().get(0);
+		return dealerHand;
+	}
+	
+	public CardStack getDeck() {
+		return deck;
 	}
 	
 	public void setBoard() {
@@ -137,5 +149,5 @@ public class BlackJackBoard extends Board{
 
 	}
 	
-	
+
 }

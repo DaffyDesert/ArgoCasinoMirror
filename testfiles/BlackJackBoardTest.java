@@ -100,9 +100,7 @@ public class BlackJackBoardTest {
 		testBoard.getDeck().addToTop(queen);
 		testBoard.getDeck().addToTop(king);
 		testBoard.getDeck().addToTop(ace);
-		System.out.println(testBoard.getDeck().peekCard(12).toString().charAt(0));
 		testBoard.setCardPointValues();
-		System.out.println(testBoard.getDeck().peekCard(12).toString().charAt(0));
 
 		for(int i = 0; i < testBoard.getDeck().getStackSize(); i++)
 			if(testBoard.getDeck().peekCard(i).getPointValue() == 11)
