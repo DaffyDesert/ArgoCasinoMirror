@@ -1,6 +1,16 @@
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JToolTip;
+import javax.swing.Timer;
 
 /**
  * 	War handles the GUI and displays aspects of a game of war.
@@ -10,8 +20,9 @@ import javax.swing.*;
  */
 
 @SuppressWarnings("serial")
-public class War extends JPanel implements Game, MouseListener{
+public class War extends JPanel implements Game {
 	JPanel statusBar;
+	JButton drawCardButton = new JButton("Play Turn");
 	JPanel gameOverScreen;
 	WarBoard board;
 	Stopwatch stopwatch;
@@ -26,7 +37,6 @@ public class War extends JPanel implements Game, MouseListener{
 		stopwatch.display().setBounds(0, 0, 400, 100);
 		thread = new Thread(stopwatch);
 		
-		this.addMouseListener(this);
 	}
 	
 	@Override
@@ -54,21 +64,33 @@ public class War extends JPanel implements Game, MouseListener{
 		statusBar.setBounds(0,0,1270,144);
 		statusBar.setLayout(new BorderLayout());
 		statusBar.add(stopwatch.display(), BorderLayout.SOUTH);
-		
+
+		drawCardButton.setForeground(new java.awt.Color(0, 156, 222));
+		drawCardButton.setBackground(new java.awt.Color( 224, 60, 49));
+		drawCardButton.setFont(new Font("Arial", Font.PLAIN, 40));
+		drawCardButton.setBorder(null);
+		drawCardButton.setToolTipText("Reveal the top cards to see who wins or if its a War!!!!!");
+		drawCardButton.addActionListener(new turnButtonListner());
+
 		this.setLayout(new GridBagLayout());
-		
+
 		GridBagConstraints sbCon = new GridBagConstraints();
 		sbCon.fill = GridBagConstraints.HORIZONTAL;
 		sbCon.gridy = 0;		
 		sbCon.ipadx = 1270;
-		sbCon.ipady = 40;
+		sbCon.ipady = 20;
 		
 		GridBagConstraints gameCon = new GridBagConstraints();
 		gameCon.fill = GridBagConstraints.HORIZONTAL;
 		gameCon.gridy = 1;
 		
+		GridBagConstraints hitBttn = new GridBagConstraints();
+		hitBttn.fill = GridBagConstraints.HORIZONTAL;
+		hitBttn.gridy = 3;		
+		
 		this.add(statusBar,sbCon);
 		this.add(board.drawBoard(), gameCon);
+		this.add(drawCardButton,hitBttn);
 		
 		this.revalidate();
 		this.repaint();
@@ -118,39 +140,19 @@ public class War extends JPanel implements Game, MouseListener{
 				setVisible(false);
 			}
 		});
-		timer.start();
+		timer.stop();
 		
 		return gameOver;
 	}
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		if (this.turn() == false) {
-			stopGame();
-			stopWatch();
-			showGameOverScreen();
+		private class turnButtonListner implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			if (turn() == false) {
+				stopGame();
+				stopWatch();
+				showGameOverScreen();
+			}
 		}
 	}
 
-	//Functions below are required by MouseListener interface but do not have functionality
-	
-	@Override
-	public void mousePressed(MouseEvent e) {
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		
-	}
 }

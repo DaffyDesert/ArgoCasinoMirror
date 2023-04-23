@@ -4,6 +4,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 
 import javax.swing.JPanel;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 
 /**
  * WarBoard handles the logic for a game of War. It holds player 
@@ -19,74 +21,106 @@ public class WarBoard{
 	CardStack winnerSpoils;
 	CardStack playerZone;
 	CardStack enemyZone;
-	
+	CardStack deck;
+	String turnResult;
+	String spoilsOutcome;
+
 	public WarBoard() {
-		CardStack standDeck = new CardStack();
+		deck = new CardStack("Deck");
 		playerStack = new CardStack("Player Stack");
 		enemyStack = new CardStack("Enemy Stack");
 		winnerSpoils = new CardStack("Winner Spoils");
 		playerZone = new CardStack();
 		enemyZone = new CardStack();
 		
-		standDeck.createStandardDeck();
-		standDeck.shuffleStack();
-		standDeck.dealEvenlyTo(standDeck, playerStack, enemyStack);
-		playerStack.printStack();
-		enemyStack.printStack();
-		
+		deck.createStandardDeck();
+		setPointValue();
+		deck.shuffleStack();
+		deck.dealEvenlyTo(playerStack, enemyStack);
 		mainPanel = new JPanel();
 	}
 	
+	private void setPointValue() {
+		for(int i  = 0; i < deck.getStackSize(); i++) {
+			if (deck.peekCard(i).getRank() == 1)//if rank == 1 == ace; then set pointVal to 14
+				deck.peekCard(i).setPointValue(14);
+			else
+				deck.peekCard(i).setPointValue(deck.peekCard(i).getRank());//else PointVal = rank				
+		}
+	}
+	
+	public String getResultMessage() {
+		return turnResult;
+	}
+
+	public void setResultMessage(String msg) {
+		this.turnResult = msg;
+	}
+
+	public String getOutcometMessage() {
+		return spoilsOutcome;
+	}
+
+	public void setOutcomeMessage(String msg) {
+		this.spoilsOutcome = msg;
+	}
+
 	public boolean turn() {
 		if(checkWinStatus() != 2)
 			return false;
-		Card enemyCard = enemyStack.dealTopCard();
-		Card playerCard = playerStack.dealTopCard();
+
+		playerZone.addToTop(playerStack.dealTopCard());
+		enemyZone.addToTop(enemyStack.dealTopCard());
 		
-		winnerSpoils.addToTop(enemyCard);
-		winnerSpoils.addToTop(playerCard);
-		
-		enemyCard.setFaceDown(false);
-		playerCard.setFaceDown(false);
-		
-		playerZone.addToTop(playerCard);
-		enemyZone.addToTop(enemyCard);
-		
-		drawBoard();
-		enemyCard.setFaceDown(true);
-		playerCard.setFaceDown(true);	
-		
-		playerZone.getStack().clear();
-		enemyZone.getStack().clear();
-		
-		return compare(playerCard, enemyCard);
+		return compare(playerZone.peekCard(playerZone.getStackSize()-1), enemyZone.peekCard(enemyZone.getStackSize()-1));
 	}
   
 	public boolean compare(Card playerCard, Card enemyCard) {
-		if(playerCard.getRank() == 1) {
-			while(!winnerSpoils.getStack().isEmpty()) 
-				playerStack.addToBottom(winnerSpoils.dealTopCard());
-			
-			return true;
+		
+		if(playerCard.getPointValue() == enemyCard.getPointValue()) {
+			turnResult = "Your card " + playerCard.toString() + " is equal to the enemy card " + enemyCard.toString();
+			spoilsOutcome = " This... means... WAR!!!! ";
+			goToWar();
 		}
-		else if(enemyCard.getRank() == 1) {
-			while(!winnerSpoils.getStack().isEmpty()) 
-				enemyStack.addToBottom(winnerSpoils.dealTopCard());
+		else if(playerCard.getPointValue() > enemyCard.getPointValue()) {
+			turnResult = "Your card " + playerCard.toString() + " beats the enemy card " + enemyCard.toString() + ". ";
+			spoilsOutcome = "Winner spoils of " + (winnerSpoils.getStackSize() + 2) + " cards will be moved to your stack.";
+			
+			playerZone.flipTopCard();
+			enemyZone.flipTopCard();
+			
+			drawBoard();
 
-			return true;
-		}
-		else if(playerCard.getRank() > enemyCard.getRank()) {
-			while(!winnerSpoils.getStack().isEmpty()) 
+			playerZone.flipTopCard();
+			enemyZone.flipTopCard();
+
+
+			winnerSpoils.addToTop(playerZone.dealTopCard());
+			winnerSpoils.addToTop(enemyZone.dealTopCard());
+
+			while(!(winnerSpoils.getStackSize() == 0))
 				playerStack.addToBottom(winnerSpoils.dealTopCard());
-			
-			return true;
 		}
-		else {
-			while(!winnerSpoils.getStack().isEmpty()) 
+		else if(playerCard.getPointValue() < enemyCard.getPointValue()) {
+			turnResult = "Your card " + playerCard.toString() + " loses to the enemy card " + enemyCard.toString() + ". ";
+			spoilsOutcome = "Winner spoils of " + (winnerSpoils.getStackSize() + 2) + " cards will be moved to the enemy stack.";
+			
+			playerZone.flipTopCard();
+			enemyZone.flipTopCard();
+			
+			drawBoard();
+
+			playerZone.flipTopCard();
+			enemyZone.flipTopCard();
+
+
+			winnerSpoils.addToTop(playerZone.dealTopCard());
+			winnerSpoils.addToTop(enemyZone.dealTopCard());
+
+			while(!(winnerSpoils.getStackSize() == 0))
 				enemyStack.addToBottom(winnerSpoils.dealTopCard());
-			
-			return true;
 		}
+		return true;
 	}
 
 	public boolean goToWar() {
@@ -112,30 +146,55 @@ public class WarBoard{
 	}
 	
 	public JPanel drawBoard() {
-		Color felt = new Color(10, 108, 3);
+		Color felt = new Color(0,122,51);
 		
 		mainPanel.removeAll();
 		mainPanel.setLayout(new GridLayout());
 		mainPanel.setPreferredSize(new Dimension(1270,720));
 		mainPanel.setBackground(felt); 
 		
-		JPanel playerSide = new JPanel();
+		JLabel turnResultMessage = new JLabel(getResultMessage());
+		JPanel turnResultArea = new JPanel();
+		turnResultArea.setLayout(new BoxLayout(turnResultArea, BoxLayout.Y_AXIS));
+		turnResultArea.setBackground(felt);
+		turnResultArea.add(turnResultMessage);
+		turnResultArea.setPreferredSize(new Dimension(1270,20));
+		
+		JLabel turnOutcomeMessage = new JLabel(getOutcometMessage());
+		JPanel turnOutcomeArea = new JPanel();
+		turnOutcomeArea.setLayout(new BoxLayout(turnOutcomeArea, BoxLayout.Y_AXIS));
+		turnOutcomeArea.setBackground(felt);
+		turnOutcomeArea.add(turnOutcomeMessage);
+		turnOutcomeArea.setPreferredSize(new Dimension(1270,20));
+		
+		JPanel playerSide = new JPanel(new GridLayout());
 		playerSide.setLayout(new GridBagLayout());
 		playerSide.setPreferredSize(new Dimension(423,720));
 		playerSide.setBackground(felt);
+		playerStack.draw().setToolTipText("These are your cards on this side of the board");
 		playerSide.add(playerStack.draw());
+
+		JPanel playZone = new JPanel();
+		playZone.setLayout(new GridBagLayout());
+		playZone.setPreferredSize(new Dimension(423,720));
+		playZone.setBackground(felt);
+		playZone.add(playerZone.draw());
+		playZone.add(enemyZone.draw());
 		
 		JPanel middle = new JPanel();
-		middle.setLayout(new GridBagLayout());
-		middle.setPreferredSize(new Dimension(423,720));
 		middle.setBackground(felt);
-		middle.add(playerZone.draw());
-		middle.add(enemyZone.draw());
+		middle.setLayout(new BoxLayout(middle, BoxLayout.Y_AXIS));
+		middle.add(playZone);
+		turnResultArea.setToolTipText("This is a text representation of the results of the turn");
+		middle.add(turnResultArea);
+		turnOutcomeMessage.setToolTipText("This is a text representation of the results of the turn");
+		middle.add(turnOutcomeMessage);
 		
 		JPanel enemySide = new JPanel();
 		enemySide.setLayout(new GridBagLayout());
 		enemySide.setPreferredSize(new Dimension(423,720));
 		enemySide.setBackground(felt);
+		enemyStack.draw().setToolTipText("These are the Enemy cards on this side of the board");
 		enemySide.add(enemyStack.draw());
 		
 		mainPanel.add(playerSide);
@@ -147,5 +206,6 @@ public class WarBoard{
 		
 		return mainPanel;
 	}
+
 
 }
