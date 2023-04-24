@@ -20,8 +20,10 @@ public class BlackJack  extends JPanel implements Game {
 	private JPanel dealerHandPanel;
 	private JPanel buttonPanel;
 	private JPanel deckAndHandsPanel;
+	private JPanel handsFlippedPanel;
 	private JButton hit;
 	private JButton hold;
+	private JButton newHand;
 	private JRadioButton help;
 	private JToolTip hitToolTip;
 	private JToolTip holdToolTip;
@@ -29,6 +31,7 @@ public class BlackJack  extends JPanel implements Game {
 	private BlackJackBoard blackJack;
 	private int winCondition;
 	private boolean turnIsOver;
+	public Component gameOverScreen;
 	
 	
 	public BlackJack() {
@@ -54,8 +57,8 @@ public class BlackJack  extends JPanel implements Game {
 
 	@Override
 	public void stopWatch() {
-		stopwatch.stopThread();
-		
+		stopwatch.stopTimer();
+		board.revalidate();	
 	}
 
 	@Override
@@ -66,9 +69,9 @@ public class BlackJack  extends JPanel implements Game {
 
 	@Override
 	public JPanel display() {
-		board = new JPanel();
+ 		board = new JPanel();
 		board.removeAll();
-		board.setBackground(new java.awt.Color(0, 122, 51));
+		board.setBackground(new java.awt.Color(0, 122, 40));
 		board.setLayout(new BorderLayout());
 		board.setPreferredSize(new Dimension(1270,650));
 		
@@ -87,7 +90,7 @@ public class BlackJack  extends JPanel implements Game {
 	public void deckAndHandsPanelBuilder() {
 		deckAndHandsPanel = new JPanel();
 		deckAndHandsPanel.setLayout(new BorderLayout());
-		deckAndHandsPanel.setBackground(new java.awt.Color(0, 122, 51));
+		deckAndHandsPanel.setBackground(new java.awt.Color(0, 122, 40));
 		deckAndHandsPanel.setPreferredSize(new Dimension(50,50));
 		deckPanelBuilder();
 		playerHandPanelBuilder();
@@ -127,13 +130,13 @@ public class BlackJack  extends JPanel implements Game {
 		
 		hit.setForeground(new java.awt.Color(0, 156, 222));
 		hit.setBackground(new java.awt.Color( 224, 60, 49));
-		hit.setFont(new Font("Arial", Font.PLAIN, 40));
+		hit.setFont(new Font("Arial", Font.PLAIN, 30));
 		hit.setBorder(null);
-		hit.setToolTipText("Adds cards to your hand");
+	
 		hit.addActionListener(new hitButtonListner());
 		hold.setForeground(new java.awt.Color(0, 156, 222));
 		hold.setBackground(new java.awt.Color(255, 184, 28));
-		hold.setFont(new Font("Arial", Font.PLAIN, 40));
+		hold.setFont(new Font("Arial", Font.PLAIN, 30));
 		hold.setBorder(null);
 		hold.addActionListener(new holdButtonListner());
 		
@@ -238,6 +241,37 @@ public class BlackJack  extends JPanel implements Game {
 		}
 	}
 	
+	private class newHandButtonListner implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+		
+			board.removeAll();
+			board.revalidate();
+			blackJack.dealerHand.emptyStack();
+			blackJack.playerHand.emptyStack();
+		
+			stopwatch = new Stopwatch();
+			thread = new Thread(stopwatch);
+			thread.start();
+			
+			blackJack.setBoard();
+			if(blackJack.is21(blackJack.playerHand())) {
+				winCondition = 1;
+				board.add(showGameOverScreen(),BorderLayout.CENTER);
+			}
+			
+			board.setPreferredSize(new Dimension(1270,650));
+			
+			statusBarPanelBuilder();
+			buttonPanelBuilder();
+			deckAndHandsPanelBuilder();
+			
+			board.add(statusBar,BorderLayout.NORTH);
+			board.add(deckAndHandsPanel,BorderLayout.CENTER);
+			board.add(buttonPanel,BorderLayout.SOUTH);
+		}
+		
+	}
+	
 	public void updatePlayerHand() {
 		blackJack.hit(blackJack.playerHand());
 		playerHandPanelBuilder();
@@ -249,7 +283,42 @@ public class BlackJack  extends JPanel implements Game {
 		deckAndHandsPanel.add(dealerHandPanel,BorderLayout.NORTH);
 	}
 	
-	public void gameOverScreenPanelBuilder(int gameOverCondition) {
+	
+	
+	public void handsFlippedPanelBuilder(int gameOverCondition) {
+		handsFlippedPanel = new JPanel();
+		handsFlippedPanel.setLayout(new BorderLayout());
+		handsFlippedPanel.setBackground(new java.awt.Color(0,122,51));
+		
+		showCardsFaceUp(dealerHandPanel,blackJack.dealerHand());
+		showCardsFaceUp(playerHandPanel,blackJack.playerHand());
+		
+		handsFlippedPanel.add(dealerHandPanel,BorderLayout.NORTH);
+		handsFlippedPanel.add(playerHandPanel,BorderLayout.SOUTH);
+		// added the spaces in the JLabel because I could not figure out how to center the text 
+		if(gameOverCondition == 1) {
+			JLabel message = new JLabel("                           You Win");;
+			message.setFont(new Font("Serif", Font.PLAIN, 72));
+			handsFlippedPanel.add(message, BorderLayout.CENTER);
+			
+		}
+		if(gameOverCondition == 2) {
+			JLabel message = new JLabel("                         You Busted");
+			message.setFont(new Font("Serif", Font.PLAIN, 72));
+			handsFlippedPanel.add(message, BorderLayout.CENTER);
+		}
+		
+		if(gameOverCondition == 3) {
+			JLabel message = new JLabel("                         You Lose");
+			message.setFont(new Font("Serif", Font.PLAIN, 72));
+			handsFlippedPanel.add(message, BorderLayout.CENTER);
+		}
+		
+	}
+	
+	
+	
+	public void gameOverScreenPanelBuilder() {
 		
 		board.remove(deckAndHandsPanel);
 		board.remove(buttonPanel);
@@ -261,34 +330,29 @@ public class BlackJack  extends JPanel implements Game {
 		gameOverScreenPanel = new JPanel();
 		gameOverScreenPanel.setLayout(new BorderLayout());
 		gameOverScreenPanel.setBackground(new java.awt.Color(0,122,51));
+		gameOverScreenPanel.setPreferredSize(new Dimension(50,50));
+		
+		handsFlippedPanelBuilder(winCondition);
+		
+		gameOverScreenPanel.add(handsFlippedPanel,BorderLayout.CENTER);
+		
+		newHand = new JButton("newHand");
+		newHand.setForeground(new java.awt.Color(0, 156, 222));
+		newHand.setBackground(new java.awt.Color( 224, 60, 49));
+		newHand.setFont(new Font("Arial", Font.PLAIN,50));
+		newHand.setBorder(null);
+		newHand.addActionListener( new newHandButtonListner());
+		
+		JPanel newHandPanel = new JPanel();
+		newHandPanel.setLayout(new FlowLayout());
+		newHandPanel.setBackground(new java.awt.Color(0,122,51));
+		newHandPanel.add(newHand);
 		
 		
-		showCardsFaceUp(dealerHandPanel,blackJack.dealerHand());
-		showCardsFaceUp(playerHandPanel,blackJack.playerHand());
-		
-		gameOverScreenPanel.add(dealerHandPanel,BorderLayout.NORTH);
-		gameOverScreenPanel.add(playerHandPanel,BorderLayout.SOUTH);
 		
 		
-		// added the spaces in the JLabel because I could not figure out how to center the text 
-		if(gameOverCondition == 1) {
-			JLabel message = new JLabel("                           You Win");;
-			message.setFont(new Font("Serif", Font.PLAIN, 72));
-			gameOverScreenPanel.add(message, BorderLayout.CENTER);
-			
-		}
-		if(gameOverCondition == 2) {
-			JLabel message = new JLabel("                         You Busted");
-			message.setFont(new Font("Serif", Font.PLAIN, 72));
-			gameOverScreenPanel.add(message, BorderLayout.CENTER);
-		}
 		
-		if(gameOverCondition == 3) {
-			JLabel message = new JLabel("                         You Lose");
-			message.setFont(new Font("Serif", Font.PLAIN, 72));
-			gameOverScreenPanel.add(message, BorderLayout.CENTER);
-		}
-
+		gameOverScreenPanel.add(newHandPanel,BorderLayout.EAST);
 	}
 
 	@Override
@@ -338,10 +402,10 @@ public class BlackJack  extends JPanel implements Game {
 
 	
 	
-	@Override
+	
 	public JPanel showGameOverScreen() {
 		stopGame();
-		gameOverScreenPanelBuilder(winCondition);
+		gameOverScreenPanelBuilder();
 		return gameOverScreenPanel;
 	}
 
