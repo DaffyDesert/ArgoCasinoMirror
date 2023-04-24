@@ -58,6 +58,7 @@ public class SolitaireColumn {
 	    String suit = card.getSuit();
 	    return suit.equals("S") || suit.equals("C");
 	}
+	
 
 	JPanel display() {
 
