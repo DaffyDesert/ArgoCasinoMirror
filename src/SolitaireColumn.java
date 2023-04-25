@@ -1,6 +1,13 @@
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Point;
+
+import javax.swing.BoxLayout;
+import javax.swing.JComponent;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
-public class SolitaireColumn {
+public class SolitaireColumn{
 	private CardStack column;
 
 	SolitaireColumn() {
@@ -47,8 +54,26 @@ public class SolitaireColumn {
 	}
 
 	JPanel display() {
-
-		return null;
+		int numCards = column.getStack().size();
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+		
+		JLayeredPane lp = new JLayeredPane();
+		lp.setPreferredSize(new Dimension(300,310));
+		Point origin = new Point(10,20);
+		int offset = 100;
+		for(int i = 0; i < numCards; ++i) {
+			JPanel currCard = column.getStack().get(i).draw();
+			
+			currCard.setBounds(origin.x, origin.y,150,150);
+			
+			lp.add(currCard, i );
+			origin.y += offset;
+		}
+		lp.setVisible(true);
+		panel.add(lp);
+		panel.setVisible(true);
+		return panel;
 	}
 	
 	void printColumn() {
