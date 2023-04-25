@@ -12,8 +12,8 @@ public class SolitaireColumn {
 	}
 
 	boolean addCard(Card card) {	
-		if(column.getStack().isEmpty()) {
-			if(card.getRank() == 13) {
+		if(isEmpty()) {
+			if(isKing(card)) {
 				column.getStack().add(card);
 				return true;
 			}
@@ -22,29 +22,43 @@ public class SolitaireColumn {
 		}
 		else {
 			Card topCard = column.peekCard(column.getStackSize() - 1);
-			if(topCard.getRank() - card.getRank() == 1) {
-				if(topCard.getSuit().compareTo("C") == 0 || topCard.getSuit().compareTo("S") == 0) {
-					if(card.getSuit().compareTo("D") == 0 || card.getSuit().compareTo("H") == 0) {
-						column.getStack().add(card);
-						return true;
-					}
-					else 
-						return false;
-				}
-				else {
-					if(card.getSuit().compareTo("C") == 0 || card.getSuit().compareTo("S") == 0) {
-						column.getStack().add(card);
-						return true;
-					}
-					else
-						return false;
-				}
-				
-			}
-			else
-				return false;
+	        if (isAdjacentAndDifferentColor(topCard, card)) {
+	            column.getStack().add(card);
+	            return true;
+	        } else {
+	            return false;
+	        }
 		}
 	}
+	
+	boolean isKing(Card card) {
+		if(card.getRank() == 13) 
+			return true;
+		return false;
+	}
+	
+	
+	boolean isEmpty() {
+		return column.getStack().isEmpty();
+	}
+	
+	boolean isAdjacentAndDifferentColor(Card card1, Card card2) {
+		int rankDifference = card1.getRank() - card2.getRank();
+	    boolean isAdjacent = rankDifference == 1;
+	    boolean isDifferentColor = (isRed(card1) && isBlack(card2)) || (isBlack(card1) && isRed(card2));
+	    return isAdjacent && isDifferentColor;
+	}
+	
+	boolean isRed(Card card) {
+	    String suit = card.getSuit();
+	    return suit.equals("H") || suit.equals("D");
+	}
+	
+	boolean isBlack(Card card) {
+	    String suit = card.getSuit();
+	    return suit.equals("S") || suit.equals("C");
+	}
+	
 
 	JPanel display() {
 

@@ -15,7 +15,7 @@ public class SolitaireColumnJUnit {
 		assertTrue(!column.addCard(new Card(12, "S")));
 		assertTrue(column.addCard(new Card(13, "C")));
 		
-		//Test 2: order of cards can only be in seqential order
+		//Test 2: order of cards can only be in sequential order
 		assertTrue(column.addCard(new Card(12, "H")));
 		assertTrue(column.addCard(new Card(11, "S")));
 		
@@ -43,16 +43,70 @@ public class SolitaireColumnJUnit {
 		assertTrue(column2.addCard(new Card(3, "D")));
 		assertTrue(column2.addCard(new Card(2, "C")));
 		assertTrue(column2.addCard(new Card(1, "H")));
+	}
+	
+	@Test
+	public void TestIsKing() {
+		column = new SolitaireColumn();
+		assertTrue(column.isKing(new Card(13,"C")));
+		assertTrue(column.isKing(new Card(13,"H")));
+		assertTrue(column.isKing(new Card(13,"S")));
+		assertTrue(column.isKing(new Card(13,"D")));
+		
+		assertTrue(!column.isKing(new Card(12,"C")));
+	}
+	
+	@Test
+	public void TestIsEmpty() {
+		column = new SolitaireColumn();
+		
+		assertTrue(column.isEmpty());
+		
+		column.addCard(new Card(13,"H"));
+		assertTrue(!column.isEmpty());
+	}
+	
+	@Test
+	public void testAdjacentAndDifferentColor() {
+		column = new SolitaireColumn();
+		
+		//Different color and adjacent cards (should pass)
+		Card FiveofHearts = new Card(5,"H");
+		Card SixofSpades = new Card(6,"S");
+		assertTrue(column.isAdjacentAndDifferentColor(SixofSpades, FiveofHearts));
+		
+		//Same color and adjacent cards (should fail)
+		Card SevenofDiamonds = new Card(7, "D");
+		Card EightofDiamonds = new Card(7, "D");
+		assertTrue(!column.isAdjacentAndDifferentColor(EightofDiamonds, SevenofDiamonds));
+		
+		//Different color but non-adjacent cards (should fail)
+		Card NineofClubs = new Card(9,"C");
+		Card JackofHearts = new Card(11, "H");
+		assertTrue(!column.isAdjacentAndDifferentColor(JackofHearts, NineofClubs));
+		
+		//Same color and non-adjacent cards (should fail)
+		Card AceofSpades = new Card(1, "S");
+		Card KingofClubs = new Card(13, "C");
+		assertTrue(!column.isAdjacentAndDifferentColor(KingofClubs, AceofSpades));
 
+	}
+	
+	@Test
+	public void testColors() {
+		SolitaireColumn column = new SolitaireColumn();
+		Card FiveofHearts = new Card(5,"H");
+		Card KingofClubs = new Card(13, "C");
+		Card SevenofDiamonds = new Card(7, "D");
+		Card AceofSpades = new Card(1, "S");
+		
+		assertTrue(column.isBlack(AceofSpades));
+		assertTrue(column.isBlack(KingofClubs));
+		assertTrue(column.isRed(FiveofHearts));
+		assertTrue(column.isRed(SevenofDiamonds));
 
-
-
-
-
-
-
-
-
+		assertTrue(!column.isRed(AceofSpades));
+		assertTrue(!column.isBlack(FiveofHearts));
 
 	}
 }
