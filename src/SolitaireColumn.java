@@ -60,15 +60,15 @@ public class SolitaireColumn{
 		
 		JLayeredPane lp = new JLayeredPane();
 		lp.setPreferredSize(new Dimension(300,310));
-		Point origin = new Point(10,20);
-		int offset = 100;
-		for(int i = 0; i < numCards; ++i) {
+		Point origin = new Point(10,100);
+		int offset = 50;
+		for(int i = numCards - 1; i >= 0; --i) {
 			JPanel currCard = column.getStack().get(i).draw();
 			
 			currCard.setBounds(origin.x, origin.y,150,150);
 			
-			lp.add(currCard, i );
-			origin.y += offset;
+			lp.add(currCard);
+			origin.y -= offset;
 		}
 		lp.setVisible(true);
 		panel.add(lp);
