@@ -79,16 +79,13 @@ public class SolitaireColumn {
 		panel.setBorder(null);
 		JLayeredPane lp = new JLayeredPane();
 		lp.setPreferredSize(new Dimension(135,750));
-		Point origin = new Point(10,310);
+		Point origin = new Point(10,0);
 		int offset = 50;
 	
-		for(int i = numCards - 1; i >= 0; --i) {
+		for(int i = numCards - 1; i >= 0; i--) {
 			JPanel currCard = column.getStack().get(i).draw();
-			
-			currCard.setBounds(origin.x, origin.y,150,150);
-	
+			currCard.setBounds(origin.x,(origin.y + (offset*i)),150,150);
 			lp.add(currCard);
-			origin.y -= offset;
 		}
 		lp.setVisible(true);
 		panel.add(lp);
