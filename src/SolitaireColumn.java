@@ -5,7 +5,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
-public class SolitaireColumn {
+public class SolitaireColumn{
 	private CardStack column;
 
 	SolitaireColumn() {
@@ -86,6 +86,7 @@ public class SolitaireColumn {
 			JPanel currCard = column.getStack().get(i).draw();
 			currCard.setBounds(origin.x,(origin.y + (offset*i)),150,150);
 			lp.add(currCard);
+
 		}
 		lp.setVisible(true);
 		panel.add(lp);
