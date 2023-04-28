@@ -1,9 +1,7 @@
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Point;
 
 import javax.swing.BoxLayout;
-import javax.swing.JComponent;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
@@ -19,7 +17,12 @@ public class SolitaireColumn{
 	}
 
 	boolean addCard(Card card) {	
-		if(isEmpty()) {
+		if(card.isFaceDown()) {
+			column.getStack().add(card);
+			return true;
+		}
+		
+		else if(isEmpty()) {
 			if(isKing(card)) {
 				column.getStack().add(card);
 				return true;
@@ -29,7 +32,7 @@ public class SolitaireColumn{
 		}
 		else {
 			Card topCard = column.peekCard(column.getStackSize() - 1);
-	        if (isAdjacentAndDifferentColor(topCard, card)) {
+	        if ((isAdjacentAndDifferentColor(topCard, card)) || (topCard.isFaceDown())) {
 	            column.getStack().add(card);
 	            return true;
 	        } else {
@@ -68,21 +71,22 @@ public class SolitaireColumn{
 	
 
 	JPanel display() {
+
 		int numCards = column.getStack().size();
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		
+		panel.setBackground(null);
+		panel.setBorder(null);
 		JLayeredPane lp = new JLayeredPane();
-		lp.setPreferredSize(new Dimension(300,310));
-		Point origin = new Point(10,100);
+		lp.setPreferredSize(new Dimension(135,750));
+		Point origin = new Point(10,0);
 		int offset = 50;
-		for(int i = numCards - 1; i >= 0; --i) {
+	
+		for(int i = numCards - 1; i >= 0; i--) {
 			JPanel currCard = column.getStack().get(i).draw();
-			
-			currCard.setBounds(origin.x, origin.y,150,150);
-			
+			currCard.setBounds(origin.x,(origin.y + (offset*i)),150,150);
 			lp.add(currCard);
-			origin.y -= offset;
+
 		}
 		lp.setVisible(true);
 		panel.add(lp);
