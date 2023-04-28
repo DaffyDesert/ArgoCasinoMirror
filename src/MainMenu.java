@@ -49,6 +49,7 @@ public class MainMenu {
 		title.setVerticalTextPosition(JLabel.NORTH);
 		title.setHorizontalTextPosition(JLabel.CENTER);
 		title.setFont(new Font("Serif", Font.PLAIN, 72));
+		title.setToolTipText("This isn't a button, why are you looking at this?");
 		GridBagConstraints titleConstraints = setConstraint(1, 0, 1, 1, 0, 5);
 		mainMenuPanel.add(title, titleConstraints);
 		mainMenuPanel.setBackground(new java.awt.Color(0, 122, 51));
@@ -62,6 +63,7 @@ public class MainMenu {
 		startButton.setBackground(new java.awt.Color(0, 122, 51));
 		startButton.setFont(new Font("Arial", Font.PLAIN, 40));
 		startButton.setBorder(null);
+		startButton.setToolTipText("Select this button to choose your game");
 		GridBagConstraints startConstraint = setConstraint(0, 0, 3, 1, 0, 0);
 		buttonPanel.add(startButton, startConstraint);
 		
@@ -71,6 +73,7 @@ public class MainMenu {
 		userMenuButton.setBackground(new java.awt.Color(0, 122, 51));
 		userMenuButton.setFont(new Font("Arial", Font.PLAIN, 40));
 		userMenuButton.setBorder(null);
+		userMenuButton.setToolTipText("Select this button to enter the User Menu");
 		buttonPanel.add(userMenuButton, userConstraint);
 		buttonPanel.setBackground(new java.awt.Color(0, 122, 51));
 		
@@ -79,6 +82,7 @@ public class MainMenu {
 		ExitButton.setBackground(new java.awt.Color(0, 122, 51));
 		ExitButton.setFont(new Font("Arial", Font.PLAIN, 40));
 		ExitButton.setBorder(null);
+		ExitButton.setToolTipText("Select this button to exit the game.");
 		GridBagConstraints exitConstraint = setConstraint(0, 2, 3, 1, 0, 0);
 		buttonPanel.add(ExitButton, exitConstraint);
 		
@@ -124,6 +128,7 @@ public class MainMenu {
 		title.setVerticalTextPosition(JLabel.NORTH);
 		title.setHorizontalTextPosition(JLabel.CENTER);
 		title.setFont(new Font("Serif", Font.PLAIN, 72));
+		title.setToolTipText("Again, not a button. Pick an actual option.");
 		GridBagConstraints titleConstraints = setConstraint(1, 0, 1, 1, 0, 5);
 		gameSelectionPanel.add(title, titleConstraints);
 		gameSelectionPanel.setBackground(new java.awt.Color(0, 122, 51));
@@ -132,10 +137,11 @@ public class MainMenu {
 		buttonPanel.setLayout(new GridBagLayout());
 		GridBagConstraints buttonPanelConstraints = setConstraint(1, 1, 1, 2, 0, 0);
 		
-		JButton solitaire = new JButton("Coming Soon!");
+		JButton solitaire = new JButton("Solitaire");
 		solitaire.setForeground(new java.awt.Color(0, 156, 222));
 		solitaire.setBackground(new java.awt.Color(0, 122, 51));
 		solitaire.setBorder(null);
+		solitaire.setToolTipText("Select this to play Solitaire");
 		GridBagConstraints sConstraint = setConstraint(0, 0, 1, 1, 0, 0);
 		buttonPanel.add(solitaire, sConstraint);
 		
@@ -143,6 +149,7 @@ public class MainMenu {
 		war.setForeground(new java.awt.Color(0, 156, 222));
 		war.setBackground(new java.awt.Color(0, 122, 51));
 		war.setBorder(null);
+		war.setToolTipText("Select this to play War");
 		GridBagConstraints warConstraint = setConstraint(1, 0, 1, 1, 0, 0);
 		buttonPanel.add(war, warConstraint);
 		
@@ -150,6 +157,7 @@ public class MainMenu {
 		blackjack.setForeground(new java.awt.Color(0, 156, 222));
 		blackjack.setBackground(new java.awt.Color(0, 122, 51));
 		blackjack.setBorder(null);
+		blackjack.setToolTipText("Select this to play blackjack");
 		GridBagConstraints bjConstraint = setConstraint(2, 0, 1, 1, 0, 0);
 		buttonPanel.add(blackjack, bjConstraint);
 		
@@ -157,6 +165,7 @@ public class MainMenu {
 		back.setForeground(new java.awt.Color(0, 156, 222));
 		back.setBackground(new java.awt.Color(0, 122, 51));
 		back.setBorder(null);
+		back.setToolTipText("Select this to go back");
 		GridBagConstraints backConstraint = setConstraint(1, 1, 1, 1, 0, 0);
 		buttonPanel.add(back, backConstraint);
 		
@@ -174,9 +183,16 @@ public class MainMenu {
 				launchWar();
 			}
 		});
+		
 		blackjack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				launchBlackJack();
+			}
+		});
+		
+		solitaire.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				launchSolitaire();
 			}
 		});
 	}
@@ -241,6 +257,16 @@ public class MainMenu {
 		windowPane.repaint();
 		gameSelectionPanel.setVisible(true);
 		
+	}
+	
+	public void launchSolitaire() {
+		Game solitaireGame = new Solitaire();
+		windowPane.add(solitaireGame.display());
+		
+		windowPane.revalidate();
+		windowPane.repaint();
+		solitaireGame.startGame();
+		gameSelectionPanel.setVisible(true);
 	}
 }
 
