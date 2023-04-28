@@ -24,6 +24,7 @@ public class SolitaireBoard {
 		heartFoundation = new CardStack();
 		columns = new SolitaireColumn[NUM_COLUMNS];
 		deck = new CardStack();
+		discardPile = new CardStack();
 		deck.createStandardDeck();
 		deck.shuffleStack();
 	}
