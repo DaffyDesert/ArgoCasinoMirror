@@ -117,19 +117,52 @@ public class Solitaire extends JPanel implements Game{
 	}
 	
 	public void foundationsBuilder() {
+		JPanel heartFoundation = new JPanel();
+		heartFoundation.setBackground(Color.red);
+		heartFoundation.setPreferredSize(new Dimension(100,145));
+		
+		JPanel spadeFoundation = new JPanel();
+		spadeFoundation.setBackground(Color.black);
+		spadeFoundation.setPreferredSize(new Dimension(100,145));
+		
+		JPanel diamondFoundation = new JPanel();
+		diamondFoundation.setBackground(Color.blue);
+		diamondFoundation.setPreferredSize(new Dimension(100,145));
+		
+		JPanel clubFoundation = new JPanel();
+		clubFoundation.setBackground(Color.green);
+		clubFoundation.setPreferredSize(new Dimension(100,145));
+		
 		foundations = new JPanel();
-		foundations.setLayout(new BorderLayout());
+		foundations.setLayout(new FlowLayout(0, 10, 20));
 		foundations.setBackground(new java.awt.Color(0,122,51));
 		foundations.setPreferredSize(new Dimension(130,250));
 		foundations.setBorder(BorderFactory.createLineBorder(Color.black, 2));
+		
+		foundations.add(heartFoundation);
+		foundations.add(spadeFoundation);
+		foundations.add(diamondFoundation);
+		foundations.add(clubFoundation);
+		
 	}
 	
 	public void handAndWasteBuilder() {
+		JPanel hand = new JPanel();
+		hand.setBackground(Color.CYAN);
+		hand.setPreferredSize(new Dimension(100,145));
+		
+		JPanel waste = new JPanel();
+		waste.setBackground(Color.pink);
+		waste.setPreferredSize(new Dimension(100,145));
+		
 		handAndWaste = new JPanel();
-		handAndWaste.setLayout(new BorderLayout());
+		handAndWaste.setLayout(new FlowLayout(0, 10, 20));
 		handAndWaste.setBackground(new java.awt.Color(0,122,51));
 		handAndWaste.setPreferredSize(new Dimension(130,250));
 		handAndWaste.setBorder(BorderFactory.createLineBorder(Color.black,2));
+		
+		handAndWaste.add(hand);
+		handAndWaste.add(waste);
 	}
 
 }
