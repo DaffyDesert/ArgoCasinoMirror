@@ -2,16 +2,24 @@ import javax.swing.JPanel;
 
 public class SolitaireBoard {
 	static int NUM_COLUMNS = 7;
+	//static int NUM_FOUNDATIONS = 4;
 	JPanel mainPanel;
 	SolitaireColumn columns[];
 	CardStack deck;
-	
+	FoundationStack[] FDStack;
 	public SolitaireColumn getColumnAt(int index) {
 		return columns[index];
 	}
 	public CardStack getDeck() {return deck;}
+
+
+	/*public FoundationStack getFoundations(int index ) {
+
+		return FoundationStack [index];
+	}*/
 	
 	public SolitaireBoard() {
+		//FDStack = new FoundationStack[NUM_FOUNDATIONS];
 		columns = new SolitaireColumn[NUM_COLUMNS];
 		deck = new CardStack();
 		deck.createStandardDeck();
