@@ -20,7 +20,6 @@ public class SolitaireBoard {
 	public CardStack getDeck() {return deck;}
 	
 	public SolitaireBoard() {
-		//heartFoundation = new HeartFoundation();
 		heartFoundation = new CardStack();
 		columns = new SolitaireColumn[NUM_COLUMNS];
 		deck = new CardStack();
@@ -37,7 +36,7 @@ public class SolitaireBoard {
 				currCard.setFaceDown(true);
 				columns[i].addCard(currCard);
 			}
-			columns[i].getColumn().peekCard(0).setFaceDown(false);
+			columns[i].getColumn().peekCard(i).setFaceDown(false);
 		}
 	}
 	

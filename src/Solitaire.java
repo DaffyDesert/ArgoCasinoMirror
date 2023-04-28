@@ -17,6 +17,7 @@ public class Solitaire extends JPanel implements Game{
 	JPanel foundations;
 	JPanel handAndWaste;
 	ArrayList<SolitaireColumn> tableauColumns = new ArrayList<SolitaireColumn>();
+	ArrayList<JPanel> tableauColumnJPanels = new ArrayList<JPanel>();
 	SolitaireBoard solitaire;
 	JPanel heartFoundation = new JPanel();
 	JPanel spadeFoundation = new JPanel();
@@ -27,6 +28,7 @@ public class Solitaire extends JPanel implements Game{
 		stopwatch = new Stopwatch();
 		thread = new Thread(stopwatch);
 		solitaire = new SolitaireBoard();
+		solitaire.dealToColumns();
 	}
 
 	@Override
@@ -95,7 +97,7 @@ public class Solitaire extends JPanel implements Game{
 	public void tableauBuilder() {
 		tableau = new JPanel();
 		tableau.setLayout(new FlowLayout());
-		
+	
 		tabeauColumnsAdder();
 
 		tableau.setBackground(new java.awt.Color(0,122,51));
@@ -103,19 +105,14 @@ public class Solitaire extends JPanel implements Game{
 		tableau.setBorder(BorderFactory.createLineBorder(Color.black, 2));
 	}
 	
-	public void tabeauColumnsAdder() {	
-		for(int i= 0; i < 7; i++) {
-			SolitaireColumn newColoumn = new SolitaireColumn();
-			tableauColumns.add(newColoumn);
-			for(int j = 0; j < (i + 1); j++) {
-				tableauColumns.get(i).addCard(solitaire.getDeck().dealTopCard());
-			}
-		
-		
-			tableauColumns.get(i).getColumn().flipTopCard();
-			tableau.add(tableauColumns.get(i).display());
+	public void tabeauColumnsAdder() {
+		for(int i = 0; i < 6; ++i) {
+			tableauColumns.add(solitaire.getColumnAt(i));
+			JPanel temp = solitaire.getColumnAt(i).display();
+			tableauColumnJPanels.add(temp);
+			tableauColumnJPanels.get(i).addMouseListener(new ColumnListener());
+			tableau.add(tableauColumnJPanels.get(i));
 		}
-
 	}
 	
 	public void foundationsBuilder() {
@@ -153,16 +150,6 @@ public class Solitaire extends JPanel implements Game{
 	}
 	
 	public void handAndWasteBuilder() {
-//		JPanel hand = new JPanel();
-//		hand.setBackground(Color.CYAN);
-//		hand.setPreferredSize(new Dimension(100,145));
-//		hand.add(solitaire.getDeck().draw());
-//		
-//		JPanel waste = new JPanel();
-//		waste.setBackground(Color.pink);
-//		waste.setPreferredSize(new Dimension(100,145));
-//		waste.add(solitaire.getDeck().draw());
-		
 		handAndWaste = new JPanel();
 		handAndWaste.setLayout(new FlowLayout(0, 10, 20));
 		handAndWaste.setBackground(new java.awt.Color(0,122,51));
@@ -213,5 +200,33 @@ public class Solitaire extends JPanel implements Game{
 		
 	}
 	
+	private class ColumnListener implements MouseListener {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			System.out.println(e.getComponent());
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			
+		}
+		
+	}
 
 }
