@@ -48,41 +48,49 @@ public class UserMenu {
 		UserListObj.setBounds(0, 0, 900, 510);
 		UserListObj.setPreferredSize(new Dimension(900, 510));
 		UserListObj.setBackground(new java.awt.Color(0, 122, 51));
+		UserListObj.setToolTipText("Select a User Profile Here!");
 		
 		addButton = new JButton("Add New User");
 		addButton.setForeground(new java.awt.Color(0, 156, 222));
 		addButton.setBackground(new java.awt.Color(0, 122, 51));
 		addButton.setBorder(null);
+		addButton.setToolTipText("Add a new User profile to the list");
 		
 		copyButton = new JButton("Copy Selected User");
 		copyButton.setForeground(new java.awt.Color(0, 156, 222));
 		copyButton.setBackground(new java.awt.Color(0, 122, 51));
 		copyButton.setBorder(null);
+		copyButton.setToolTipText("Copy an existing user. First, select a user.");
 		
 		deleteButton = new JButton("Delete Selected User");
 		deleteButton.setForeground(new java.awt.Color(0, 156, 222));
 		deleteButton.setBackground(new java.awt.Color(0, 122, 51));
 		deleteButton.setBorder(null);
+		deleteButton.setToolTipText("Delete an existing user. First, select a user.");
 		
 		backButton = new JButton("Go Back");
 		backButton.setForeground(new java.awt.Color(0, 156, 222));
 		backButton.setBackground(new java.awt.Color(0, 122, 51));
 		backButton.setBorder(null);
+		backButton.setToolTipText("Go Back");
 		
 		selectButton = new JButton("Select User");
 		selectButton.setForeground(new java.awt.Color(0, 156, 222));
 		selectButton.setBackground(new java.awt.Color(0, 122, 51));
 		selectButton.setBorder(null);
+		selectButton.setToolTipText("First, select a user. Click this button to log-in as that user.");
 		
 		manageButton = new JButton("View Selected User");
 		manageButton.setForeground(new java.awt.Color(0, 156, 222));
 		manageButton.setBackground(new java.awt.Color(0, 122, 51));
 		manageButton.setBorder(null);
+		manageButton.setToolTipText("Click this to view the selected user's data and manage their information.");
 		
 		clearAllButton = new JButton("Clear All Data");
 		clearAllButton.setForeground(new java.awt.Color(0, 156, 222));
 		clearAllButton.setBackground(new java.awt.Color(0, 122, 51));
 		clearAllButton.setBorder(null);
+		clearAllButton.setToolTipText("This will delete ALL your data!!!");
 		
 		ButtonPanel = new JPanel();
 		ButtonPanel.setBackground(new java.awt.Color(0, 122, 51));
