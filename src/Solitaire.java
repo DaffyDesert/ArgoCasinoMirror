@@ -84,17 +84,42 @@ public class Solitaire extends JPanel implements Game{
 	
 	public void tableauBuilder() {
 		tableau = new JPanel();
-		tableau.setLayout(new BorderLayout());
+		tableau.setLayout(new FlowLayout());
+		
+		tabeauColumnsAdder();
+
+		
+
 		tableau.setBackground(new java.awt.Color(0,122,51));
-		tableau.setPreferredSize(new Dimension(50,50));
+		tableau.setPreferredSize(new Dimension(6000,310));
 		tableau.setBorder(BorderFactory.createLineBorder(Color.black, 2));
+	}
+	
+	public void tabeauColumnsAdder() {
+		CardStack testStack = new CardStack();
+		testStack.createStandardDeck();
+		testStack.shuffleStack();
+		
+		//loads in cards for testing purposes
+		for(int i= 0; i < 7; i++) {
+			SolitaireColumn newColoumn = new SolitaireColumn();
+			tableauColumns.add(newColoumn);
+			for(int j = 0; j < (i + 1); j++) {
+				tableauColumns.get(i).addCard(testStack.dealTopCard());
+			}
+		
+		
+			tableauColumns.get(i).getColumn().flipTopCard();
+			tableau.add(tableauColumns.get(i).display());
+		}
+
 	}
 	
 	public void foundationsBuilder() {
 		foundations = new JPanel();
 		foundations.setLayout(new BorderLayout());
 		foundations.setBackground(new java.awt.Color(0,122,51));
-		foundations.setPreferredSize(new Dimension(200,250));
+		foundations.setPreferredSize(new Dimension(130,250));
 		foundations.setBorder(BorderFactory.createLineBorder(Color.black, 2));
 	}
 	
@@ -102,7 +127,7 @@ public class Solitaire extends JPanel implements Game{
 		handAndWaste = new JPanel();
 		handAndWaste.setLayout(new BorderLayout());
 		handAndWaste.setBackground(new java.awt.Color(0,122,51));
-		handAndWaste.setPreferredSize(new Dimension(200,250));
+		handAndWaste.setPreferredSize(new Dimension(130,250));
 		handAndWaste.setBorder(BorderFactory.createLineBorder(Color.black,2));
 	}
 

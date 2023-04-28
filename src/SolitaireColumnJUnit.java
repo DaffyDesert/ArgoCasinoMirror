@@ -12,22 +12,38 @@ public class SolitaireColumnJUnit {
 		column2 = new SolitaireColumn();
 		
 		//Test 1: only kings can be added to an empty stack
-		assertTrue(!column.addCard(new Card(12, "S")));
-		assertTrue(column.addCard(new Card(13, "C")));
+		Card queenofSpades = new Card (12, "S");
+		queenofSpades.setFaceDown(false);
+		assertTrue(!column.addCard(queenofSpades));
+		Card kingofClubs = new Card (13, "C");
+		kingofClubs.setFaceDown(false);
+		assertTrue(column.addCard(kingofClubs));
 		
 		//Test 2: order of cards can only be in sequential order
-		assertTrue(column.addCard(new Card(12, "H")));
-		assertTrue(column.addCard(new Card(11, "S")));
+		Card queenofHearts = new Card(12, "H");
+		queenofHearts.setFaceDown(false);
+		assertTrue(column.addCard(queenofHearts));
+		Card jackofSpades = new Card(11, "S");
+		jackofSpades.setFaceDown(false);
+		assertTrue(column.addCard(jackofSpades));
 		
 		// Should fail because the next card is not a 10
-		assertTrue(!column.addCard(new Card(1, "S")));
+		Card aceofHearts = new Card(1, "H");
+		aceofHearts.setFaceDown(false);
+		assertTrue(!column.addCard(aceofHearts));
 		
 		//Class should only allow alternating colors when adding cards. ie: hearts(red), spade(black), diamond(red), club(black)
 		//order right now is 13C, 12H, 11S. so it should only be a 10H or 10D
-		assertTrue(!column.addCard(new Card(10, "C")));
-		assertTrue(!column.addCard(new Card(10, "S")));
+		Card tenofClubs = new Card(10,"C");
+		tenofClubs.setFaceDown(false);
+		assertTrue(!column.addCard(tenofClubs));
+		Card tenofSpades = new Card(10, "S");
+		tenofSpades.setFaceDown(false);
+		assertTrue(!column.addCard(tenofSpades));
 		
-		assertTrue(column.addCard(new Card(10, "H")));
+		Card tenofHearts = new Card(10, "H");
+		tenofHearts.setFaceDown(false);
+		assertTrue(column.addCard(tenofHearts));
 		
 		/***** Testing another Column to simulate a full column *****/
 		assertTrue(column2.addCard(new Card(13, "H")));
