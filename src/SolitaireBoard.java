@@ -157,8 +157,7 @@ public class SolitaireBoard {
     	}
     }
     
-    public void drawFromDeck() {
-    	deck.flipTopCard();
-    	discardPile.addToTop(deck.dealTopCard());
+    public Card drawFromDeck() {
+    	return deck.dealTopCard();
     }
 }

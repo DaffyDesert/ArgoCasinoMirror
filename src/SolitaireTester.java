@@ -10,5 +10,4 @@ public class SolitaireTester {
 		frame.add(sol.display());
 		frame.setVisible(true);
 	}
-
 }
