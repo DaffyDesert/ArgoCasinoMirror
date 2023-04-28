@@ -148,13 +148,15 @@ public class Solitaire extends JPanel implements Game{
 	}
 	
 	public void handAndWasteBuilder() {
-		JPanel hand = new JPanel();
-		hand.setBackground(Color.CYAN);
-		hand.setPreferredSize(new Dimension(100,145));
-		
-		JPanel waste = new JPanel();
-		waste.setBackground(Color.pink);
-		waste.setPreferredSize(new Dimension(100,145));
+//		JPanel hand = new JPanel();
+//		hand.setBackground(Color.CYAN);
+//		hand.setPreferredSize(new Dimension(100,145));
+//		hand.add(solitaire.getDeck().draw());
+//		
+//		JPanel waste = new JPanel();
+//		waste.setBackground(Color.pink);
+//		waste.setPreferredSize(new Dimension(100,145));
+//		waste.add(solitaire.getDeck().draw());
 		
 		handAndWaste = new JPanel();
 		handAndWaste.setLayout(new FlowLayout(0, 10, 20));
@@ -162,8 +164,8 @@ public class Solitaire extends JPanel implements Game{
 		handAndWaste.setPreferredSize(new Dimension(130,250));
 		handAndWaste.setBorder(BorderFactory.createLineBorder(Color.black,2));
 		
-		handAndWaste.add(hand);
-		handAndWaste.add(waste);
+		handAndWaste.add(solitaire.getDeck().draw());
+		handAndWaste.add(solitaire.getDiscardPile().draw());
 	}
 
 }

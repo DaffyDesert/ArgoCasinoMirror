@@ -24,6 +24,7 @@ public class SolitaireBoard {
 		heartFoundation = new CardStack();
 		columns = new SolitaireColumn[NUM_COLUMNS];
 		deck = new CardStack();
+		discardPile = new CardStack();
 		deck.createStandardDeck();
 		deck.shuffleStack();
 	}
@@ -146,5 +147,19 @@ public class SolitaireBoard {
 
     public CardStack getDiscardPile() {
         return discardPile;
+    }
+    
+    public void resetDeck() {
+    	if (deck.getStackSize() == 0) {
+    		for (int i = 0; i < discardPile.getStackSize(); ++i) {
+    			deck.addToTop(discardPile.dealTopCard());
+    			deck.flipTopCard();
+    		}
+    	}
+    }
+    
+    public void drawFromDeck() {
+    	deck.flipTopCard();
+    	discardPile.addToTop(deck.dealTopCard());
     }
 }
