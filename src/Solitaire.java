@@ -15,11 +15,12 @@ public class Solitaire extends JPanel implements Game{
 	JPanel foundations;
 	JPanel handAndWaste;
 	ArrayList<SolitaireColumn> tableauColumns = new ArrayList<SolitaireColumn>();
+	SolitaireBoard solitaire;
 	
 	Solitaire() {
 		stopwatch = new Stopwatch();
 		thread = new Thread(stopwatch);
-		//solitaire = new SolitaireBoard();
+		solitaire = new SolitaireBoard();
 	}
 
 	@Override
