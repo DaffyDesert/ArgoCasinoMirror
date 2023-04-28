@@ -1,11 +1,8 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 public class Solitaire extends JPanel implements Game{
@@ -15,7 +12,6 @@ public class Solitaire extends JPanel implements Game{
 	JPanel tableau;
 	JPanel foundations;
 	JPanel handAndWaste;
-	private ArrayList<SolitaireColumn> tableauColumns= new ArrayList<>();
 	
 	Solitaire() {
 		stopwatch = new Stopwatch();
@@ -118,11 +114,6 @@ public class Solitaire extends JPanel implements Game{
 		}
 
 	}
-	
-	
-	
-	
-	
 	
 	public void foundationsBuilder() {
 		foundations = new JPanel();
