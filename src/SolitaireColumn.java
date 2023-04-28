@@ -1,5 +1,7 @@
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLayeredPane;
@@ -86,7 +88,6 @@ public class SolitaireColumn{
 			JPanel currCard = column.getStack().get(i).draw();
 			currCard.setBounds(origin.x,(origin.y + (offset*i)),150,150);
 			lp.add(currCard);
-
 		}
 		lp.setVisible(true);
 		panel.add(lp);
