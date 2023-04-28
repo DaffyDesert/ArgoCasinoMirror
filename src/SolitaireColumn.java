@@ -19,6 +19,10 @@ public class SolitaireColumn{
 	}
 
 	boolean addCard(Card card) {	
+		if(card.isFaceDown()) {
+			column.getStack().add(card);
+			return true;
+		}
 		if(isEmpty()) {
 			if(isKing(card)) {
 				column.getStack().add(card);
