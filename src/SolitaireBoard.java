@@ -25,8 +25,9 @@ public class SolitaireBoard {
 				Card currCard = deck.dealTopCard();
 				currCard.setFaceDown(true);
 				columns[i].addCard(currCard);
+				System.out.println(currCard);
 			}
-			columns[i].getColumn().flipTopCard();
+			columns[i].getColumn().peekCard(0).setFaceDown(false);
 		}
 	}
 
