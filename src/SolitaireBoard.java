@@ -7,31 +7,26 @@ public class SolitaireBoard {
 	CardStack deck;
 	CardStack discardPile;
     
-    HeartFoundation heartfoundation;
-	SpadeFoundation Spadefoundation;
-    DiamondFoundation Diamondfoundation;
-    ClubFoundation Clubfoundation;
+    CardStack heartFoundation;
+    CardStack spadeFoundation;
+    CardStack diamondFoundation;
+    CardStack clubFoundation;
 
-
-    public SolitaireColumn getColumnAt(int index) {
-		return columns[index];
-	}
+    public SolitaireColumn getColumnAt(int index) {return columns[index];}
+	public CardStack getHeartFoundation() {return heartFoundation;};
+	public CardStack getSpadeFoundation() {return spadeFoundation;}
+	public CardStack getDiamondFoundation() {return diamondFoundation;}
+	public CardStack getClubFoundation() {return clubFoundation;}
 	public CardStack getDeck() {return deck;}
-
-
-	public FoundationStack getFoundations(int index ) {
-
-		return FoundationStack [index];
-	}
 	
 	public SolitaireBoard() {
-		/* FDStack = new FoundationStack[NUM_FOUNDATIONS];*/
+		//heartFoundation = new HeartFoundation();
+		heartFoundation = new CardStack();
 		columns = new SolitaireColumn[NUM_COLUMNS];
 		deck = new CardStack();
 		deck.createStandardDeck();
 		deck.shuffleStack();
 	}
-
 
 	public void dealToColumns() {
 		for(int i = 0; i < NUM_COLUMNS; ++i) {
@@ -40,103 +35,116 @@ public class SolitaireBoard {
 				Card currCard = deck.dealTopCard();
 				currCard.setFaceDown(true);
 				columns[i].addCard(currCard);
-				System.out.println(currCard);
 			}
 			columns[i].getColumn().peekCard(0).setFaceDown(false);
 		}
 	}
-
-    private class HeartFoundation extends CardStack{
-        @override
-        public boolean addToTop(Card card) {
-            Card topCard = stack.get(stack.length()-1);
-            int rankDifference =card.getRank() - topcard.getRank();
-            if(card.getSuit() =='H') {
-                if(stack.isEmpty() || card.getRank() == 1){
-                    stack.add(card);
-                    return true;
-                }
-                else if(rankDifference == 1){
-                    stack.add(card);
-                    return true;
-                }
-                else{
-                    return false;
-                }
+	
+	public boolean addToHeartFoundation(Card card) {
+		if(heartFoundation.getStack().isEmpty()) {
+			if(card.getSuit().compareTo("H") == 0 && card.getRank() == 1) {
+				heartFoundation.getStack().add(card);
+	            return true;
+			}
+			else
+				return false;
+		}
+		Card topCard = heartFoundation.getStack().get(heartFoundation.getStackSize() - 1);
+		int rankDifference = card.getRank() - topCard.getRank();
+		if(card.getSuit() == "H") {
+            if(heartFoundation.getStack().isEmpty() || card.getRank() == 1){
+                heartFoundation.getStack().add(card);
+                return true;
             }
-        }
-    }
-    private class SpadeFoundation extends CardStack{
-        @override
-        public boolean addToTop(Card card) {
-            Card topCard = stack.get(stack.length()-1);
-            int rankDifference =card.getRank() - topcard.getRank();
-            if(card.getSuit() =='S') {
-                if(stack.isEmpty() || card.getRank() == 1){
-                    stack.add(card);
-                    return true;
-                }
-                else if(rankDifference == 1){
-                    stack.add(card);
-                    return true;
-                }
-                else{
-                    return false;
-                }
+            else if(rankDifference == 1){
+                heartFoundation.getStack().add(card);
+                return true;
             }
+                return false;
         }
-    }
-
-    private class ClubFoundation extends CardStack{
-        @override
-        public boolean addToTop(Card card) {
-            Card topCard = stack.get(stack.length()-1);
-            int rankDifference =card.getRank() - topcard.getRank();
-            if(card.getSuit() =='C') {
-                if(stack.isEmpty() || card.getRank() == 1){
-                    stack.add(card);
-                    return true;
-                }
-                else if(rankDifference == 1){
-                    stack.add(card);
-                    return true;
-                }
-                else{
-                    return false;
-                }
+        return false;
+	}
+	
+	public boolean addToSpadeFoundation(Card card) {
+		if(spadeFoundation.getStack().isEmpty()) {
+			if(card.getSuit().compareTo("S") == 0 && card.getRank() == 1) {
+				spadeFoundation.getStack().add(card);
+	            return true;
+			}
+			else
+				return false;
+		}
+		Card topCard = spadeFoundation.getStack().get(spadeFoundation.getStackSize() - 1);
+		int rankDifference = card.getRank() - topCard.getRank();
+		if(card.getSuit() == "S") {
+            if(spadeFoundation.getStack().isEmpty() || card.getRank() == 1){
+                spadeFoundation.getStack().add(card);
+                return true;
             }
-        }
-    }
-    private class DiamondFoundation extends CardStack{
-        @override
-        public boolean addToTop(Card card) {
-            Card topCard = stack.get(stack.length()-1);
-            int rankDifference =card.getRank() - topcard.getRank();
-            if(card.getSuit() =='D') {
-                if(stack.isEmpty() || card.getRank() == 1){
-                    stack.add(card);
-                    return true;
-                }
-                else if(rankDifference == 1){
-                    stack.add(card);
-                    return true;
-                }
-                else{
-                    return false;
-                }
+            else if(rankDifference == 1){
+                spadeFoundation.getStack().add(card);
+                return true;
             }
+                return false;
         }
-    }
-
+        return false;
+	}
+	
+	public boolean addToClubFoundation(Card card) {
+		if(clubFoundation.getStack().isEmpty()) {
+			if(card.getSuit().compareTo("C") == 0 && card.getRank() == 1) {
+				clubFoundation.getStack().add(card);
+	            return true;
+			}
+			else
+				return false;
+		}
+		Card topCard = clubFoundation.getStack().get(clubFoundation.getStackSize() - 1);
+		int rankDifference = card.getRank() - topCard.getRank();
+		if(card.getSuit() == "C") {
+            if(clubFoundation.getStack().isEmpty() || card.getRank() == 1){
+                clubFoundation.getStack().add(card);
+                return true;
+            }
+            else if(rankDifference == 1){
+                clubFoundation.getStack().add(card);
+                return true;
+            }
+                return false;
+        }
+        return false;
+	}
+	
+	public boolean addToDiamondFoundation(Card card) {
+		if(diamondFoundation.getStack().isEmpty()) {
+			if(card.getSuit().compareTo("D") == 0 && card.getRank() == 1) {
+				diamondFoundation.getStack().add(card);
+	            return true;
+			}
+			else
+				return false;
+		}
+		Card topCard = diamondFoundation.getStack().get(diamondFoundation.getStackSize() - 1);
+		int rankDifference = card.getRank() - topCard.getRank();
+		if(card.getSuit() == "C") {
+            if(diamondFoundation.getStack().isEmpty() || card.getRank() == 1){
+                diamondFoundation.getStack().add(card);
+                return true;
+            }
+            else if(rankDifference == 1){
+                diamondFoundation.getStack().add(card);
+                return true;
+            }
+                return false;
+        }
+        return false;
+	}
+	
     public void addToDiscardPile(Card card) {
-        discardPile.addCard(card);
+        discardPile.getStack().add(card);
     }
 
     public CardStack getDiscardPile() {
         return discardPile;
     }
-
-    /*Card card = columns[columnIndex].removeCard();
-solitaireBoard.addToDiscardPile(card); */
-
 }

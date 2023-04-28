@@ -25,4 +25,21 @@ public class SolitaireBoardJUnit {
 		assertTrue(!board.getColumnAt(1).getColumn().peekCard(0).isFaceDown());
 
 	}
+	
+	@Test
+	public void FoundationsTest() {
+		SolitaireBoard board = new SolitaireBoard();
+		//do foundations accept only their respective suits?
+		Card aceofSpades = new Card(1, "S");
+		assertTrue(!board.addToHeartFoundation(aceofSpades));
+		
+		//Does foundation accept only ace's as the first card?
+		Card twoOfHearts = new Card(2, "H");
+		assertTrue(!board.addToHeartFoundation(twoOfHearts));
+		Card aceofHearts = new Card(1, "H");
+		assertTrue(board.addToHeartFoundation(aceofHearts));
+		
+		//Does found accept cards in ascending order?
+		assertTrue(board.addToHeartFoundation(twoOfHearts));
+	}
 }
