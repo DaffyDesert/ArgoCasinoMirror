@@ -2,6 +2,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -16,7 +18,11 @@ public class Solitaire extends JPanel implements Game{
 	JPanel handAndWaste;
 	ArrayList<SolitaireColumn> tableauColumns = new ArrayList<SolitaireColumn>();
 	SolitaireBoard solitaire;
-	
+	JPanel heartFoundation = new JPanel();
+	JPanel spadeFoundation = new JPanel();
+	JPanel diamondFoundation = new JPanel();
+	JPanel clubFoundation = new JPanel();
+
 	Solitaire() {
 		stopwatch = new Stopwatch();
 		thread = new Thread(stopwatch);
@@ -97,17 +103,12 @@ public class Solitaire extends JPanel implements Game{
 		tableau.setBorder(BorderFactory.createLineBorder(Color.black, 2));
 	}
 	
-	public void tabeauColumnsAdder() {
-		CardStack testStack = new CardStack();
-		testStack.createStandardDeck();
-		testStack.shuffleStack();
-		
-		//loads in cards for testing purposes
+	public void tabeauColumnsAdder() {	
 		for(int i= 0; i < 7; i++) {
 			SolitaireColumn newColoumn = new SolitaireColumn();
 			tableauColumns.add(newColoumn);
 			for(int j = 0; j < (i + 1); j++) {
-				tableauColumns.get(i).addCard(testStack.dealTopCard());
+				tableauColumns.get(i).addCard(solitaire.getDeck().dealTopCard());
 			}
 		
 		
@@ -118,21 +119,25 @@ public class Solitaire extends JPanel implements Game{
 	}
 	
 	public void foundationsBuilder() {
-		JPanel heartFoundation = new JPanel();
+		heartFoundation = new JPanel();
 		heartFoundation.setBackground(Color.red);
 		heartFoundation.setPreferredSize(new Dimension(100,145));
+		heartFoundation.addMouseListener(new FoundationListener());
 		
-		JPanel spadeFoundation = new JPanel();
+		spadeFoundation = new JPanel();
 		spadeFoundation.setBackground(Color.black);
 		spadeFoundation.setPreferredSize(new Dimension(100,145));
+		spadeFoundation.addMouseListener(new FoundationListener());
 		
-		JPanel diamondFoundation = new JPanel();
+		diamondFoundation = new JPanel();
 		diamondFoundation.setBackground(Color.blue);
 		diamondFoundation.setPreferredSize(new Dimension(100,145));
+		diamondFoundation.addMouseListener(new FoundationListener());
 		
-		JPanel clubFoundation = new JPanel();
+		clubFoundation = new JPanel();
 		clubFoundation.setBackground(Color.green);
 		clubFoundation.setPreferredSize(new Dimension(100,145));
+		clubFoundation.addMouseListener(new FoundationListener());
 		
 		foundations = new JPanel();
 		foundations.setLayout(new FlowLayout(0, 10, 20));
@@ -165,5 +170,46 @@ public class Solitaire extends JPanel implements Game{
 		handAndWaste.add(hand);
 		handAndWaste.add(waste);
 	}
+	
+	private class FoundationListener implements MouseListener {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			if(e.getComponent() == heartFoundation) {
+				System.out.println("IT HURTS");
+			}
+			else if(e.getComponent() == spadeFoundation) {
+				System.out.println("IT BURNS");
+			}
+			else if(e.getComponent() == diamondFoundation) {
+				System.out.println("IM IN PAIN");
+			}
+			else if(e.getComponent() == clubFoundation) {
+				System.out.println("MY EARS BURN");
+			}
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			
+		}
+		
+	}
+	
 
 }
