@@ -1,6 +1,8 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -12,6 +14,7 @@ public class Solitaire extends JPanel implements Game{
 	JPanel tableau;
 	JPanel foundations;
 	JPanel handAndWaste;
+	ArrayList<SolitaireColumn> tableauColumns = new ArrayList<SolitaireColumn>();
 	
 	Solitaire() {
 		stopwatch = new Stopwatch();
@@ -87,8 +90,6 @@ public class Solitaire extends JPanel implements Game{
 		tableau.setLayout(new FlowLayout());
 		
 		tabeauColumnsAdder();
-
-		
 
 		tableau.setBackground(new java.awt.Color(0,122,51));
 		tableau.setPreferredSize(new Dimension(6000,310));
