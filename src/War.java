@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToolTip;
 import javax.swing.Timer;
@@ -27,8 +28,12 @@ public class War extends JPanel implements Game {
 	WarBoard board;
 	Stopwatch stopwatch;
 	Thread thread;
+	private double userBet;
+	private User playerProfile;
 
-	War() {
+
+	War(User playerProfile) {
+		this.playerProfile = playerProfile;
 		this.setBounds(0, 0, 1270, 720);
 		statusBar = new JPanel();
 		board = new WarBoard();
@@ -47,6 +52,7 @@ public class War extends JPanel implements Game {
 	@Override
 	public void startGame() {
 		startWatch();
+		promptPlayerBet();
 	}
 	
 	@Override
@@ -150,6 +156,7 @@ public class War extends JPanel implements Game {
 				if (turn() == false) {
 					stopGame();
 					stopWatch();
+					updatePlayerBank();
 					showGameOverScreen();
 			}
 		}
@@ -157,8 +164,32 @@ public class War extends JPanel implements Game {
 
 		@Override
 		public void promptPlayerBet() {
-			// TODO Auto-generated method stub
+			boolean validInput = false;
+			while(!validInput) {
+				try{
+					userBet = Double.parseDouble(JOptionPane.showInputDialog("How much would you like to bet?" + "\n" +
+																			playerProfile.getName() + "'s Bank: $" + playerProfile.getCurrency()));
+				}catch(NumberFormatException e) {
+					JOptionPane.showMessageDialog(null, "Input must be an integer");
+				}
+				if(userBet > playerProfile.getCurrency()) {
+					JOptionPane.showMessageDialog(null, "You dont have that much to bet!!!");
+				}
+				else {
+					board.setPlayerBet(userBet);
+					validInput = true;
+				}
+			}
 			
+			JOptionPane.showMessageDialog(null, "You chose to bet $" + board.getPlayerBet());
+		}
+		
+		@Override
+		public void updatePlayerBank() {
+			if(board.checkWinStatus() == 1)
+				playerProfile.setCurrency(board.getPlayerBet() + playerProfile.getCurrency());
+			else
+				playerProfile.setCurrency(playerProfile.getCurrency() - board.getPlayerBet());
 		}
 
 }

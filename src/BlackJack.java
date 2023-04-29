@@ -32,9 +32,8 @@ public class BlackJack  extends JPanel implements Game {
 	
 	private BlackJackBoard blackJack;
 	private int winCondition;
-	private int userBet;
+	private double userBet;
 	private User playerProfile;
-	private Users userProfiles;
 	private boolean turnIsOver;
 	public Component gameOverScreen;
 	
@@ -63,28 +62,6 @@ public class BlackJack  extends JPanel implements Game {
 		}
 	}
 
-	@Override
-	public void promptPlayerBet() {
-		boolean validInput = false;
-		while(!validInput) {
-			try{
-				userBet = Integer.parseInt(JOptionPane.showInputDialog("How much would you like to bet?" + "\n" +
-																		playerProfile.getName() + "'s Bank: $" + playerProfile.getCurrency()));
-			}catch(NumberFormatException e) {
-				JOptionPane.showMessageDialog(null, "Input must be an integer");
-			}
-			if(userBet > playerProfile.getCurrency()) {
-				JOptionPane.showMessageDialog(null, "You dont have that much to bet!!!");
-			}
-			else {
-				blackJack.setPlayerBet(userBet);
-				validInput = true;
-			}
-		}
-		
-		JOptionPane.showMessageDialog(null, userBet + "You chose to bet $" + blackJack.getPlayerBet());
-	}
-	
 	@Override
 	public void stopWatch() {
 		stopwatch.stopTimer();
@@ -432,15 +409,40 @@ public class BlackJack  extends JPanel implements Game {
 	}
 	
 	@Override
+	public void promptPlayerBet() {
+		boolean validInput = false;
+		while(!validInput) {
+			try{
+				userBet = Double.parseDouble(JOptionPane.showInputDialog("How much would you like to bet?" + "\n" +
+																		playerProfile.getName() + "'s Bank: $" + playerProfile.getCurrency()));
+			}catch(NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "Input must be an integer");
+			}
+			if(userBet > playerProfile.getCurrency()) {
+				JOptionPane.showMessageDialog(null, "You dont have that much to bet!!!");
+			}
+			else {
+				blackJack.setPlayerBet(userBet);
+				validInput = true;
+			}
+		}
+		
+		JOptionPane.showMessageDialog(null, "You chose to bet $" + blackJack.getPlayerBet());
+	}
+	
+	@Override
 	public void updatePlayerBank() {
 		if(winCondition == 1)
-			blackJack.getPlayerBet();
+			playerProfile.setCurrency(blackJack.getPlayerBet() + playerProfile.getCurrency());
+		else
+			playerProfile.setCurrency(playerProfile.getCurrency() - blackJack.getPlayerBet());
 	}
 	
 	
 	public JPanel showGameOverScreen() {
 		stopGame();
-		
+		updatePlayerBank();
+		//System.out.print(playerProfile.getCurrency());
 		gameOverScreenPanelBuilder();
 		return gameOverScreenPanel;
 	}

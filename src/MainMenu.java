@@ -238,7 +238,7 @@ public class MainMenu {
 	}
 	
 	public void launchWar() {
-		Game warGame = new War();
+		Game warGame = new War(userMenu.getActiveUser());
 		
 		windowPane.add(warGame.display());
 		windowPane.revalidate();
@@ -249,7 +249,7 @@ public class MainMenu {
 	}
 	
 	public void launchBlackJack() {
-		Game blackJackGame = new BlackJack();
+		Game blackJackGame = new BlackJack(userMenu.getActiveUser());
 		blackJackGame.startGame();
 		windowPane.add(blackJackGame.display());
 		

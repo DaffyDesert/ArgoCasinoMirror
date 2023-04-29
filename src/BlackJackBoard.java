@@ -11,7 +11,7 @@ public class BlackJackBoard {
 	CardStack playerHand;
 	CardStack dealerHand;
 	CardStack deck;
-	int playerBet;
+	double playerBet;
 	
 	
 	public BlackJackBoard() {
@@ -39,11 +39,11 @@ public class BlackJackBoard {
 		return deck;
 	}
 	
-	public int getPlayerBet() {
+	public double getPlayerBet() {
 		return playerBet;
 	}
 
-	public void setPlayerBet(int playerBet) {
+	public void setPlayerBet(double playerBet) {
 		this.playerBet = playerBet;
 	}
 
