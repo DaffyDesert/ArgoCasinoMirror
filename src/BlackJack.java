@@ -70,8 +70,8 @@ public class BlackJack  extends JPanel implements Game {
 
 	@Override
 	public void stopGame() {
+		updatePlayerBank();
 		stopWatch();
-		
 	}
 
 	@Override
@@ -435,17 +435,17 @@ public class BlackJack  extends JPanel implements Game {
 	}
 	@Override
 	public void updatePlayerBank() {
-		if(winCondition == 1)
+		if(winCondition == 1) {
 			playerProfile.setCurrency(blackJack.getPlayerBet() + playerProfile.getCurrency());
-		else
+		}
+		else {
 			playerProfile.setCurrency(playerProfile.getCurrency() - blackJack.getPlayerBet());
+		}
 	}
 	
 	
 	public JPanel showGameOverScreen() {
 		stopGame();
-		updatePlayerBank();
-		//System.out.print(playerProfile.getCurrency());
 		gameOverScreenPanelBuilder();
 		return gameOverScreenPanel;
 	}
