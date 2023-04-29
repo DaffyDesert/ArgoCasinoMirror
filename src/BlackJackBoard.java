@@ -11,9 +11,12 @@ public class BlackJackBoard {
 	CardStack playerHand;
 	CardStack dealerHand;
 	CardStack deck;
+	int playerBet;
+	
 	
 	public BlackJackBoard() {
 		
+		setPlayerBet(0);
 		playerHand = new CardStack();
 		playerHand().setName("Player Hand");
 		dealerHand = new CardStack();
@@ -22,7 +25,6 @@ public class BlackJackBoard {
 		for(int i = 0; i < 6; i++)
 			deck.createStandardDeck();			
 		getDeck().setStackName("x6-52 Card Deck");
-
 	}
 	
 	public CardStack playerHand() {
@@ -37,6 +39,14 @@ public class BlackJackBoard {
 		return deck;
 	}
 	
+	public int getPlayerBet() {
+		return playerBet;
+	}
+
+	public void setPlayerBet(int playerBet) {
+		this.playerBet = playerBet;
+	}
+
 	public void setBoard() {
 		getDeck().shuffleStack();
 		setCardPointValues();

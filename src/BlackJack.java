@@ -49,8 +49,10 @@ public class BlackJack  extends JPanel implements Game {
 	public void startGame() {
 		startWatch();
 		blackJack.setBoard();
+		//blackJack.promptPlayerBet();
 		if(blackJack.is21(blackJack.playerHand())) {
 			winCondition = 1;
+			//blackJack.setPlayerBet(getPlayerBet()*2);
 			board.add(showGameOverScreen(),BorderLayout.CENTER);
 		}
 	}

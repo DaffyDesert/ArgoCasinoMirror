@@ -290,4 +290,21 @@ public class BlackJackBoardTest {
 
 		assertTrue(testBoard.handTotal(testBoard.dealerHand()) == 18);
 	}
+
+	@Test
+	void testPlaceBetGetBet() {
+		
+		testBoard.setBoard();
+		
+		assertTrue(testBoard.getPlayerBet() == 0);
+		
+		testBoard.setPlayerBet(200);
+		
+		assertTrue(testBoard.getPlayerBet() == 200);
+
+		testBoard.setPlayerBet(250);
+		
+		assertTrue(testBoard.getPlayerBet() == 250);
+}
+
 }
