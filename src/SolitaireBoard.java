@@ -21,6 +21,9 @@ public class SolitaireBoard {
 	
 	public SolitaireBoard() {
 		heartFoundation = new CardStack();
+		spadeFoundation = new CardStack();
+		diamondFoundation = new CardStack();
+		clubFoundation = new CardStack();
 		columns = new SolitaireColumn[NUM_COLUMNS];
 		deck = new CardStack();
 		discardPile = new CardStack();
@@ -44,6 +47,7 @@ public class SolitaireBoard {
 		if(heartFoundation.getStack().isEmpty()) {
 			if(card.getSuit().compareTo("H") == 0 && card.getRank() == 1) {
 				heartFoundation.getStack().add(card);
+				card.setFaceDown(true);
 	            return true;
 			}
 			else
@@ -54,10 +58,12 @@ public class SolitaireBoard {
 		if(card.getSuit() == "H") {
             if(heartFoundation.getStack().isEmpty() || card.getRank() == 1){
                 heartFoundation.getStack().add(card);
+                card.setFaceDown(true);
                 return true;
             }
             else if(rankDifference == 1){
                 heartFoundation.getStack().add(card);
+                card.setFaceDown(true);
                 return true;
             }
                 return false;
@@ -69,6 +75,7 @@ public class SolitaireBoard {
 		if(spadeFoundation.getStack().isEmpty()) {
 			if(card.getSuit().compareTo("S") == 0 && card.getRank() == 1) {
 				spadeFoundation.getStack().add(card);
+				card.setFaceDown(true);
 	            return true;
 			}
 			else
@@ -79,10 +86,12 @@ public class SolitaireBoard {
 		if(card.getSuit() == "S") {
             if(spadeFoundation.getStack().isEmpty() || card.getRank() == 1){
                 spadeFoundation.getStack().add(card);
+				card.setFaceDown(true);
                 return true;
             }
             else if(rankDifference == 1){
                 spadeFoundation.getStack().add(card);
+                card.setFaceDown(true);
                 return true;
             }
                 return false;
@@ -94,6 +103,7 @@ public class SolitaireBoard {
 		if(clubFoundation.getStack().isEmpty()) {
 			if(card.getSuit().compareTo("C") == 0 && card.getRank() == 1) {
 				clubFoundation.getStack().add(card);
+				card.setFaceDown(true);
 	            return true;
 			}
 			else
@@ -104,10 +114,12 @@ public class SolitaireBoard {
 		if(card.getSuit() == "C") {
             if(clubFoundation.getStack().isEmpty() || card.getRank() == 1){
                 clubFoundation.getStack().add(card);
+                card.setFaceDown(true);
                 return true;
             }
             else if(rankDifference == 1){
                 clubFoundation.getStack().add(card);
+                card.setFaceDown(true);
                 return true;
             }
                 return false;
@@ -119,6 +131,7 @@ public class SolitaireBoard {
 		if(diamondFoundation.getStack().isEmpty()) {
 			if(card.getSuit().compareTo("D") == 0 && card.getRank() == 1) {
 				diamondFoundation.getStack().add(card);
+				card.setFaceDown(true);
 	            return true;
 			}
 			else
@@ -129,10 +142,12 @@ public class SolitaireBoard {
 		if(card.getSuit() == "C") {
             if(diamondFoundation.getStack().isEmpty() || card.getRank() == 1){
                 diamondFoundation.getStack().add(card);
+                card.setFaceDown(true);
                 return true;
             }
             else if(rankDifference == 1){
                 diamondFoundation.getStack().add(card);
+                card.setFaceDown(true);
                 return true;
             }
                 return false;

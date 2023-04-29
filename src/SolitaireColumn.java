@@ -85,10 +85,13 @@ public class SolitaireColumn{
 		int offset = 50;
 	
 		for(int i = numCards - 1; i >= 0; i--) {
-			JPanel currCard = column.getStack().get(i).draw();
-			currCard.setBounds(origin.x,(origin.y + (offset*i)),150,150);
-			lp.add(currCard);
+			Card currCard = column.getStack().get(i);
+			JPanel currCardJPanel = currCard.draw();
+			currCardJPanel.setBounds(origin.x,(origin.y + (offset*i)),150,150);
+			lp.add(currCardJPanel);
 		}
+		if(numCards != 0)
+			column.peekCard(numCards - 1).setFaceDown(false);
 		lp.setVisible(true);
 		panel.add(lp);
 		panel.setVisible(true);

@@ -13,6 +13,15 @@ import javax.swing.JPanel;
 public class Solitaire extends JPanel implements Game {
 	private Stopwatch stopwatch;
 	private Thread thread;
+	/*
+	 * KNOWN BUGS:
+	 * - When after picking up a card from a column and placing it somewhere else, the last card of the last column clicked does not switch to face up
+	 * - When in the scenario above, you can pick up the face down cards
+	 * - When you have a card in your hand, you can actually put it in the discard pile, even if its from the columns
+	 * - Unable to pick up an entire stack of face up cards
+	 * - Foundations are able to store the Ace but any card after wards is eaten
+	 * - Not a bug but in hindsight, i could've used an array for the columns
+	 */
 
 	JPanel board;
 	JPanel tableau;
@@ -247,19 +256,68 @@ public class Solitaire extends JPanel implements Game {
 		handAndWaste.add(hand);
 		handAndWaste.add(waste);
 	}
-
+	
+	public void revalidateAllColumns() {
+		column1.revalidate();
+		column1.repaint();
+		column2.revalidate();
+		column2.repaint();
+		column3.revalidate();
+		column3.repaint();
+		column4.revalidate();
+		column4.repaint();
+		column5.revalidate();
+		column5.repaint();
+		column6.revalidate();
+		column6.repaint();
+		column7.revalidate();
+		column7.repaint();
+	}
+	
 	private class FoundationListener implements MouseListener {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			if (e.getComponent() == heartFoundation) {
-				System.out.println("IT HURTS");
-			} else if (e.getComponent() == spadeFoundation) {
-				System.out.println("IT BURNS");
-			} else if (e.getComponent() == diamondFoundation) {
-				System.out.println("IM IN PAIN");
-			} else if (e.getComponent() == clubFoundation) {
-				System.out.println("MY EARS BURN");
+			if (e.getComponent() == heartFoundation && solitaire.addToHeartFoundation(currCard)) {
+				selectedCardPanel.removeAll();
+				selectedCardPanel.revalidate();
+				selectedCardPanel.repaint();
+				
+				currCard.setFaceDown(false);
+				heartFoundation.add(currCard.draw());
+				heartFoundation.revalidate();
+				heartFoundation.repaint();
+				currCard = new Card();
+			} else if (e.getComponent() == spadeFoundation && solitaire.addToSpadeFoundation(currCard)) {
+				selectedCardPanel.removeAll();
+				selectedCardPanel.revalidate();
+				selectedCardPanel.repaint();
+				
+				currCard.setFaceDown(false);
+				spadeFoundation.add(currCard.draw());
+				spadeFoundation.revalidate();
+				spadeFoundation.repaint();
+				currCard = new Card();
+			} else if (e.getComponent() == diamondFoundation && solitaire.addToDiamondFoundation(currCard)) {
+				selectedCardPanel.removeAll();
+				selectedCardPanel.revalidate();
+				selectedCardPanel.repaint();
+				
+				currCard.setFaceDown(false);
+				diamondFoundation.add(currCard.draw());
+				diamondFoundation.revalidate();
+				diamondFoundation.repaint();
+				currCard = new Card();
+			} else if (e.getComponent() == clubFoundation && solitaire.addToClubFoundation(currCard)) {
+				selectedCardPanel.removeAll();
+				selectedCardPanel.revalidate();
+				selectedCardPanel.repaint();
+				
+				currCard.setFaceDown(false);
+				clubFoundation.add(currCard.draw());
+				clubFoundation.revalidate();
+				clubFoundation.repaint();
+				currCard = new Card();
 			}
 		}
 
@@ -287,22 +345,140 @@ public class Solitaire extends JPanel implements Game {
 
 	private class ColumnListener implements MouseListener {
 
+
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			if (e.getComponent() == column1) {
-				System.out.println("column1");
-			} else if (e.getComponent() == column2) {
-				System.out.println("column2");
-			} else if (e.getComponent() == column3) {
-				System.out.println("column3");
-			} else if (e.getComponent() == column4) {
-				System.out.println("column4");
-			} else if (e.getComponent() == column5) {
-				System.out.println("column5");
-			} else if (e.getComponent() == column6) {
-				System.out.println("column6");
-			} else if (e.getComponent() == column7) {
-				System.out.println("column7");
+			if (currCard.getRank() != 0) {
+				if (e.getComponent() == column1 && solitaire.getColumnAt(0).addCard(currCard)) {  
+					currCard = new Card();
+					selectedCardPanel.removeAll();
+					selectedCardPanel.revalidate();
+					selectedCardPanel.repaint();
+					
+					column1.removeAll();
+					column1.add(solitaire.getColumnAt(0).display());
+					revalidateAllColumns();
+				} else if (e.getComponent() == column2 && solitaire.getColumnAt(1).addCard(currCard)) {
+					currCard = new Card();
+					selectedCardPanel.removeAll();
+					selectedCardPanel.revalidate();
+					selectedCardPanel.repaint();
+					
+					column2.removeAll();
+					column2.add(solitaire.getColumnAt(1).display());
+					revalidateAllColumns();
+				} else if (e.getComponent() == column3 && solitaire.getColumnAt(2).addCard(currCard)) {
+					currCard = new Card();
+					selectedCardPanel.removeAll();
+					selectedCardPanel.revalidate();
+					selectedCardPanel.repaint();
+					
+					column3.removeAll();
+					column3.add(solitaire.getColumnAt(2).display());
+					revalidateAllColumns();
+				} else if (e.getComponent() == column4 && solitaire.getColumnAt(3).addCard(currCard)) {
+					currCard = new Card();
+					selectedCardPanel.removeAll();
+					selectedCardPanel.revalidate();
+					selectedCardPanel.repaint();
+					
+					column4.removeAll();
+					column4.add(solitaire.getColumnAt(3).display());
+					revalidateAllColumns();
+				} else if (e.getComponent() == column5 && solitaire.getColumnAt(4).addCard(currCard)) {
+					currCard = new Card();
+					selectedCardPanel.removeAll();
+					selectedCardPanel.revalidate();
+					selectedCardPanel.repaint();
+					
+					column5.removeAll();
+					column5.add(solitaire.getColumnAt(4).display());
+					revalidateAllColumns();
+				} else if (e.getComponent() == column6 && solitaire.getColumnAt(5).addCard(currCard)) {
+					currCard = new Card();
+					selectedCardPanel.removeAll();
+					selectedCardPanel.revalidate();
+					selectedCardPanel.repaint();
+					
+					column6.removeAll();
+					column6.add(solitaire.getColumnAt(5).display());
+					revalidateAllColumns();
+				} else if (e.getComponent() == column7 && solitaire.getColumnAt(6).addCard(currCard)) {
+					currCard = new Card();
+					selectedCardPanel.removeAll();
+					selectedCardPanel.revalidate();
+					selectedCardPanel.repaint();
+					
+					column7.removeAll();
+					column7.add(solitaire.getColumnAt(6).display());
+					revalidateAllColumns();
+				}
+			}
+			else {
+				if (e.getComponent() == column1) {
+					currCard = solitaire.getColumnAt(0).getColumn().dealTopCard();
+					selectedCardPanel.add(currCard.draw());
+					selectedCardPanel.revalidate();
+					selectedCardPanel.repaint();
+					
+					column1.removeAll();
+					column1.add(solitaire.getColumnAt(0).display());
+					revalidateAllColumns();
+				} else if (e.getComponent() == column2) {
+					currCard = solitaire.getColumnAt(1).getColumn().dealTopCard();
+					selectedCardPanel.add(currCard.draw());
+					selectedCardPanel.revalidate();
+					selectedCardPanel.repaint();
+					
+					column2.removeAll();
+					column2.add(solitaire.getColumnAt(1).display());
+					revalidateAllColumns();
+				} else if (e.getComponent() == column3) {
+					currCard = solitaire.getColumnAt(2).getColumn().dealTopCard();
+					selectedCardPanel.add(currCard.draw());
+					selectedCardPanel.revalidate();
+					selectedCardPanel.repaint();
+					
+					column3.removeAll();
+					column3.add(solitaire.getColumnAt(2).display());
+					revalidateAllColumns();
+				} else if (e.getComponent() == column4) {
+					currCard = solitaire.getColumnAt(3).getColumn().dealTopCard();
+					selectedCardPanel.add(currCard.draw());
+					selectedCardPanel.revalidate();
+					selectedCardPanel.repaint();
+					
+					column4.removeAll();
+					column4.add(solitaire.getColumnAt(3).display());
+					revalidateAllColumns();
+				} else if (e.getComponent() == column5) {
+					currCard = solitaire.getColumnAt(4).getColumn().dealTopCard();
+					selectedCardPanel.add(currCard.draw());
+					selectedCardPanel.revalidate();
+					selectedCardPanel.repaint();
+					
+					column5.removeAll();
+					column5.add(solitaire.getColumnAt(4).display());
+					revalidateAllColumns();
+				} else if (e.getComponent() == column6) {
+					currCard = solitaire.getColumnAt(5).getColumn().dealTopCard();
+					selectedCardPanel.add(currCard.draw());
+					selectedCardPanel.revalidate();
+					selectedCardPanel.repaint();
+					
+					column6.removeAll();
+					column6.add(solitaire.getColumnAt(5).display());
+					revalidateAllColumns();
+				} else if (e.getComponent() == column7) {
+					currCard = solitaire.getColumnAt(6).getColumn().dealTopCard();
+					selectedCardPanel.add(currCard.draw());
+					selectedCardPanel.revalidate();
+					selectedCardPanel.repaint();
+					
+					column7.removeAll();
+					column7.add(solitaire.getColumnAt(6).display());
+					revalidateAllColumns();
+				}
 			}
 		}
 
