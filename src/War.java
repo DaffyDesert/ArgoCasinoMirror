@@ -171,11 +171,15 @@ public class War extends JPanel implements Game {
 																			playerProfile.getName() + "'s Bank: $" + playerProfile.getCurrency()));
 				}catch(NumberFormatException e) {
 					JOptionPane.showMessageDialog(null, "Input must be an integer");
+					continue;
 				}
 				if(userBet > playerProfile.getCurrency()) {
 					JOptionPane.showMessageDialog(null, "You dont have that much to bet!!!");
 				}
-				else {
+				else if(userBet < 0){
+					JOptionPane.showMessageDialog(null, "You can't bet a negative amount!!!");
+				}
+				else if(userBet <= playerProfile.getCurrency() && userBet >= 0){
 					board.setPlayerBet(userBet);
 					validInput = true;
 				}
