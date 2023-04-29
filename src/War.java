@@ -37,7 +37,7 @@ public class War extends JPanel implements Game {
 		stopwatch.display().setBounds(0, 0, 400, 100);
 		thread = new Thread(stopwatch);
 		
-	}
+	} 
 	
 	@Override
 	public void startWatch() {
@@ -154,5 +154,11 @@ public class War extends JPanel implements Game {
 			}
 		}
 	}
+
+		@Override
+		public void promptPlayerBet() {
+			// TODO Auto-generated method stub
+			
+		}
 
 }

@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.InputMismatchException;
+
 import javax.swing.*;
 
 /**
@@ -30,14 +32,18 @@ public class BlackJack  extends JPanel implements Game {
 	
 	private BlackJackBoard blackJack;
 	private int winCondition;
+	private int userBet;
+	private User playerProfile;
+	private Users userProfiles;
 	private boolean turnIsOver;
 	public Component gameOverScreen;
 	
 	
-	public BlackJack() {
+	public BlackJack(User playerProfile) {
 		stopwatch = new Stopwatch();
 		thread = new Thread(stopwatch);
 		blackJack = new BlackJackBoard();
+		this.playerProfile = playerProfile;
 	}
 	
 	@Override
@@ -49,14 +55,36 @@ public class BlackJack  extends JPanel implements Game {
 	public void startGame() {
 		startWatch();
 		blackJack.setBoard();
-		//blackJack.promptPlayerBet();
-		if(blackJack.is21(blackJack.playerHand())) {
+		promptPlayerBet();
+		if(blackJack.is21(blackJack.playerHand())) {//
 			winCondition = 1;
-			//blackJack.setPlayerBet(getPlayerBet()*2);
+			blackJack.setPlayerBet(blackJack.getPlayerBet()*2);
 			board.add(showGameOverScreen(),BorderLayout.CENTER);
 		}
 	}
 
+	@Override
+	public void promptPlayerBet() {
+		boolean validInput = false;
+		while(!validInput) {
+			try{
+				userBet = Integer.parseInt(JOptionPane.showInputDialog("How much would you like to bet?" + "\n" +
+																		playerProfile.getName() + "'s Bank: $" + playerProfile.getCurrency()));
+			}catch(NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "Input must be an integer");
+			}
+			if(userBet > playerProfile.getCurrency()) {
+				JOptionPane.showMessageDialog(null, "You dont have that much to bet!!!");
+			}
+			else {
+				blackJack.setPlayerBet(userBet);
+				validInput = true;
+			}
+		}
+		
+		JOptionPane.showMessageDialog(null, userBet + "You chose to bet $" + blackJack.getPlayerBet());
+	}
+	
 	@Override
 	public void stopWatch() {
 		stopwatch.stopTimer();
@@ -76,7 +104,7 @@ public class BlackJack  extends JPanel implements Game {
 		board.setBackground(new java.awt.Color(0, 122, 40));
 		board.setLayout(new BorderLayout());
 		board.setPreferredSize(new Dimension(1270,650));
-		
+
 		statusBarPanelBuilder();
 		buttonPanelBuilder();
 		deckAndHandsPanelBuilder();
@@ -256,6 +284,7 @@ public class BlackJack  extends JPanel implements Game {
 			thread.start();
 			
 			blackJack.setBoard();
+			promptPlayerBet();
 			if(blackJack.is21(blackJack.playerHand())) {
 				winCondition = 1;
 				board.add(showGameOverScreen(),BorderLayout.CENTER);
@@ -401,12 +430,17 @@ public class BlackJack  extends JPanel implements Game {
 		}
 		return turnIsOver;
 	}
-
 	
+	@Override
+	public void updatePlayerBank() {
+		if(winCondition == 1)
+			blackJack.getPlayerBet();
+	}
 	
 	
 	public JPanel showGameOverScreen() {
 		stopGame();
+		
 		gameOverScreenPanelBuilder();
 		return gameOverScreenPanel;
 	}
