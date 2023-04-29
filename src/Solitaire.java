@@ -42,6 +42,7 @@ public class Solitaire extends JPanel implements Game {
 	JPanel waste;
 
 	Solitaire() {
+		currCard = new Card();
 		stopwatch = new Stopwatch();
 		thread = new Thread(stopwatch);
 		solitaire = new SolitaireBoard();
@@ -112,18 +113,10 @@ public class Solitaire extends JPanel implements Game {
 	public void selectedCardBuilder() {
 		selectedCardPanel = new JPanel();
 		selectedCardPanel.setLayout(new FlowLayout());
-		selectedCardPanel.setBackground(Color.white);
+		selectedCardPanel.setBackground(new java.awt.Color(0, 122, 51));
 		selectedCardPanel.setPreferredSize(new Dimension(6000, 200));
 
-		if(currCard != null) {
-			selectedCardPanel.add(new Card(13, "C").draw());
-			selectedCardPanel.revalidate();
-			selectedCardPanel.repaint();
-		}
-		
 		tableau.add(selectedCardPanel);
-		tableau.revalidate();
-		tableau.repaint();
 	}
 
 	public void tableauBuilder() {
@@ -133,8 +126,7 @@ public class Solitaire extends JPanel implements Game {
 		selectedCardBuilder();
 		tableau.setBackground(new java.awt.Color(0, 122, 51));
 		tableau.setPreferredSize(new Dimension(6000, 210));
-		tableau.setBorder(BorderFactory.createLineBorder(Color.black, 2));
-		
+
 		tableau.revalidate();
 		tableau.repaint();
 	}
@@ -238,11 +230,12 @@ public class Solitaire extends JPanel implements Game {
 	public void handAndWasteBuilder() {
 		hand = new JPanel();
 		hand = solitaire.getDeck().draw();
+		hand.setPreferredSize(new Dimension(100, 200));
 		hand.addMouseListener(new DeckAndWasteListener());
 
 		waste = new JPanel();
-		waste.setBackground(Color.black);
-		waste = solitaire.getDiscardPile().draw();
+		waste.setBackground(new java.awt.Color(0, 122, 51));
+		waste.setPreferredSize(new Dimension(100, 200));
 		waste.addMouseListener(new DeckAndWasteListener());
 
 		handAndWaste = new JPanel();
@@ -339,16 +332,46 @@ public class Solitaire extends JPanel implements Game {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			if (e.getComponent() == hand) {
+			if (e.getComponent() == hand && currCard.getRank() == 0) {
 				if (solitaire.getDeck().getStackSize() == 0) {
-					//move all cards from waste to deck
-				}
+					solitaire.resetDeck();
+					waste.removeAll();
+					waste.revalidate();
+					waste.repaint();
+					
+					hand.add(solitaire.getDeck().peekCard(0).draw());
+					hand.revalidate();
+					hand.repaint();
+				} 
 				else {
+					
 					currCard = solitaire.drawFromDeck();
-					System.out.println(currCard.toString());
+					currCard.setFaceDown(false);
+					selectedCardPanel.removeAll();
+					selectedCardPanel.add(currCard.draw());
+					
+					if(solitaire.getDeck().getStackSize() == 0) {
+						hand.removeAll();
+						hand.revalidate();
+						hand.repaint();
+					}
+					
+					selectedCardPanel.revalidate();
+					selectedCardPanel.repaint();
 				}
-			} else if (e.getComponent() == waste) {
+			}
+			
+			if (e.getComponent() == waste && currCard.getRank() != 0) {
+				selectedCardPanel.removeAll();
+				selectedCardPanel.revalidate();
+				selectedCardPanel.repaint();
 				
+				waste.removeAll();
+				solitaire.addToDiscardPile(currCard);
+				waste.add(currCard.draw());
+				currCard = new Card();
+				waste.revalidate();
+				waste.repaint();
 			}
 		}
 

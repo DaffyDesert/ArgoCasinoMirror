@@ -149,12 +149,12 @@ public class SolitaireBoard {
     }
     
     public void resetDeck() {
-    	if (deck.getStackSize() == 0) {
-    		for (int i = 0; i < discardPile.getStackSize(); ++i) {
-    			deck.addToTop(discardPile.dealTopCard());
-    			deck.flipTopCard();
+    		int discardStackSize = discardPile.getStackSize();
+    		for (int i = 0; i < discardStackSize; ++i) {
+    			Card currCard = discardPile.dealTopCard();
+    			currCard.setFaceDown(true);
+    			deck.addToTop(currCard);
     		}
-    	}
     }
     
     public Card drawFromDeck() {
