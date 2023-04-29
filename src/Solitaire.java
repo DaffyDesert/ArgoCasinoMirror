@@ -1,6 +1,10 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -12,11 +16,17 @@ public class Solitaire extends JPanel implements Game{
 	JPanel tableau;
 	JPanel foundations;
 	JPanel handAndWaste;
-	
+	ArrayList<SolitaireColumn> tableauColumns = new ArrayList<SolitaireColumn>();
+	SolitaireBoard solitaire;
+	JPanel heartFoundation = new JPanel();
+	JPanel spadeFoundation = new JPanel();
+	JPanel diamondFoundation = new JPanel();
+	JPanel clubFoundation = new JPanel();
+
 	Solitaire() {
 		stopwatch = new Stopwatch();
 		thread = new Thread(stopwatch);
-		//solitaire = new SolitaireBoard();
+		solitaire = new SolitaireBoard();
 	}
 
 	@Override
@@ -88,24 +98,17 @@ public class Solitaire extends JPanel implements Game{
 		
 		tabeauColumnsAdder();
 
-		
-
 		tableau.setBackground(new java.awt.Color(0,122,51));
 		tableau.setPreferredSize(new Dimension(6000,310));
 		tableau.setBorder(BorderFactory.createLineBorder(Color.black, 2));
 	}
 	
-	public void tabeauColumnsAdder() {
-		CardStack testStack = new CardStack();
-		testStack.createStandardDeck();
-		testStack.shuffleStack();
-		
-		//loads in cards for testing purposes
+	public void tabeauColumnsAdder() {	
 		for(int i= 0; i < 7; i++) {
 			SolitaireColumn newColoumn = new SolitaireColumn();
 			tableauColumns.add(newColoumn);
 			for(int j = 0; j < (i + 1); j++) {
-				tableauColumns.get(i).addCard(testStack.dealTopCard());
+				tableauColumns.get(i).addCard(solitaire.getDeck().dealTopCard());
 			}
 		
 		
@@ -116,19 +119,99 @@ public class Solitaire extends JPanel implements Game{
 	}
 	
 	public void foundationsBuilder() {
+		heartFoundation = new JPanel();
+		heartFoundation.setBackground(Color.red);
+		heartFoundation.setPreferredSize(new Dimension(100,145));
+		heartFoundation.addMouseListener(new FoundationListener());
+		
+		spadeFoundation = new JPanel();
+		spadeFoundation.setBackground(Color.black);
+		spadeFoundation.setPreferredSize(new Dimension(100,145));
+		spadeFoundation.addMouseListener(new FoundationListener());
+		
+		diamondFoundation = new JPanel();
+		diamondFoundation.setBackground(Color.blue);
+		diamondFoundation.setPreferredSize(new Dimension(100,145));
+		diamondFoundation.addMouseListener(new FoundationListener());
+		
+		clubFoundation = new JPanel();
+		clubFoundation.setBackground(Color.green);
+		clubFoundation.setPreferredSize(new Dimension(100,145));
+		clubFoundation.addMouseListener(new FoundationListener());
+		
 		foundations = new JPanel();
-		foundations.setLayout(new BorderLayout());
+		foundations.setLayout(new FlowLayout(0, 10, 20));
 		foundations.setBackground(new java.awt.Color(0,122,51));
 		foundations.setPreferredSize(new Dimension(130,250));
 		foundations.setBorder(BorderFactory.createLineBorder(Color.black, 2));
+		
+		foundations.add(heartFoundation);
+		foundations.add(spadeFoundation);
+		foundations.add(diamondFoundation);
+		foundations.add(clubFoundation);
+		
 	}
 	
 	public void handAndWasteBuilder() {
+//		JPanel hand = new JPanel();
+//		hand.setBackground(Color.CYAN);
+//		hand.setPreferredSize(new Dimension(100,145));
+//		hand.add(solitaire.getDeck().draw());
+//		
+//		JPanel waste = new JPanel();
+//		waste.setBackground(Color.pink);
+//		waste.setPreferredSize(new Dimension(100,145));
+//		waste.add(solitaire.getDeck().draw());
+		
 		handAndWaste = new JPanel();
-		handAndWaste.setLayout(new BorderLayout());
+		handAndWaste.setLayout(new FlowLayout(0, 10, 20));
 		handAndWaste.setBackground(new java.awt.Color(0,122,51));
 		handAndWaste.setPreferredSize(new Dimension(130,250));
 		handAndWaste.setBorder(BorderFactory.createLineBorder(Color.black,2));
+		
+		handAndWaste.add(solitaire.getDeck().draw());
+		handAndWaste.add(solitaire.getDiscardPile().draw());
 	}
+	
+	private class FoundationListener implements MouseListener {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			if(e.getComponent() == heartFoundation) {
+				System.out.println("IT HURTS");
+			}
+			else if(e.getComponent() == spadeFoundation) {
+				System.out.println("IT BURNS");
+			}
+			else if(e.getComponent() == diamondFoundation) {
+				System.out.println("IM IN PAIN");
+			}
+			else if(e.getComponent() == clubFoundation) {
+				System.out.println("MY EARS BURN");
+			}
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			
+		}
+		
+	}
+	
 
 }
