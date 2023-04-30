@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.InputMismatchException;
+
 import javax.swing.*;
 
 /**
@@ -30,14 +32,17 @@ public class BlackJack  extends JPanel implements Game {
 	
 	private BlackJackBoard blackJack;
 	private int winCondition;
+	private double userBet;
+	private User playerProfile;
 	private boolean turnIsOver;
 	public Component gameOverScreen;
 	
 	
-	public BlackJack() {
+	public BlackJack(User playerProfile) {
 		stopwatch = new Stopwatch();
 		thread = new Thread(stopwatch);
 		blackJack = new BlackJackBoard();
+		this.playerProfile = playerProfile;
 	}
 	
 	@Override
@@ -49,8 +54,10 @@ public class BlackJack  extends JPanel implements Game {
 	public void startGame() {
 		startWatch();
 		blackJack.setBoard();
-		if(blackJack.is21(blackJack.playerHand())) {
+		promptPlayerBet();
+		if(blackJack.is21(blackJack.playerHand())) {//
 			winCondition = 1;
+			blackJack.setPlayerBet(blackJack.getPlayerBet()*2);
 			board.add(showGameOverScreen(),BorderLayout.CENTER);
 		}
 	}
@@ -63,8 +70,8 @@ public class BlackJack  extends JPanel implements Game {
 
 	@Override
 	public void stopGame() {
+		updatePlayerBank();
 		stopWatch();
-		
 	}
 
 	@Override
@@ -74,7 +81,7 @@ public class BlackJack  extends JPanel implements Game {
 		board.setBackground(new java.awt.Color(0, 122, 40));
 		board.setLayout(new BorderLayout());
 		board.setPreferredSize(new Dimension(1270,650));
-		
+
 		statusBarPanelBuilder();
 		buttonPanelBuilder();
 		deckAndHandsPanelBuilder();
@@ -254,6 +261,7 @@ public class BlackJack  extends JPanel implements Game {
 			thread.start();
 			
 			blackJack.setBoard();
+			promptPlayerBet();
 			if(blackJack.is21(blackJack.playerHand())) {
 				winCondition = 1;
 				board.add(showGameOverScreen(),BorderLayout.CENTER);
@@ -399,8 +407,41 @@ public class BlackJack  extends JPanel implements Game {
 		}
 		return turnIsOver;
 	}
-
 	
+	@Override
+	public void promptPlayerBet() {
+		boolean validInput = false;
+		while(!validInput) {
+			try{
+				userBet = Double.parseDouble(JOptionPane.showInputDialog("How much would you like to bet?" + "\n" +
+																		playerProfile.getName() + "'s Bank: $" + playerProfile.getCurrency()));
+			}catch(NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "Input must be an integer");
+				continue;
+			}
+			if(userBet > playerProfile.getCurrency()) {
+				JOptionPane.showMessageDialog(null, "You dont have that much to bet!!!");
+			}
+			else if(userBet < 0){
+				JOptionPane.showMessageDialog(null, "You can't bet a negative amount!!!");
+			}
+			else if(userBet <= playerProfile.getCurrency() && userBet >= 0){
+				blackJack.setPlayerBet(userBet);
+				validInput = true;
+			}
+		}
+		
+		JOptionPane.showMessageDialog(null, "You chose to bet $" + blackJack.getPlayerBet());
+	}
+	@Override
+	public void updatePlayerBank() {
+		if(winCondition == 1) {
+			playerProfile.setCurrency(blackJack.getPlayerBet() + playerProfile.getCurrency());
+		}
+		else {
+			playerProfile.setCurrency(playerProfile.getCurrency() - blackJack.getPlayerBet());
+		}
+	}
 	
 	
 	public JPanel showGameOverScreen() {
