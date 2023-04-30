@@ -10,7 +10,9 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class Solitaire extends JPanel implements Game {
+
+@SuppressWarnings("serial")
+public class Solitaire extends JPanel implements Game{
 	private Stopwatch stopwatch;
 	private Thread thread;
 	/*
@@ -571,6 +573,18 @@ public class Solitaire extends JPanel implements Game {
 
 		}
 
+	}
+
+	@Override
+	public void promptPlayerBet() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updatePlayerBank() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

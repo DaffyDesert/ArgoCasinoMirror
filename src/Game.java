@@ -13,4 +13,6 @@ public interface Game {
 	public int isOver(); 
 	public boolean turn(); 
 	public JPanel showGameOverScreen(); 
+	public void promptPlayerBet();
+	public void updatePlayerBank();
 }

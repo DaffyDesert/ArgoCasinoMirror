@@ -24,8 +24,10 @@ public class WarBoard{
 	CardStack deck;
 	String turnResult;
 	String spoilsOutcome;
+	double playerBet;
 
 	public WarBoard() {
+		setPlayerBet(0);
 		deck = new CardStack("Deck");
 		playerStack = new CardStack("Player Stack");
 		enemyStack = new CardStack("Enemy Stack");
@@ -40,6 +42,14 @@ public class WarBoard{
 		mainPanel = new JPanel();
 	}
 	
+	public double getPlayerBet() {
+		return playerBet;
+	}
+
+	public void setPlayerBet(double playerBet) {
+		this.playerBet = playerBet;
+	}
+
 	private void setPointValue() {
 		for(int i  = 0; i < deck.getStackSize(); i++) {
 			if (deck.peekCard(i).getRank() == 1)//if rank == 1 == ace; then set pointVal to 14
