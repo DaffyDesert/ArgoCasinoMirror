@@ -5,6 +5,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -190,10 +191,17 @@ public class War extends JPanel implements Game {
 		
 		@Override
 		public void updatePlayerBank() {
-			if(board.checkWinStatus() == 1)
-				playerProfile.setCurrency(board.getPlayerBet() + playerProfile.getCurrency());
-			else
+			Random randBet = new Random();
+			double dealerBet = randBet.nextDouble(-25, 26) + board.getPlayerBet();
+			if(dealerBet < 0)
+				dealerBet *= -1;
+			
+			if(board.checkWinStatus() == 1) {
+				playerProfile.setCurrency(dealerBet + playerProfile.getCurrency());
+			}
+			else {
 				playerProfile.setCurrency(playerProfile.getCurrency() - board.getPlayerBet());
+			}
 		}
 
 }
