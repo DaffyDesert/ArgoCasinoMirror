@@ -71,6 +71,8 @@ If you need any help while using the program, there should be a "Help" menu in t
 
 -Comprehensive Help Menu
 
+### Development on this project has stopped, but should development continue in the future:
+
 ##### Future improvements in Development v.4.0 or by Full Release v.1.0
 
 -Functional Solitaire
