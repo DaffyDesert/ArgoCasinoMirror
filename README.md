@@ -39,7 +39,8 @@ start a game of Blackjack.
 In War, you can click anywhere on the window and the program will automatically take the top card off of yours, and the enemy's deck and compare the two. The
 game ends when one player has 0 cards left.
 In Black Jack, you will be greeted with your current cards as well as an option to "hit" or "hold". The "hit" option will give you another card and hold will 
-reveal the cards the dealer has and determine who is the winner. 
+reveal the cards the dealer has and determine who is the winner.
+In Solitaire, you will be greeted with a near-fully-built Solitaire board. Sadly, this game is not-functional at this time, but you can admire our GUI handiwork.
 
 "User Menu" will bring you to another Menu where you can add new users to your machine. To add a new user you can click "Add New User" at the bottom of the screen
 and it will prompt for a personalized tag and a password. To log in as a user, you must click the "Select User" button and you will be prompted to input your password.
@@ -48,7 +49,7 @@ is set to an admin by default and admins have the ability to delete other users,
 
 "Exit" will close the program.
 
- 
+If you need any help while using the program, there should be a "Help" menu in the top-left corner of the game. That menu will have most of the answers you may be looking for.
 
 #### Change Log
 
@@ -64,16 +65,20 @@ is set to an admin by default and admins have the ability to delete other users,
 
 -Functional Game of Blackjack
 
-##### Coming soon in Development v.3.0 / Full Release v.1.0
+##### Development v.3.0
 
--Functional Solitaire
-
--Betting between games
+-Betting between games (Currently bugged)
 
 -Comprehensive Help Menu
 
+##### Future improvements in Development v.4.0 or by Full Release v.1.0
+
+-Functional Solitaire
+
 -Bug Fixes
+
+-Beautification of menus
 
  
 
-*As of the current build (Development v.2.0), Solitaire is unavailable.
+*As of the current build (Development v.3.0), Solitaire is unavailable.
