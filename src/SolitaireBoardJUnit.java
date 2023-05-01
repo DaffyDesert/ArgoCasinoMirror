@@ -22,7 +22,7 @@ public class SolitaireBoardJUnit {
 		
 		//is the last card in the column facing up?
 		assertTrue(!board.getColumnAt(0).getColumn().peekCard(0).isFaceDown());
-		assertTrue(!board.getColumnAt(1).getColumn().peekCard(0).isFaceDown());
+		assertTrue(!board.getColumnAt(1).getColumn().peekCard(1).isFaceDown());
 
 	}
 	

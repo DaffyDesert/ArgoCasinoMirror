@@ -31,6 +31,12 @@ public class Card {
 	public boolean isFaceDown() {return faceDown;}
 	public void setFaceDown(boolean faceDown) {this.faceDown = faceDown;}
 	
+	public Card() {
+		setRank(0);
+		setSuit("");
+		setFaceDown(true);
+	}
+	
 	public Card(int rank, String suit) {
 		setRank(rank);
 		setSuit(suit);
