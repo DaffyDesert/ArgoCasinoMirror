@@ -8,15 +8,21 @@
 
 #### How to install:
 
-1.) Download the repository.
+1.) Download the repository by selected the big, green "Code" button at the top of this page.
 
-2.) Unzip the file in the location of your choice
+2.) Select "Download ZIP"
 
-3.) Create a new java project in the Eclipse IDE
+3.) Locate the downloaded .zip file. Unzip the file in the location of your choice.
 
-4.) Move all files from the repository folder into your new project folder
+4.) Download Eclipse IDE if you haven't already
 
-5.) Right-click on the package explorer in eclipse, select "Refresh"
+5.) Create a new java project in the Eclipse IDE
+
+6.) Move all files from the repository folder into your new project folder
+
+7.) Right-click on the package explorer in eclipse, select "Refresh"
+
+8.) Your game is now installed!
 
  
 
