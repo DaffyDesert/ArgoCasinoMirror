@@ -585,6 +585,5 @@ public class Solitaire extends JPanel implements Game{
 		// TODO Auto-generated method stub
 		
 	}
-	
 
 }
